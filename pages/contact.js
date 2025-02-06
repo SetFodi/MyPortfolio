@@ -140,8 +140,8 @@ function Contact() {
                 {...register('message', {
                   required: 'Message is required',
                   minLength: {
-                    value: 20,
-                    message: 'Message must be at least 20 characters'
+                    value: 10,
+                    message: 'Message must be at least 10 characters'
                   }
                 })}
                 rows="5"

@@ -86,7 +86,7 @@ export default function About() {
               transition={{ duration: 1, delay: 0.5 }}
               className="text-xl text-gray-700 dark:text-gray-300 mb-8 max-w-3xl mx-auto leading-relaxed"
             >
-              My name is <span className="font-semibold text-purple-600 dark:text-purple-400">Luka Partenadze</span>, a passionate Junior Full Stack Developer who loves turning ideas into elegant, scalable web applications. My journey in coding began with curiosity and has grown into a dedication to building digital experiences that are as innovative as they are user-friendly.
+              My name is <span className="font-semibold text-purple-600 dark:text-purple-400">Luka Partenadze</span>, a passionate Junior Full Stack Developer who loves turning ideas into elegant, scalable web applications. My journey in coding began with curiosity and has grown into a dedication to building digital experiences that are as innovative as they are user-friendly. and by the way I have the most beautiful girlfriend ever.
             </motion.p>
           </div>
         </section>
