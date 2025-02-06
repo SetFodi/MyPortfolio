@@ -1,6 +1,6 @@
 'use client'
 import Link from 'next/link'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { Bars3Icon, XMarkIcon, SunIcon, MoonIcon } from '@heroicons/react/24/outline'
 import useMounted from '../hooks/useMounted'
@@ -12,12 +12,22 @@ const navbarVariants = {
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false)
+  // Initialize darkMode based on localStorage or the current HTML class.
   const [darkMode, setDarkMode] = useState(false)
   const mounted = useMounted()
 
-  if (!mounted) return null
+  useEffect(() => {
+    // On mount, read the stored mode (if any) or the current document state.
+    if (typeof window !== 'undefined') {
+      const stored = localStorage.getItem('darkMode')
+      if (stored !== null) {
+        setDarkMode(stored === 'true')
+      } else {
+        setDarkMode(document.documentElement.classList.contains('dark'))
+      }
+    }
+  }, [])
 
-  // Toggle dark mode by adding or removing the `dark` class on the <html> element
   const toggleDarkMode = () => {
     setDarkMode((prev) => {
       const newMode = !prev
@@ -26,9 +36,12 @@ const Navbar = () => {
       } else {
         document.documentElement.classList.remove('dark')
       }
+      localStorage.setItem('darkMode', newMode)
       return newMode
     })
   }
+
+  if (!mounted) return null
 
   const navItems = [
     { name: 'Home', path: '/' },
@@ -50,9 +63,9 @@ const Navbar = () => {
           <Link href="/" legacyBehavior>
             <motion.a
               whileHover={{ scale: 1.1 }}
-              className="text-3xl font-extrabold text-gray-900 dark:text-gray-100"
+              className="text-3xl font-extrabold text-gray-900 dark:text-gray-100 cursor-pointer"
             >
-              SetFodi
+              Luka
             </motion.a>
           </Link>
 

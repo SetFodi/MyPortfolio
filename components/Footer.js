@@ -1,14 +1,14 @@
 'use client'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
-import { FaGithub, FaLinkedin, FaTwitter, FaEnvelope } from 'react-icons/fa'
+import { FaGithub, FaLinkedin, FaTwitter, FaEnvelope, FaInstagram } from 'react-icons/fa'
 
 const Footer = () => {
   const socialLinks = [
     { name: 'GitHub', href: 'https://github.com/SetFodi', icon: <FaGithub /> },
-    { name: 'LinkedIn', href: '#', icon: <FaLinkedin /> },
-    { name: 'Twitter', href: '#', icon: <FaTwitter /> },
-    { name: 'Email', href: 'mailto:hello@setfodi.com', icon: <FaEnvelope /> }
+    { name: 'LinkedIn', href: 'https://www.linkedin.com/in/luka-partenadze-394675348/', icon: <FaLinkedin /> },
+    { name: 'Instagram', href: 'https://www.instagram.com/fartenadzeluka/', icon: <FaInstagram /> },
+    { name: 'Email', href: 'mailto:lukafartenadze2004@gmail.com', icon: <FaEnvelope /> }
   ]
 
   const navLinks = [

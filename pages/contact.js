@@ -15,7 +15,7 @@ function Contact() {
   return (
     <div className="min-h-screen bg-white dark:bg-black relative overflow-hidden">
       <Head>
-        <title>Contact - SetFodi</title>
+        <title>Contact - Luka</title>
         <meta name="description" content="Contact SetFodi, Full Stack Developer" />
         <link rel="icon" href="/favicon.ico" />
       </Head>

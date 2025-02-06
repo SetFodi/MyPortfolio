@@ -11,7 +11,7 @@ import CountUp from 'react-countup'
 // Dynamically import the Particles component with SSR disabled
 const Particles = dynamic(
   () => import('react-tsparticles').then((mod) => mod.default),
-  { 
+  {
     ssr: false,
     loading: () => (
       <div className="absolute inset-0 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500" />
@@ -39,14 +39,14 @@ const Home = () => {
       description: 'Interactive typing speed test platform',
       image: '/images/typingy.jpg',
       link: 'https://typingy.live',
-      technologies: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Firebase'],
+      technologies: ['Next.js', 'Javascript', 'Tailwind CSS', 'MongoDB'],
     },
     {
       title: 'DevConnect',
       description: 'Developer collaboration network',
       image: '/images/devconnect.jpg',
-      link: 'https://devconnect.com',
-      technologies: ['React', 'GraphQL', 'PostgreSQL', 'AWS'],
+      link: 'https://github.com/SetFodi/devconnect',
+      technologies: ['React', 'Javascript', 'MongoDB', 'Tailwind CSS'],
     },
   ]
 
@@ -60,7 +60,7 @@ const Home = () => {
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-black">
       <Head>
-        <title>SetFodi - Full Stack Developer</title>
+        <title>Luka Partenadze - Full Stack Developer</title>
         <meta name="description" content="Portfolio of SetFodi, Junior Full Stack Developer" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
@@ -123,7 +123,7 @@ const Home = () => {
             className="relative z-10 text-center px-4"
           >
             <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-              SetFodi
+              Luka Partenadze
             </h1>
             <p className="text-xl md:text-3xl text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto">
               I'm a Junior Full Stack Developer passionate about building innovative and dynamic digital experiences.
