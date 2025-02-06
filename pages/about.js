@@ -25,8 +25,8 @@ const floatingVariants = {
 }
 
 const skillItems = [
-  { icon: CodeBracketIcon, color: 'blue', text: 'JavaScript (ES6+), TypeScript' },
-  { icon: LightBulbIcon, color: 'yellow', text: 'React, Next.js & Modern Front-end Libraries' },
+  { icon: CodeBracketIcon, color: 'blue', text: 'JavaScript (ES6+), TypeScript, Python' },
+  { icon: LightBulbIcon, color: 'yellow', text: 'React, Next.js, Angular & Modern Front-end Libraries' },
   { icon: ServerIcon, color: 'green', text: 'Node.js, Express & RESTful API Development' },
   { icon: ArrowPathIcon, color: 'indigo', text: 'Version Control with Git' },
   { icon: DevicePhoneMobileIcon, color: 'pink', text: 'Responsive Design with Tailwind CSS' },

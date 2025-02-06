@@ -145,8 +145,8 @@ const Home = () => {
         <section className="py-20 bg-white dark:bg-gray-900">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
               className="text-center mb-12"
             >
@@ -159,44 +159,49 @@ const Home = () => {
             </motion.div>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
               <motion.div
+                whileHover={{ scale: 1.05 }}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.1 }}
-                className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6"
+                className="bg-gradient-to-r from-blue-500 to-indigo-500 dark:from-blue-600 dark:to-indigo-600 rounded-xl shadow-2xl p-8"
               >
-                <CountUp end={8} duration={2} className="text-4xl font-bold text-blue-600" />
-                <p className="mt-2 text-gray-600 dark:text-gray-300">Projects Completed</p>
+                <CountUp end={8} duration={2} className="text-5xl font-extrabold text-white" />
+                <p className="mt-4 text-lg text-white">Projects Completed</p>
               </motion.div>
               <motion.div
+                whileHover={{ scale: 1.05 }}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.2 }}
-                className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6"
+                className="bg-gradient-to-r from-green-500 to-teal-500 dark:from-green-600 dark:to-teal-600 rounded-xl shadow-2xl p-8"
               >
-                <CountUp end={1} duration={2} className="text-4xl font-bold text-blue-600" />
-                <p className="mt-2 text-gray-600 dark:text-gray-300">Years of Experience</p>
+                <CountUp end={1} duration={2} className="text-5xl font-extrabold text-white" />
+                <p className="mt-4 text-lg text-white">Years of Experience</p>
               </motion.div>
               <motion.div
+                whileHover={{ scale: 1.05 }}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.3 }}
-                className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6"
+                className="bg-gradient-to-r from-purple-500 to-pink-500 dark:from-purple-600 dark:to-pink-600 rounded-xl shadow-2xl p-8"
               >
-                <CountUp end={3} duration={2} className="text-4xl font-bold text-blue-600" />
-                <p className="mt-2 text-gray-600 dark:text-gray-300">Happy Clients</p>
+                <CountUp end={3} duration={2} className="text-5xl font-extrabold text-white" />
+                <p className="mt-4 text-lg text-white">Happy Clients</p>
               </motion.div>
               <motion.div
+                whileHover={{ scale: 1.05 }}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.4 }}
-                className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6"
+                className="bg-gradient-to-r from-yellow-500 to-orange-500 dark:from-yellow-600 dark:to-orange-600 rounded-xl shadow-2xl p-8"
               >
-                <CountUp end={250} duration={2} className="text-4xl font-bold text-blue-600" />
-                <p className="mt-2 text-gray-600 dark:text-gray-300">Cups of Tea</p>
+                <CountUp end={250} duration={2} className="text-5xl font-extrabold text-white" />
+                <p className="mt-4 text-lg text-white">Cups of Tea</p>
               </motion.div>
             </div>
           </div>
         </section>
+
 
         {/* Projects Section */}
         <section className="py-20 bg-white dark:bg-black">

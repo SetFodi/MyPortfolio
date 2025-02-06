@@ -2,14 +2,48 @@
 import Head from 'next/head'
 import { useForm } from 'react-hook-form'
 import { motion } from 'framer-motion'
+import { useState } from 'react'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 
 function Contact() {
-  const { register, handleSubmit, formState: { errors } } = useForm()
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors }
+  } = useForm()
 
-  const onSubmit = (data) => {
-    console.log(data)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitSuccess, setSubmitSuccess] = useState('')
+  const [submitError, setSubmitError] = useState('')
+
+  const onSubmit = async (data) => {
+    setIsSubmitting(true)
+    setSubmitSuccess('')
+    setSubmitError('')
+
+    try {
+      // POST the form data to the API route
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      })
+
+      if (!res.ok) {
+        throw new Error('Failed to send the message. Please try again later.')
+      }
+
+      setSubmitSuccess('Your message has been sent successfully!')
+      reset() // reset the form fields
+    } catch (error) {
+      setSubmitError(error.message)
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -21,7 +55,7 @@ function Contact() {
       </Head>
 
       {/* Animated Gradient Background */}
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1.5 }}
@@ -38,7 +72,7 @@ function Contact() {
           className="container mx-auto px-4 sm:px-6 lg:px-8"
         >
           <div className="max-w-2xl mx-auto text-center mb-12">
-            <motion.h1 
+            <motion.h1
               className="text-4xl font-bold text-gray-800 dark:text-gray-100 mb-4"
               initial={{ scale: 0.8 }}
               animate={{ scale: 1 }}
@@ -46,7 +80,7 @@ function Contact() {
             >
               Let's Connect
             </motion.h1>
-            <motion.p 
+            <motion.p
               className="text-lg text-gray-700 dark:text-gray-300"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -69,9 +103,8 @@ function Contact() {
               </label>
               <input
                 {...register('name', { required: 'Name is required' })}
-                className={`w-full px-4 py-2 rounded-lg border focus:outline-none transition-colors ${
-                  errors.name ? 'border-red-500' : 'border-gray-200 dark:border-gray-700 focus:border-blue-500'
-                }`}
+                className={`w-full px-4 py-2 rounded-lg border focus:outline-none transition-colors ${errors.name ? 'border-red-500' : 'border-gray-200 dark:border-gray-700 focus:border-blue-500'
+                  }`}
               />
               {errors.name && (
                 <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>
@@ -91,9 +124,8 @@ function Contact() {
                     message: 'Invalid email address'
                   }
                 })}
-                className={`w-full px-4 py-2 rounded-lg border focus:outline-none transition-colors ${
-                  errors.email ? 'border-red-500' : 'border-gray-200 dark:border-gray-700 focus:border-blue-500'
-                }`}
+                className={`w-full px-4 py-2 rounded-lg border focus:outline-none transition-colors ${errors.email ? 'border-red-500' : 'border-gray-200 dark:border-gray-700 focus:border-blue-500'
+                  }`}
               />
               {errors.email && (
                 <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>
@@ -113,9 +145,8 @@ function Contact() {
                   }
                 })}
                 rows="5"
-                className={`w-full px-4 py-2 rounded-lg border focus:outline-none transition-colors ${
-                  errors.message ? 'border-red-500' : 'border-gray-200 dark:border-gray-700 focus:border-blue-500'
-                }`}
+                className={`w-full px-4 py-2 rounded-lg border focus:outline-none transition-colors ${errors.message ? 'border-red-500' : 'border-gray-200 dark:border-gray-700 focus:border-blue-500'
+                  }`}
               ></textarea>
               {errors.message && (
                 <p className="text-red-500 text-sm mt-1">{errors.message.message}</p>
@@ -126,10 +157,32 @@ function Contact() {
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               type="submit"
-              className="w-full bg-blue-600 text-white py-3 rounded-lg font-medium hover:bg-blue-700 transition-colors"
+              disabled={isSubmitting}
+              className={`w-full bg-blue-600 text-white py-3 rounded-lg font-medium transition-colors ${isSubmitting ? 'opacity-75 cursor-not-allowed' : 'hover:bg-blue-700'
+                }`}
             >
-              Send Message
+              {isSubmitting ? 'Sending...' : 'Send Message'}
             </motion.button>
+
+            {/* Display success or error message */}
+            {submitSuccess && (
+              <motion.p
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                className="mt-4 text-green-600 text-center font-medium"
+              >
+                {submitSuccess}
+              </motion.p>
+            )}
+            {submitError && (
+              <motion.p
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                className="mt-4 text-red-600 text-center font-medium"
+              >
+                {submitError}
+              </motion.p>
+            )}
           </motion.form>
         </motion.section>
       </main>

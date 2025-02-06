@@ -39,21 +39,21 @@ export default function Projects() {
       link: 'https://github.com/SetFodi/devconnect',
     },
     {
-      title: 'Movie-Angular',
-      description: 'Movie Themed Website In Angular.',
-      image: '/devconnect.jpg',
-      link: 'https://github.com/SetFodi/angular-final',
+      title: 'MoviesProfile',
+      description: 'Movie Themed Website In React.',
+      image: '/MovieApp.jpg',
+      link: 'https://github.com/SetFodi/moviesProfile',
     },
     {
       title: 'Task-Manager',
       description: 'Managing Tasks (First Projeddt in Next.js)',
-      image: '/devconnect.jpg',
+      image: '/taskmanager.jpg',
       link: 'https://github.com/SetFodi/TaskManger',
     },
     {
       title: 'MusicStreamingService',
       description: 'App where you can Stream Musics, Little buggy but good for the experience',
-      image: '/devconnect.jpg',
+      image: '/musicstreamingservice.jpg',
       link: 'https://github.com/SetFodi/MusicStreamingService',
     },
   ];
