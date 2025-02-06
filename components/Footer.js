@@ -1,7 +1,7 @@
 'use client'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
-import { FaGithub, FaLinkedin, FaTwitter, FaEnvelope, FaInstagram } from 'react-icons/fa'
+import { FaGithub, FaLinkedin, FaInstagram, FaEnvelope } from 'react-icons/fa'
 
 const Footer = () => {
   const socialLinks = [
@@ -17,45 +17,43 @@ const Footer = () => {
     { name: 'Contact', path: '/contact' }
   ]
 
-  const legalLinks = [
-    { name: 'Privacy Policy', path: '/privacy' },
-    { name: 'Terms of Service', path: '/terms' }
-  ]
-
   return (
-    <footer className="bg-gradient-to-b from-gray-900 to-gray-800 text-gray-300 py-12">
+    <footer className="bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900 text-gray-300 py-12">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div 
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="grid grid-cols-1 md:grid-cols-4 gap-8"
+          className="grid grid-cols-1 md:grid-cols-3 gap-8"
         >
           {/* Brand Section */}
           <div className="space-y-4">
-            <motion.h3 
-              className="text-lg font-semibold text-white"
+            <motion.h3
+              className="text-2xl font-bold text-white"
               whileHover={{ scale: 1.05 }}
             >
               SetFodi
             </motion.h3>
-            <motion.p className="text-sm">
-              Building digital solutions that make an impact.
+            <motion.p
+              className="text-sm text-gray-300"
+              whileHover={{ scale: 1.02 }}
+            >
+              Crafting digital solutions that make an impact.
             </motion.p>
           </div>
 
           {/* Navigation Section */}
           <div className="space-y-4">
-            <motion.h4 
-              className="text-sm font-semibold text-white uppercase"
+            <motion.h4
+              className="text-sm font-semibold text-white uppercase tracking-wider"
               whileHover={{ scale: 1.05 }}
             >
               Navigation
             </motion.h4>
-            <nav className="space-y-2">
+            <nav className="flex flex-col space-y-2">
               {navLinks.map((link, index) => (
                 <Link key={index} href={link.path} legacyBehavior>
-                  <a className="block text-sm hover:text-white transition-colors">
+                  <a className="text-sm hover:text-white transition-colors">
                     {link.name}
                   </a>
                 </Link>
@@ -65,42 +63,24 @@ const Footer = () => {
 
           {/* Connect Section */}
           <div className="space-y-4">
-            <motion.h4 
-              className="text-sm font-semibold text-white uppercase"
+            <motion.h4
+              className="text-sm font-semibold text-white uppercase tracking-wider"
               whileHover={{ scale: 1.05 }}
             >
               Connect
             </motion.h4>
             <nav className="flex space-x-4">
               {socialLinks.map((link, index) => (
-                <a
+                <motion.a
                   key={index}
                   href={link.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-2xl hover:text-white transition-colors"
+                  whileHover={{ scale: 1.15 }}
+                  className="text-2xl transition-colors hover:text-white"
                 >
                   {link.icon}
-                </a>
-              ))}
-            </nav>
-          </div>
-
-          {/* Legal Section */}
-          <div className="space-y-4">
-            <motion.h4 
-              className="text-sm font-semibold text-white uppercase"
-              whileHover={{ scale: 1.05 }}
-            >
-              Legal
-            </motion.h4>
-            <nav className="space-y-2">
-              {legalLinks.map((link, index) => (
-                <Link key={index} href={link.path} legacyBehavior>
-                  <a className="block text-sm hover:text-white transition-colors">
-                    {link.name}
-                  </a>
-                </Link>
+                </motion.a>
               ))}
             </nav>
           </div>
@@ -110,7 +90,7 @@ const Footer = () => {
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="border-t border-gray-700 mt-12 pt-8 text-center text-sm"
+          className="border-t border-gray-700 mt-12 pt-6 text-center text-sm text-gray-400"
         >
           <p>&copy; {new Date().getFullYear()} SetFodi. All rights reserved.</p>
         </motion.div>
