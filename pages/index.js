@@ -18,6 +18,8 @@ import {
   SiDotnet,
   SiMongodb,
   SiMysql,
+  SiPostgresql,
+  SiTypescript
 } from 'react-icons/si'
 
 import Navbar from '../components/Navbar'
@@ -26,6 +28,7 @@ import Footer from '../components/Footer'
 const skillData = [
   { name: 'JavaScript', icon: <SiJavascript /> },
   { name: 'Node.js', icon: <SiNodedotjs /> },
+  { name: 'TypeScript', icon: <SiTypescript /> },
   { name: 'HTML', icon: <SiHtml5 /> },
   { name: 'CSS', icon: <SiCss3 /> },
   { name: 'Angular', icon: <SiAngular /> },
@@ -38,6 +41,7 @@ const skillData = [
   { name: 'C#', icon: <SiDotnet /> },
   { name: 'MongoDB', icon: <SiMongodb /> },
   { name: 'MySQL', icon: <SiMysql /> },
+  { name: 'PostgreSQL', icon: <SiPostgresql /> },
 ]
 
 // Example projects

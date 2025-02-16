@@ -60,7 +60,7 @@ export default function Projects() {
       description: 'Task management app (first project in Next.js).',
       image: '/taskmanager.jpg',
       link: 'https://github.com/SetFodi/TaskManger',
-      technologies: ['Next.js', 'JavaScript', 'Tailwind CSS', 'Firebase'],
+      technologies: ['Next.js', 'JavaScript', 'Tailwind CSS', 'MongoDB'],
     },
     {
       title: 'MusicStreamingService',
@@ -69,6 +69,13 @@ export default function Projects() {
       link: 'https://github.com/SetFodi/MusicStreamingService',
       technologies: ['React', 'JavaScript', 'Node.js', 'MongoDB'],
     },
+    {
+      title: 'SetWord',
+      description: 'Wordle clone built Next-js.',
+      image: '/SetWord.jpg',
+      link: 'https://setword.vercel.app/',
+      technologies: ['Next.js', 'JavaScript', 'API Integration', 'Tailwind CSS'],
+    }
   ]
 
   return (
