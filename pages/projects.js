@@ -79,7 +79,7 @@ export default function Projects() {
     {
       title: 'AndCode',
       description: 'Coding Challanges - Train your coding skills.',
-      image: '/AndCode.jpg',
+      image: '/andcode.jpg',
       link: 'https://andcode.vercel.app/',
       technologies: ['Next.js', 'Node', 'API Integration', 'Tailwind CSS'],
     }
