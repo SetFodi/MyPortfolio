@@ -75,6 +75,13 @@ export default function Projects() {
       image: '/SetWord.jpg',
       link: 'https://setword.vercel.app/',
       technologies: ['Next.js', 'JavaScript', 'API Integration', 'Tailwind CSS'],
+    },
+    {
+      title: 'AndCode',
+      description: 'Coding Challanges - Train your coding skills.',
+      image: '/AndCode.jpg',
+      link: 'https://andcode.vercel.app/',
+      technologies: ['Next.js', 'Node', 'API Integration', 'Tailwind CSS'],
     }
   ]
 
