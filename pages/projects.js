@@ -82,7 +82,14 @@ export default function Projects() {
       image: '/andcode.jpg',
       link: 'https://andcode.vercel.app/',
       technologies: ['Next.js', 'Node', 'API Integration', 'Tailwind CSS'],
-    }
+    },
+	{
+      title: 'AndWatch',
+      description: 'Platform for saving your favorite Movies/Animes.',
+      image: '/andwatch.jpg',
+      link: 'https://andwatch.vercel.app/',
+      technologies: ['Next.js', 'TypeScript', 'Node.js', 'MongoDB', 'Api Integration', 'Tailwind CSS'],
+    },
   ]
 
   return (
