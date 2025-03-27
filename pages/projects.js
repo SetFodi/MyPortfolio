@@ -162,25 +162,7 @@ export default function Projects() {
         {/* Projects Grid - Improved for mobile */}
         <section className="pt-16 pb-20 bg-white dark:bg-black">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            {/* Filter tabs for mobile */}
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2, duration: 0.5 }}
-              className="mb-12 overflow-x-auto scrollbar-hide flex justify-center"
-            >
-              <div className="inline-flex space-x-2 p-1 bg-gray-100 dark:bg-gray-800 rounded-full">
-                <button className="px-4 py-2 text-sm font-medium rounded-full bg-blue-500 text-white">
-                  All Projects
-                </button>
-                <button className="px-4 py-2 text-sm font-medium rounded-full text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700">
-                  Web Apps
-                </button>
-                <button className="px-4 py-2 text-sm font-medium rounded-full text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700">
-                  Mobile
-                </button>
-              </div>
-            </motion.div>
+
             
             <motion.div
               variants={containerVariants}
