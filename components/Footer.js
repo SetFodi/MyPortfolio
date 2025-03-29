@@ -32,7 +32,7 @@ const Footer = () => {
               className="text-2xl font-bold text-white"
               whileHover={{ scale: 1.05 }}
             >
-              SetFodi
+             Luka Partenadze 
             </motion.h3>
             <motion.p
               className="text-sm text-gray-300"
@@ -92,7 +92,7 @@ const Footer = () => {
           transition={{ duration: 0.8, delay: 0.2 }}
           className="border-t border-gray-700 mt-6 pt-4 text-center text-sm text-gray-400"
         >
-          <p>&copy; {new Date().getFullYear()} SetFodi. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} Luka Partenadze. All rights reserved.</p>
         </motion.div>
       </div>
     </footer>
