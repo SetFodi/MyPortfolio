@@ -101,6 +101,13 @@ export default function Projects() {
       link: 'https://andwatch.vercel.app/',
       technologies: ['Next.js', 'TypeScript', 'Node.js', 'MongoDB', 'Api Integration', 'Tailwind CSS'],
     },
+ {
+      title: 'Furtniture',
+      description: 'Furniture Shop Website',
+      image: '/furniture.jpeg',
+      link: 'https://github.com/SetFodi/furniture-store',
+      technologies: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Node.js', 'MongoDB'],
+    },
   ]
 
   return (
