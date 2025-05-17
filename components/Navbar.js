@@ -61,16 +61,28 @@ const staggerContainer = (staggerChildren = 0.1, delayChildren = 0) => ({
 // --- Fancy Hover Animation for Logo ---
 const logoLetterVariants = {
   hover: (i) => ({
-    y: [0, -5, 0],
-    color: ["#4F46E5", "#8B5CF6", "#4F46E5"],
+    y: [0, -8, 0],
+    scale: [1, 1.2, 1],
+    rotate: [0, i % 2 === 0 ? 10 : -10, 0],
+    color: ["#4F46E5", "#8B5CF6", "#EC4899", "#4F46E5"],
     transition: {
       y: {
-        duration: 0.4,
+        duration: 0.6,
+        ease: "easeInOut",
+        delay: i * 0.05
+      },
+      scale: {
+        duration: 0.6,
+        ease: "easeInOut",
+        delay: i * 0.05
+      },
+      rotate: {
+        duration: 0.6,
         ease: "easeInOut",
         delay: i * 0.05
       },
       color: {
-        duration: 0.6,
+        duration: 0.8,
         ease: "easeInOut",
         delay: i * 0.05
       }
@@ -101,7 +113,7 @@ export default function Navbar() {
     } else if (latest < previous || latest <= 10) {
       setHidden(false)
     }
-    
+
     // Close mobile menu on scroll
     if (isOpen && latest > 50) {
       setIsOpen(false)
@@ -114,7 +126,7 @@ export default function Navbar() {
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
     const initialMode = storedMode !== null ? storedMode === 'true' : prefersDark
     setDarkMode(initialMode)
-    
+
     if (initialMode) {
       document.documentElement.classList.add('dark')
     } else {
@@ -157,8 +169,13 @@ export default function Navbar() {
         animate={hidden ? 'hidden' : 'visible'}
         initial="visible"
         transition={{ duration: 0.35, ease: [0.1, 0.25, 0.3, 1] }}
-        className={`fixed top-0 left-0 right-0 z-50 bg-white/90 dark:bg-black/85 backdrop-blur-xl border-b border-gray-200/70 dark:border-gray-800/70 shadow-sm`}
+        className={`fixed top-0 left-0 right-0 z-50 bg-white/90 dark:bg-black/85 backdrop-blur-xl border-b border-gray-200/70 dark:border-gray-800/70 shadow-sm overflow-hidden`}
       >
+        {/* Fun background elements */}
+        <div className="absolute inset-0 z-0 overflow-hidden">
+          <div className="absolute -right-10 top-0 w-32 h-32 bg-gradient-to-br from-indigo-200/20 to-purple-200/20 dark:from-indigo-900/10 dark:to-purple-900/10 rounded-full blur-2xl"></div>
+          <div className="absolute -left-10 top-5 w-24 h-24 bg-gradient-to-br from-blue-200/20 to-cyan-200/20 dark:from-blue-900/10 dark:to-cyan-900/10 rounded-full blur-2xl"></div>
+        </div>
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16 md:h-20">
             {/* Enhanced Logo with Letter Animation */}
@@ -179,14 +196,32 @@ export default function Navbar() {
                     </motion.span>
                   ))}
                 </span>
-                <motion.span 
-                  className="text-purple-500"
+                <motion.span
+                  className="relative text-transparent"
                   whileHover={{
-                    scale: [1, 1.2, 1],
-                    rotate: [0, 5, 0, -5, 0],
-                    transition: { duration: 0.5 }
+                    scale: [1, 1.5, 1],
+                    rotate: [0, 10, 0, -10, 0],
+                    transition: { duration: 0.7 }
                   }}
-                >.</motion.span>
+                >
+                  <span className="absolute inset-0 flex items-center justify-center">
+                    <motion.span
+                      className="inline-block w-3 h-3 rounded-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500"
+                      animate={{
+                        scale: [1, 1.2, 1],
+                        rotate: [0, 180],
+                        borderRadius: ["50%", "30%", "50%"]
+                      }}
+                      transition={{
+                        duration: 3,
+                        ease: "linear",
+                        repeat: Infinity,
+                        repeatType: "reverse"
+                      }}
+                    />
+                  </span>
+                  .
+                </motion.span>
               </motion.a>
             </Link>
 
@@ -212,7 +247,7 @@ export default function Navbar() {
               {/* Developer icon with tooltip - new addition */}
               <motion.div className="relative hidden sm:block">
                 <motion.a
-                  href="https://github.com/SetFodi" 
+                  href="https://github.com/SetFodi"
                   target="_blank"
                   rel="noopener noreferrer"
                   whileHover={{ scale: 1.1, rotate: 5 }}
@@ -250,7 +285,7 @@ export default function Navbar() {
                     )}
                   </motion.div>
                 </AnimatePresence>
-                
+
                 {/* Subtle ripple effect on toggle */}
                 <AnimatePresence>
                   {darkMode && (
@@ -304,8 +339,8 @@ export default function Navbar() {
               exit="closed"
               className="md:hidden absolute top-full left-0 w-full bg-white/95 dark:bg-black/90 backdrop-blur-xl shadow-lg border-t border-gray-200/70 dark:border-gray-800/70 overflow-hidden origin-top"
               style={{
-                backgroundImage: darkMode 
-                  ? 'linear-gradient(to bottom, rgba(0,0,0,0.9), rgba(0,0,0,0.95))' 
+                backgroundImage: darkMode
+                  ? 'linear-gradient(to bottom, rgba(0,0,0,0.9), rgba(0,0,0,0.95))'
                   : 'linear-gradient(to bottom, rgba(255,255,255,0.95), rgba(255,255,255,0.98))'
               }}
             >
@@ -334,11 +369,11 @@ export default function Navbar() {
             </motion.div>
           )}
         </AnimatePresence>
-        
+
         {/* Scroll Progress Indicator */}
-        <motion.div 
+        <motion.div
           className="absolute bottom-0 left-0 h-0.5 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500"
-          style={{ 
+          style={{
             scaleX: scrollProgress,
             width: '100%',
             originX: 0,
@@ -346,69 +381,192 @@ export default function Navbar() {
           }}
         />
       </motion.nav>
+      {/* Fun floating elements in the navbar */}
+      <div className="hidden md:block">
+        <div className="fixed top-3 right-[20%] w-6 h-6 rounded-full bg-gradient-to-r from-purple-400 to-indigo-400 opacity-20 dark:opacity-30 blur-sm animate-float animation-delay-2000"></div>
+        <div className="fixed top-5 left-[30%] w-4 h-4 rounded-full bg-gradient-to-r from-blue-400 to-cyan-400 opacity-20 dark:opacity-30 blur-sm animate-float"></div>
+        <div className="fixed top-12 right-[40%] w-3 h-3 rounded-full bg-gradient-to-r from-pink-400 to-red-400 opacity-20 dark:opacity-30 blur-sm animate-float animation-delay-4000"></div>
+      </div>
     </>
   )
 }
 
-// Enhanced Desktop NavLink Component
+// Enhanced Desktop NavLink Component with fun animations
 const NavLink = ({ href, text, isActive }) => (
   <Link href={href} passHref legacyBehavior>
     <motion.a
       variants={navItemVariants}
-      className={`relative text-sm lg:text-base font-medium px-3 lg:px-4 py-2 rounded-md transition-colors duration-200 group
+      className={`relative text-sm lg:text-base font-medium px-3 lg:px-4 py-2 rounded-md transition-colors duration-200 group overflow-hidden
         ${
           isActive
             ? 'text-gray-900 dark:text-white'
             : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'
         }`}
+      whileHover="hover"
     >
-      {text}
-      {/* Enhanced hover effect for non-active items */}
+      {/* Text with letter animation on hover */}
+      <motion.span className="relative z-10 flex">
+        {text.split('').map((letter, i) => (
+          <motion.span
+            key={i}
+            variants={{
+              hover: {
+                y: [0, -5, 0],
+                transition: {
+                  duration: 0.3,
+                  ease: "easeInOut",
+                  delay: i * 0.03,
+                  repeat: 0
+                }
+              }
+            }}
+            className="inline-block"
+          >
+            {letter === ' ' ? '\u00A0' : letter}
+          </motion.span>
+        ))}
+      </motion.span>
+
+      {/* Fun hover effect for non-active items */}
       {!isActive && (
-        <motion.span
-          className="absolute left-0 bottom-0.5 h-0.5 bg-gradient-to-r from-blue-500 to-purple-500 w-full rounded-full"
-          initial={{ scaleX: 0 }}
-          whileHover={{ scaleX: 1 }}
-          transition={{ duration: 0.3, ease: 'easeOut' }}
-          style={{ originX: 0.5 }}
-        />
+        <>
+          <motion.span
+            className="absolute left-0 bottom-0 h-0.5 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 w-full rounded-full"
+            initial={{ scaleX: 0 }}
+            variants={{
+              hover: {
+                scaleX: 1,
+                transition: { duration: 0.3, ease: 'easeOut' }
+              }
+            }}
+            style={{ originX: 0 }}
+          />
+          <motion.span
+            className="absolute inset-0 bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-pink-500/10 rounded-md"
+            initial={{ opacity: 0 }}
+            variants={{
+              hover: {
+                opacity: 1,
+                transition: { duration: 0.3 }
+              }
+            }}
+          />
+        </>
       )}
-      {/* Enhanced active indicator with gradient */}
+
+      {/* Enhanced active indicator with gradient and animation */}
       {isActive && (
-        <motion.div
-          layoutId="active-nav-indicator"
-          className="absolute left-0 bottom-0 h-0.5 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 w-full rounded-full"
-          initial={false}
-          transition={{ type: 'spring', stiffness: 350, damping: 30 }}
-        />
+        <>
+          <motion.div
+            layoutId="active-nav-indicator"
+            className="absolute left-0 bottom-0 h-0.5 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 w-full rounded-full"
+            initial={false}
+            transition={{ type: 'spring', stiffness: 350, damping: 30 }}
+          />
+          <motion.div
+            className="absolute inset-0 bg-gradient-to-r from-blue-500/5 via-purple-500/5 to-pink-500/5 rounded-md"
+            layoutId="active-nav-background"
+            initial={false}
+            transition={{ type: 'spring', stiffness: 350, damping: 30 }}
+          />
+          <motion.div
+            className="absolute -right-1 top-1 w-2 h-2 rounded-full bg-gradient-to-r from-blue-400 to-purple-400 opacity-70"
+            animate={{
+              scale: [1, 1.5, 1],
+              opacity: [0.7, 0.3, 0.7],
+            }}
+            transition={{
+              duration: 2,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+          />
+        </>
       )}
     </motion.a>
   </Link>
 )
 
-// Enhanced Mobile NavLink Component
+// Enhanced Mobile NavLink Component with fun animations
 const MobileNavLink = ({ href, text, isActive, onClick }) => (
   <Link href={href} passHref legacyBehavior>
     <motion.a
       variants={mobileNavItemVariants}
       onClick={onClick}
-      className={`block px-3 py-3 text-base font-medium rounded-md transition-colors duration-200
+      whileHover={{ x: 5 }}
+      className={`block px-3 py-3 text-base font-medium rounded-md transition-all duration-200 relative overflow-hidden
         ${
           isActive
             ? 'text-purple-600 dark:text-purple-400 bg-gradient-to-r from-purple-50 to-transparent dark:from-purple-900/30 dark:to-transparent'
             : 'text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-700/50'
         }`}
     >
-      <span className="flex items-center">
+      {/* Background sparkle effect for active items */}
+      {isActive && (
+        <>
+          <motion.div
+            className="absolute top-1 right-4 w-1.5 h-1.5 rounded-full bg-purple-400/70"
+            animate={{
+              y: [0, -8, 0],
+              opacity: [0.7, 0, 0.7],
+              scale: [1, 1.5, 1]
+            }}
+            transition={{
+              duration: 2,
+              repeat: Infinity,
+              repeatType: "reverse",
+              ease: "easeInOut"
+            }}
+          />
+          <motion.div
+            className="absolute bottom-1 right-8 w-1 h-1 rounded-full bg-indigo-400/70"
+            animate={{
+              y: [0, 5, 0],
+              opacity: [0.7, 0, 0.7],
+              scale: [1, 1.5, 1]
+            }}
+            transition={{
+              duration: 1.5,
+              repeat: Infinity,
+              repeatType: "reverse",
+              ease: "easeInOut",
+              delay: 0.5
+            }}
+          />
+        </>
+      )}
+
+      <span className="flex items-center relative z-10">
         {isActive && (
           <motion.span
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            className="mr-2 h-1.5 w-1.5 rounded-full bg-purple-500"
+            initial={{ scale: 0, rotate: -180 }}
+            animate={{ scale: 1, rotate: 0 }}
+            transition={{ type: "spring", stiffness: 500, damping: 15 }}
+            className="mr-2 h-2 w-2 rounded-full bg-gradient-to-r from-purple-500 to-indigo-500"
           />
         )}
-        {text}
+
+        {/* Text with subtle animation */}
+        <motion.span
+          initial={false}
+          animate={isActive ? {
+            color: ["#9333EA", "#6366F1", "#9333EA"],
+            transition: { duration: 3, repeat: Infinity }
+          } : {}}
+        >
+          {text}
+        </motion.span>
       </span>
+
+      {/* Bottom border animation on hover for non-active items */}
+      {!isActive && (
+        <motion.div
+          className="absolute bottom-0 left-0 h-[1px] bg-gradient-to-r from-transparent via-gray-400/50 to-transparent dark:via-gray-500/30 w-full"
+          initial={{ scaleX: 0, opacity: 0 }}
+          whileHover={{ scaleX: 1, opacity: 1 }}
+          transition={{ duration: 0.3 }}
+        />
+      )}
     </motion.a>
   </Link>
 )

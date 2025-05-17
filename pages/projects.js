@@ -216,9 +216,20 @@ export default function Projects() {
 
   const projects = [
     {
+      title: 'AndCook',
+      description: 'Recipe sharing platform where users can discover, save, and create recipes. Features user profiles, favorites, and personalized collections.',
+      image: '/images/AndCook.jpg',
+      link: 'https://andcook.vercel.app',
+      technologies: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Node.js', 'MongoDB'],
+      status: 'Live',
+      category: 'Web App',
+      githubStats: { stars: 22, forks: 4 },
+      longDescription: 'AndCook is a comprehensive recipe platform that allows users to browse, save, and share their favorite recipes. Users can create profiles, add recipes to favorites, and build personalized collections. The platform features a modern, responsive design with intuitive navigation, recipe search functionality, and detailed cooking instructions.'
+    },
+    {
       title: 'Syncrolly',
       description: 'A real-time data synchronization platform with collaborative features. Enables seamless data flow between multiple users and devices.',
-      image: '/syncrolly.jpg',
+      image: '/images/syncrolly.jpg',
       link: 'https://syncrolly.com',
       technologies: ['React', 'Node.js', 'WebSocket', 'MongoDB'],
       status: 'Live',
@@ -229,7 +240,7 @@ export default function Projects() {
     {
       title: 'Typingy',
       description: 'Interactive typing speed test application with multiplayer competitions, custom text challenges, and detailed performance analytics.',
-      image: '/typingy.jpg',
+      image: '/images/typingy.jpg',
       link: 'https://typingy.live',
       technologies: ['Next.js', 'JavaScript', 'Tailwind CSS', 'MongoDB'],
       status: 'Live',
@@ -240,7 +251,7 @@ export default function Projects() {
     {
       title: 'Devconnect',
       description: 'Professional networking platform specifically designed for developers. Features project collaboration, skill matching, and community forums.',
-      image: '/devconnect.jpg',
+      image: '/images/devconnect.jpg',
       link: 'https://github.com/SetFodi/devconnect',
       technologies: ['React', 'JavaScript', 'WebSocket', 'MongoDB', 'Tailwind CSS'],
       status: 'Completed',

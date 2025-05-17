@@ -265,7 +265,7 @@ export default function About() {
                 <div className="mb-8">
                   <h3 className="text-sm uppercase tracking-widest text-gray-500 dark:text-gray-400 font-semibold mb-3">Tech Stack</h3>
                   <div className="flex flex-wrap gap-2">
-                    {['React', 'Next.js', 'Node.js', 'TypeScript', 'Tailwind'].map((tech, i) => (
+                    {['JavaScript', 'TypeScript', 'React', 'Next.js', 'Node.js'].map((tech, i) => (
                       <span
                         key={i}
                         className="px-3 py-1 bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 rounded-full text-sm"
@@ -379,7 +379,7 @@ export default function About() {
                 </div>
                 <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4">Frontend</h3>
                 <div className="space-y-3">
-                  {['React', 'Next.js', 'TypeScript', 'Tailwind CSS', 'HTML/CSS', 'JavaScript (ES6+)'].map((skill, i) => (
+                  {['JavaScript', 'TypeScript', 'React', 'Next.js', 'HTML/CSS', 'Angular'].map((skill, i) => (
                     <div key={i} className="flex items-center">
                       <div className="w-2 h-2 rounded-full bg-indigo-500 mr-3"></div>
                       <span className="text-gray-700 dark:text-gray-300">{skill}</span>
@@ -401,7 +401,7 @@ export default function About() {
                 </div>
                 <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4">Backend</h3>
                 <div className="space-y-3">
-                  {['Node.js', 'Express', 'RESTful APIs', 'MongoDB', 'PHP', 'Laravel'].map((skill, i) => (
+                  {['Node.js', 'Python', 'PHP', 'Laravel', 'C#', 'RESTful APIs'].map((skill, i) => (
                     <div key={i} className="flex items-center">
                       <div className="w-2 h-2 rounded-full bg-purple-500 mr-3"></div>
                       <span className="text-gray-700 dark:text-gray-300">{skill}</span>
@@ -421,9 +421,9 @@ export default function About() {
                 <div className="w-14 h-14 bg-blue-100 dark:bg-blue-900/30 rounded-xl flex items-center justify-center mb-6">
                   <ArrowPathIcon className="w-8 h-8 text-blue-600 dark:text-blue-400" />
                 </div>
-                <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4">Tools & Others</h3>
+                <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4">Database & Deployment</h3>
                 <div className="space-y-3">
-                  {['Git', 'GitHub', 'VS Code', 'Responsive Design', 'UI/UX Principles', 'Agile/Scrum'].map((skill, i) => (
+                  {['MongoDB', 'MySQL', 'PostgreSQL', 'Git', 'Vercel', 'Netlify', 'Render'].map((skill, i) => (
                     <div key={i} className="flex items-center">
                       <div className="w-2 h-2 rounded-full bg-blue-500 mr-3"></div>
                       <span className="text-gray-700 dark:text-gray-300">{skill}</span>
