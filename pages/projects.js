@@ -731,8 +731,11 @@ export default function Projects() {
 
                         {/* Hover overlay */}
                         {!isMobile && (
-                          <div
-                            className="absolute inset-0 flex items-center justify-center bg-indigo-700/20 backdrop-blur-[2px] opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none"
+                          <a
+                            href={project.link}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="absolute inset-0 flex items-center justify-center bg-indigo-700/20 backdrop-blur-[2px] opacity-0 group-hover:opacity-100 transition-all duration-300 z-10"
                             style={{
                               opacity: hoveredIndex === index ? 1 : 0
                             }}
@@ -742,7 +745,7 @@ export default function Projects() {
                               <ArrowTopRightOnSquareIcon className="w-5 h-5" />
                               <div className="absolute -inset-[3px] rounded-xl bg-indigo-400/20 -z-10"></div>
                             </div>
-                          </div>
+                          </a>
                         )}
                       </div>
                     </Tilt>
