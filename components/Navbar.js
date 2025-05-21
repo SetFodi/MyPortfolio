@@ -28,24 +28,44 @@ const navItemVariants = {
   visible: { opacity: 1, y: 0 },
 }
 
-const mobileMenuVariants = {
-  closed: { opacity: 0, scaleY: 0.95, transition: { duration: 0.2 } },
-  open: {
-    opacity: 1,
-    scaleY: 1,
+// Mobile menu animation variants
+const menuVariants = {
+  closed: { 
+    height: 0,
+    opacity: 0,
     transition: {
-      type: 'spring',
-      stiffness: 300,
-      damping: 30,
-      when: 'beforeChildren',
+      duration: 0.3,
+      ease: [0.4, 0.0, 0.2, 1],
+      when: "afterChildren",
       staggerChildren: 0.05,
-    },
+      staggerDirection: -1
+    }
   },
+  open: { 
+    height: "auto",
+    opacity: 1,
+    transition: {
+      duration: 0.4,
+      ease: [0.4, 0.0, 0.2, 1],
+      when: "beforeChildren",
+      staggerChildren: 0.1,
+      delayChildren: 0.1
+    }
+  }
 }
 
-const mobileNavItemVariants = {
-  closed: { opacity: 0, x: -20 },
-  open: { opacity: 1, x: 0 },
+// Mobile menu items animation
+const menuItemVariants = {
+  closed: { 
+    opacity: 0, 
+    y: -10,
+    transition: { duration: 0.2, ease: "easeInOut" } 
+  },
+  open: { 
+    opacity: 1, 
+    y: 0,
+    transition: { duration: 0.3, ease: "easeOut" } 
+  }
 }
 
 const staggerContainer = (staggerChildren = 0.1, delayChildren = 0) => ({
@@ -148,6 +168,11 @@ export default function Navbar() {
     })
   }
 
+  // Function to toggle mobile menu
+  const toggleMenu = () => {
+    setIsOpen(!isOpen);
+  };
+
   if (!mounted) {
     return <nav className="fixed top-0 left-0 right-0 z-50 h-16 md:h-20 opacity-0" aria-hidden="true"></nav>;
   }
@@ -169,14 +194,14 @@ export default function Navbar() {
         animate={hidden ? 'hidden' : 'visible'}
         initial="visible"
         transition={{ duration: 0.35, ease: [0.1, 0.25, 0.3, 1] }}
-        className={`fixed top-0 left-0 right-0 z-50 bg-white/90 dark:bg-black/85 backdrop-blur-xl border-b border-gray-200/70 dark:border-gray-800/70 shadow-sm overflow-hidden`}
+        className="fixed top-0 left-0 right-0 z-40 bg-white/90 dark:bg-black/85 backdrop-blur-xl border-b border-gray-200/70 dark:border-gray-800/70 shadow-sm"
       >
         {/* Fun background elements */}
         <div className="absolute inset-0 z-0 overflow-hidden">
           <div className="absolute -right-10 top-0 w-32 h-32 bg-gradient-to-br from-indigo-200/20 to-purple-200/20 dark:from-indigo-900/10 dark:to-purple-900/10 rounded-full blur-2xl"></div>
           <div className="absolute -left-10 top-5 w-24 h-24 bg-gradient-to-br from-blue-200/20 to-cyan-200/20 dark:from-blue-900/10 dark:to-cyan-900/10 rounded-full blur-2xl"></div>
         </div>
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="container relative mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16 md:h-20">
             {/* Enhanced Logo with Letter Animation */}
             <Link href="/" passHref legacyBehavior>
@@ -300,13 +325,14 @@ export default function Navbar() {
                 </AnimatePresence>
               </motion.button>
 
-              {/* Mobile Menu Button - Enhanced */}
-              <div className="md:hidden">
+              {/* IMPROVED MOBILE MENU BUTTON WITH ANIMATION */}
+              <div className="md:hidden z-50 relative">
                 <motion.button
-                  onClick={() => setIsOpen(!isOpen)}
-                  whileTap={{ scale: 0.9 }}
-                  className="p-2 rounded-md text-gray-600 dark:text-gray-300 hover:bg-gray-200/70 dark:hover:bg-gray-700/70 focus:outline-none transition-colors duration-200 relative z-50"
+                  onClick={toggleMenu}
+                  className="p-3 rounded-md text-gray-600 dark:text-gray-300 hover:bg-gray-200/70 dark:hover:bg-gray-700/70 transition-colors duration-200 flex items-center justify-center touch-manipulation"
                   aria-label="Toggle mobile menu"
+                  style={{ zIndex: 999 }}
+                  whileTap={{ scale: 0.9 }}
                 >
                   <AnimatePresence mode="wait" initial={false}>
                     <motion.div
@@ -327,48 +353,70 @@ export default function Navbar() {
               </div>
             </div>
           </div>
+          
+          {/* ANIMATED MOBILE MENU */}
+          <AnimatePresence>
+            {isOpen && (
+              <motion.div 
+                initial="closed"
+                animate="open"
+                exit="closed"
+                variants={menuVariants}
+                className="md:hidden overflow-hidden border-t border-gray-200 dark:border-gray-800"
+              >
+                <div className="py-4 px-3 space-y-2">
+                  {navItems.map((item, idx) => (
+                    <motion.div key={item.name} variants={menuItemVariants} custom={idx}>
+                      <Link
+                        href={item.path}
+                        onClick={() => setIsOpen(false)}
+                      >
+                        <motion.div 
+                          className={`block px-4 py-3 rounded-md text-base font-medium ${
+                            pathname === item.path
+                              ? 'bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300'
+                              : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800'
+                          }`}
+                          whileHover={{ x: 5 }}
+                          whileTap={{ scale: 0.98 }}
+                        >
+                          <div className="flex items-center">
+                            {pathname === item.path && (
+                              <motion.div 
+                                className="mr-2 h-2 w-2 rounded-full bg-indigo-500"
+                                initial={{ scale: 0 }}
+                                animate={{ scale: 1 }}
+                                transition={{ duration: 0.2 }}
+                              />
+                            )}
+                            {item.name}
+                          </div>
+                        </motion.div>
+                      </Link>
+                    </motion.div>
+                  ))}
+                  <motion.div variants={menuItemVariants}>
+                    <a
+                      href="https://github.com/SetFodi"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block px-4 py-3 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
+                    >
+                      <motion.span 
+                        className="flex items-center gap-2"
+                        whileHover={{ x: 5 }}
+                        whileTap={{ scale: 0.98 }}
+                      >
+                        <CodeBracketIcon className="h-5 w-5" />
+                        GitHub
+                      </motion.span>
+                    </a>
+                  </motion.div>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
-
-        {/* Mobile Navigation Menu - Enhanced with gradient border */}
-        <AnimatePresence>
-          {isOpen && (
-            <motion.div
-              variants={mobileMenuVariants}
-              initial="closed"
-              animate="open"
-              exit="closed"
-              className="md:hidden absolute top-full left-0 w-full bg-white/95 dark:bg-black/90 backdrop-blur-xl shadow-lg border-t border-gray-200/70 dark:border-gray-800/70 overflow-hidden origin-top z-50"
-              style={{
-                backgroundImage: darkMode
-                  ? 'linear-gradient(to bottom, rgba(0,0,0,0.9), rgba(0,0,0,0.95))'
-                  : 'linear-gradient(to bottom, rgba(255,255,255,0.95), rgba(255,255,255,0.98))'
-              }}
-            >
-              <div className="px-4 pt-2 pb-4 space-y-1">
-                {navItems.map((item) => (
-                  <MobileNavLink
-                    key={item.name}
-                    href={item.path}
-                    text={item.name}
-                    isActive={pathname === item.path}
-                    onClick={() => setIsOpen(false)}
-                  />
-                ))}
-                {/* Extra GitHub link in mobile menu */}
-                <motion.a
-                  href="https://github.com/SetFodi"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  variants={mobileNavItemVariants}
-                  className="flex items-center gap-2 px-3 py-3 text-base font-medium rounded-md text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-700/50 transition-colors duration-200"
-                >
-                  <CodeBracketIcon className="h-5 w-5" />
-                  GitHub
-                </motion.a>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
 
         {/* Scroll Progress Indicator */}
         <motion.div
@@ -381,6 +429,7 @@ export default function Navbar() {
           }}
         />
       </motion.nav>
+      
       {/* Fun floating elements in the navbar */}
       <div className="hidden md:block">
         <div className="fixed top-3 right-[20%] w-6 h-6 rounded-full bg-gradient-to-r from-purple-400 to-indigo-400 opacity-20 dark:opacity-30 blur-sm animate-float animation-delay-2000"></div>
@@ -482,90 +531,6 @@ const NavLink = ({ href, text, isActive }) => (
             }}
           />
         </>
-      )}
-    </motion.a>
-  </Link>
-)
-
-// Enhanced Mobile NavLink Component with fun animations
-const MobileNavLink = ({ href, text, isActive, onClick }) => (
-  <Link href={href} passHref legacyBehavior>
-    <motion.a
-      variants={mobileNavItemVariants}
-      onClick={onClick}
-      whileHover={{ x: 5 }}
-      className={`block px-3 py-3 text-base font-medium rounded-md transition-all duration-200 relative overflow-hidden
-        ${
-          isActive
-            ? 'text-purple-600 dark:text-purple-400 bg-gradient-to-r from-purple-50 to-transparent dark:from-purple-900/30 dark:to-transparent'
-            : 'text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-700/50'
-        }`}
-    >
-      {/* Background sparkle effect for active items */}
-      {isActive && (
-        <>
-          <motion.div
-            className="absolute top-1 right-4 w-1.5 h-1.5 rounded-full bg-purple-400/70"
-            animate={{
-              y: [0, -8, 0],
-              opacity: [0.7, 0, 0.7],
-              scale: [1, 1.5, 1]
-            }}
-            transition={{
-              duration: 2,
-              repeat: Infinity,
-              repeatType: "reverse",
-              ease: "easeInOut"
-            }}
-          />
-          <motion.div
-            className="absolute bottom-1 right-8 w-1 h-1 rounded-full bg-indigo-400/70"
-            animate={{
-              y: [0, 5, 0],
-              opacity: [0.7, 0, 0.7],
-              scale: [1, 1.5, 1]
-            }}
-            transition={{
-              duration: 1.5,
-              repeat: Infinity,
-              repeatType: "reverse",
-              ease: "easeInOut",
-              delay: 0.5
-            }}
-          />
-        </>
-      )}
-
-      <span className="flex items-center relative z-10">
-        {isActive && (
-          <motion.span
-            initial={{ scale: 0, rotate: -180 }}
-            animate={{ scale: 1, rotate: 0 }}
-            transition={{ type: "spring", stiffness: 500, damping: 15 }}
-            className="mr-2 h-2 w-2 rounded-full bg-gradient-to-r from-purple-500 to-indigo-500"
-          />
-        )}
-
-        {/* Text with subtle animation */}
-        <motion.span
-          initial={false}
-          animate={isActive ? {
-            color: ["#9333EA", "#6366F1", "#9333EA"],
-            transition: { duration: 3, repeat: Infinity }
-          } : {}}
-        >
-          {text}
-        </motion.span>
-      </span>
-
-      {/* Bottom border animation on hover for non-active items */}
-      {!isActive && (
-        <motion.div
-          className="absolute bottom-0 left-0 h-[1px] bg-gradient-to-r from-transparent via-gray-400/50 to-transparent dark:via-gray-500/30 w-full"
-          initial={{ scaleX: 0, opacity: 0 }}
-          whileHover={{ scaleX: 1, opacity: 1 }}
-          transition={{ duration: 0.3 }}
-        />
       )}
     </motion.a>
   </Link>
