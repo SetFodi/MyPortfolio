@@ -305,7 +305,7 @@ export default function Navbar() {
                 <motion.button
                   onClick={() => setIsOpen(!isOpen)}
                   whileTap={{ scale: 0.9 }}
-                  className="p-2 rounded-md text-gray-600 dark:text-gray-300 hover:bg-gray-200/70 dark:hover:bg-gray-700/70 focus:outline-none transition-colors duration-200"
+                  className="p-2 rounded-md text-gray-600 dark:text-gray-300 hover:bg-gray-200/70 dark:hover:bg-gray-700/70 focus:outline-none transition-colors duration-200 relative z-50"
                   aria-label="Toggle mobile menu"
                 >
                   <AnimatePresence mode="wait" initial={false}>
@@ -337,7 +337,7 @@ export default function Navbar() {
               initial="closed"
               animate="open"
               exit="closed"
-              className="md:hidden absolute top-full left-0 w-full bg-white/95 dark:bg-black/90 backdrop-blur-xl shadow-lg border-t border-gray-200/70 dark:border-gray-800/70 overflow-hidden origin-top"
+              className="md:hidden absolute top-full left-0 w-full bg-white/95 dark:bg-black/90 backdrop-blur-xl shadow-lg border-t border-gray-200/70 dark:border-gray-800/70 overflow-hidden origin-top z-50"
               style={{
                 backgroundImage: darkMode
                   ? 'linear-gradient(to bottom, rgba(0,0,0,0.9), rgba(0,0,0,0.95))'

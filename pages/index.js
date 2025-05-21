@@ -77,7 +77,7 @@ export default function Home() {
         {/* Hero Section */}
         <section
           ref={heroRef}
-          className="relative min-h-screen flex items-center"
+          className="relative min-h-screen flex items-center pt-20 md:pt-0"
         >
           {/* Modern Background */}
           <div className="absolute inset-0 z-0 overflow-hidden">
