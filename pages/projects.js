@@ -631,6 +631,23 @@ export default function Projects() {
                       <div className="block h-full rounded-2xl overflow-hidden bg-white dark:bg-gray-900 shadow-lg hover:shadow-2xl dark:shadow-gray-900/30 dark:hover:shadow-indigo-500/10 border border-gray-100 dark:border-gray-800 hover:border-indigo-300 dark:hover:border-indigo-800/50 transition-all duration-300 transform">
                         {/* Project Image */}
                         <div className="relative h-52 sm:h-60 md:h-64 overflow-hidden">
+                          {/* Mobile tap overlay - makes entire image clickable */}
+                          {isMobile && (
+                            <>
+                              <a
+                                href={project.link}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="absolute inset-0 z-20"
+                                aria-label={`View ${project.title} project`}
+                              />
+                              {/* Visual indicator for mobile users */}
+                              <div className="absolute top-3 right-3 z-10 bg-white/90 dark:bg-gray-900/90 p-1.5 rounded-full shadow-md">
+                                <ArrowTopRightOnSquareIcon className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
+                              </div>
+                            </>
+                          )}
+
                           <div className="h-full w-full">
                             <div
                               className="w-full h-full bg-cover bg-center transition-transform duration-700"
@@ -689,9 +706,21 @@ export default function Projects() {
                         {/* Content */}
                         <div className="p-5 sm:p-6 bg-white dark:bg-gray-900 h-full flex flex-col">
                           <div className="flex items-center justify-between mb-2">
-                            <h3 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-gray-100 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors duration-300">
-                              {project.title}
-                            </h3>
+                            {isMobile ? (
+                              <a
+                                href={project.link}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-gray-100 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors duration-300 flex items-center"
+                              >
+                                {project.title}
+                                <ArrowTopRightOnSquareIcon className="w-4 h-4 ml-1.5 text-indigo-500 dark:text-indigo-400" />
+                              </a>
+                            ) : (
+                              <h3 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-gray-100 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors duration-300">
+                                {project.title}
+                              </h3>
+                            )}
                             <span className="text-xs font-medium text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded">
                               {project.category}
                             </span>
