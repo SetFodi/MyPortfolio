@@ -22,10 +22,12 @@ export const skillData = [
 
   // Tools & Deployment
   { name: 'Git', category: 'tools', color: '#F05032' },
+  { name: 'Docker', category: 'tools', color: '#2496ED' },
+{ name: 'Swagger', category: 'tools', color: '#85ea2d' },
+  { name: 'Postman', category: 'tools', color: '#FF6C37' },
   { name: 'Vercel', category: 'tools', color: '#000000' },
   { name: 'Netlify', category: 'tools', color: '#00C7B7' },
-  { name: 'Render', category: 'tools', color: '#46E3B7' }
-]
+  { name: 'Render', category: 'tools', color: '#46E3B7' },]
 
 // Project data with enhanced details
 export const projects = [
