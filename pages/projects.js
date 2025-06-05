@@ -336,6 +336,17 @@ export default function Projects() {
       githubStats: { stars: 9, forks: 1 },
       longDescription: 'Furniture is a modern e-commerce platform specializing in home furnishings. The application features high-quality product images, detailed specifications, and customer reviews. Users can visualize products in their space using AR technology, create wishlists, and enjoy a seamless checkout process with multiple payment options.'
     },
+	{
+  title: 'LocalEvently',
+  description: 'Hyperlocal event discovery platform connecting communities through location-based event browsing, creation, and RSVP management.',
+  image: '/localevently.jpg',
+  link: 'https://github.com/SetFodi/LocalEvently',
+  technologies: ['Next.js 15', 'TypeScript', 'MongoDB', 'Tailwind CSS', 'JWT', 'Nodemailer'],
+  status: 'Completed',
+  category: 'Social Platform',
+  githubStats: { stars: 0, forks: 0 }, // Update these when you publish
+  longDescription: 'LocalEvently is a comprehensive community platform that enables users to discover and create local events within their neighborhood. The application features geolocation-based event filtering, interactive map integration, and complete event management capabilities. Users can RSVP to events, create detailed event listings, and manage their social calendar through an intuitive dashboard. The platform includes advanced authentication with JWT tokens, secure password management, comprehensive help documentation, and email notifications. Built with modern web technologies, LocalEvently offers both dark and light themes, responsive design, and seamless user experience across all devices.'
+},
   ]
 
   // Generate technology list for filter
