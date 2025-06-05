@@ -339,7 +339,7 @@ export default function Projects() {
 	{
   title: 'LocalEvently',
   description: 'Hyperlocal event discovery platform connecting communities through location-based event browsing, creation, and RSVP management.',
-  image: '/localevently.jpg',
+  image: '/localevently.png',
   link: 'https://github.com/SetFodi/LocalEvently',
   technologies: ['Next.js 15', 'TypeScript', 'MongoDB', 'Tailwind CSS', 'JWT', 'Nodemailer'],
   status: 'Completed',
