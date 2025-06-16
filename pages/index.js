@@ -37,13 +37,18 @@ export default function Home() {
     return () => clearInterval(interval)
   }, [index])
 
-  // For dark mode - default to light mode
+  // For dark mode - remove forced light mode and sync with navbar
   useEffect(() => {
-    // Always default to light mode on home page
-    document.documentElement.classList.remove('dark')
-
-    // Save the theme preference
-    localStorage.setItem('theme', 'light')
+    // Sync with stored theme preference instead of forcing light mode
+    const storedMode = localStorage.getItem('darkMode')
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+    const shouldBeDark = storedMode !== null ? storedMode === 'true' : prefersDark
+    
+    if (shouldBeDark) {
+      document.documentElement.classList.add('dark')
+    } else {
+      document.documentElement.classList.remove('dark')
+    }
   }, [])
 
   // Animation variants
@@ -71,7 +76,7 @@ export default function Home() {
 
   return (
     <ScrollAnimations>
-      <div className="bg-white dark:bg-gray-900 text-gray-900 dark:text-white overflow-hidden">
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-indigo-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 text-gray-900 dark:text-white overflow-hidden transition-colors duration-500">
         <Head>
           <title>Luka Partenadze | Full Stack Developer</title>
           <meta name="description" content="Portfolio of Luka Partenadze, a passionate Full Stack Developer specializing in modern web technologies." />
@@ -97,23 +102,29 @@ export default function Home() {
         >
           {/* Advanced Background */}
           <div className="absolute inset-0 z-0">
-            {/* Dynamic gradient base */}
+            {/* Dynamic gradient base - theme adaptive */}
             <motion.div 
-              className="absolute inset-0 bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 dark:from-gray-900 dark:via-indigo-950 dark:to-purple-950"
+              className="absolute inset-0"
               animate={{
                 background: [
-                  "linear-gradient(135deg, rgb(238, 242, 255) 0%, rgb(237, 233, 254) 50%, rgb(251, 242, 249) 100%)",
-                  "linear-gradient(135deg, rgb(237, 233, 254) 0%, rgb(251, 242, 249) 50%, rgb(255, 247, 237) 100%)",
-                  "linear-gradient(135deg, rgb(251, 242, 249) 0%, rgb(255, 247, 237) 50%, rgb(238, 242, 255) 100%)",
-                  "linear-gradient(135deg, rgb(238, 242, 255) 0%, rgb(237, 233, 254) 50%, rgb(251, 242, 249) 100%)"
+                  "linear-gradient(135deg, rgba(238, 242, 255, 0.8) 0%, rgba(237, 233, 254, 0.8) 50%, rgba(251, 242, 249, 0.8) 100%)",
+                  "linear-gradient(135deg, rgba(237, 233, 254, 0.8) 0%, rgba(251, 242, 249, 0.8) 50%, rgba(255, 247, 237, 0.8) 100%)",
+                  "linear-gradient(135deg, rgba(251, 242, 249, 0.8) 0%, rgba(255, 247, 237, 0.8) 50%, rgba(238, 242, 255, 0.8) 100%)",
+                  "linear-gradient(135deg, rgba(238, 242, 255, 0.8) 0%, rgba(237, 233, 254, 0.8) 50%, rgba(251, 242, 249, 0.8) 100%)"
                 ]
               }}
               transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
+              style={{
+                filter: 'var(--tw-backdrop-blur)'
+              }}
             />
+            
+            {/* Dark mode overlay */}
+            <div className="absolute inset-0 bg-gray-900/20 dark:bg-gray-900/60 transition-colors duration-500" />
 
-            {/* Morphing gradient blobs */}
+            {/* Morphing gradient blobs - improved theme adaptation */}
             <motion.div 
-              className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-indigo-300/40 to-purple-400/40 dark:from-indigo-600/30 dark:to-purple-700/30 rounded-full blur-3xl"
+              className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-indigo-400/30 to-purple-500/30 dark:from-indigo-500/20 dark:to-purple-600/20 rounded-full blur-3xl transition-colors duration-500"
               animate={{
                 x: [0, 50, -30, 0],
                 y: [0, -40, 20, 0],
@@ -122,7 +133,7 @@ export default function Home() {
               transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
             />
             <motion.div 
-              className="absolute bottom-0 left-0 w-80 h-80 bg-gradient-to-tr from-pink-300/40 to-indigo-400/40 dark:from-pink-600/30 dark:to-indigo-700/30 rounded-full blur-3xl"
+              className="absolute bottom-0 left-0 w-80 h-80 bg-gradient-to-tr from-pink-400/30 to-indigo-500/30 dark:from-pink-500/20 dark:to-indigo-600/20 rounded-full blur-3xl transition-colors duration-500"
               animate={{
                 x: [0, -60, 40, 0],
                 y: [0, 30, -50, 0],
@@ -131,7 +142,7 @@ export default function Home() {
               transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 2 }}
             />
             <motion.div 
-              className="absolute top-1/2 left-1/3 w-64 h-64 bg-gradient-to-bl from-purple-300/30 to-pink-400/30 dark:from-purple-600/20 dark:to-pink-700/20 rounded-full blur-3xl"
+              className="absolute top-1/2 left-1/3 w-64 h-64 bg-gradient-to-bl from-purple-400/25 to-pink-500/25 dark:from-purple-500/15 dark:to-pink-600/15 rounded-full blur-3xl transition-colors duration-500"
               animate={{
                 x: [0, 70, -20, 0],
                 y: [0, -30, 60, 0],
@@ -140,9 +151,9 @@ export default function Home() {
               transition={{ duration: 12, repeat: Infinity, ease: "easeInOut", delay: 4 }}
             />
 
-            {/* Floating geometric shapes */}
+            {/* Floating geometric shapes - improved theme adaptation */}
             <motion.div 
-              className="absolute top-20 left-20 w-16 h-16 border-2 border-indigo-300/50 dark:border-indigo-600/50 rounded-lg"
+              className="absolute top-20 left-20 w-16 h-16 border-2 border-indigo-400/40 dark:border-indigo-400/60 rounded-lg transition-colors duration-500"
               animate={{
                 rotate: [0, 180, 360],
                 x: [0, 20, -10, 0],
@@ -151,7 +162,7 @@ export default function Home() {
               transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
             />
             <motion.div 
-              className="absolute bottom-32 right-24 w-24 h-24 border-2 border-purple-300/50 dark:border-purple-600/50 rounded-full"
+              className="absolute bottom-32 right-24 w-24 h-24 border-2 border-purple-400/40 dark:border-purple-400/60 rounded-full transition-colors duration-500"
               animate={{
                 rotate: [0, -90, -180, -270, -360],
                 scale: [1, 1.1, 0.9, 1.05, 1],
@@ -159,10 +170,10 @@ export default function Home() {
               transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
             />
             <motion.div 
-              className="absolute top-1/3 right-1/4 w-12 h-12 bg-gradient-to-br from-pink-400/30 to-purple-500/30 dark:from-pink-600/20 dark:to-purple-700/20 rounded-full"
+              className="absolute top-1/3 right-1/4 w-12 h-12 bg-gradient-to-br from-pink-400/40 to-purple-500/40 dark:from-pink-400/30 dark:to-purple-500/30 rounded-full transition-colors duration-500"
               animate={{
                 y: [0, -30, 0],
-                opacity: [0.3, 0.7, 0.3],
+                opacity: [0.4, 0.8, 0.4],
               }}
               transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
             />
@@ -251,7 +262,7 @@ export default function Home() {
 
                 <motion.p
                   variants={fadeIn}
-                  className="text-lg md:text-xl text-gray-600 dark:text-gray-300 mb-10 max-w-lg leading-relaxed reveal-up"
+                  className="text-lg md:text-xl text-gray-700 dark:text-gray-200 mb-10 max-w-lg leading-relaxed reveal-up transition-colors duration-500"
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.8, delay: 0.4 }}
@@ -307,7 +318,7 @@ export default function Home() {
                   </Link>
                   <Link href="/contact" passHref legacyBehavior>
                     <motion.a
-                      className="group magnetic relative overflow-hidden px-8 py-4 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm text-indigo-600 dark:text-indigo-400 font-semibold rounded-xl shadow-lg border border-indigo-200/50 dark:border-indigo-700/50 hover:border-indigo-300 dark:hover:border-indigo-600 transition-all duration-500"
+                      className="group magnetic relative overflow-hidden px-8 py-4 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm text-indigo-600 dark:text-indigo-300 font-semibold rounded-xl shadow-lg border border-indigo-200/60 dark:border-indigo-600/60 hover:border-indigo-300 dark:hover:border-indigo-500 transition-all duration-500"
                       whileHover={{ 
                         scale: 1.05,
                         backgroundColor: "rgba(255, 255, 255, 0.95)"
@@ -316,7 +327,7 @@ export default function Home() {
                     >
                       <span className="relative z-10">Get in Touch</span>
                       <motion.div
-                        className="absolute inset-0 bg-gradient-to-r from-indigo-50 to-purple-50 dark:from-indigo-900/50 dark:to-purple-900/50 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                        className="absolute inset-0 bg-gradient-to-r from-indigo-50 to-purple-50 dark:from-indigo-800/60 dark:to-purple-800/60 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
                         initial={{ scale: 0 }}
                         whileHover={{ scale: 1 }}
                         transition={{ duration: 0.3 }}
@@ -338,9 +349,9 @@ export default function Home() {
                   whileHover={{ scale: 1.02 }}
                   transition={{ type: "spring", stiffness: 300, damping: 30 }}
                 >
-                  {/* Floating elements around image */}
+                  {/* Floating elements around image - improved theme adaptation */}
                   <motion.div
-                    className="absolute -top-8 -left-8 w-16 h-16 bg-gradient-to-br from-indigo-400 to-purple-500 rounded-full blur-sm opacity-20"
+                    className="absolute -top-8 -left-8 w-16 h-16 bg-gradient-to-br from-indigo-400 to-purple-500 dark:from-indigo-500 dark:to-purple-600 rounded-full blur-sm opacity-30 dark:opacity-20 transition-colors duration-500"
                     animate={{
                       y: [0, -20, 0],
                       x: [0, 10, 0],
@@ -349,7 +360,7 @@ export default function Home() {
                     transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
                   />
                   <motion.div
-                    className="absolute -top-4 -right-12 w-12 h-12 bg-gradient-to-br from-pink-400 to-orange-500 rounded-lg rotate-45 opacity-25"
+                    className="absolute -top-4 -right-12 w-12 h-12 bg-gradient-to-br from-pink-400 to-orange-500 dark:from-pink-500 dark:to-orange-600 rounded-lg rotate-45 opacity-35 dark:opacity-25 transition-colors duration-500"
                     animate={{
                       rotate: [45, 225, 45],
                       y: [0, -15, 0]
@@ -357,7 +368,7 @@ export default function Home() {
                     transition={{ duration: 8, repeat: Infinity, ease: "easeInOut", delay: 1 }}
                   />
                   <motion.div
-                    className="absolute -bottom-6 -right-6 w-20 h-20 bg-gradient-to-br from-green-400 to-blue-500 rounded-full blur-sm opacity-15"
+                    className="absolute -bottom-6 -right-6 w-20 h-20 bg-gradient-to-br from-green-400 to-blue-500 dark:from-green-500 dark:to-blue-600 rounded-full blur-sm opacity-25 dark:opacity-15 transition-colors duration-500"
                     animate={{
                       scale: [1, 1.2, 1],
                       x: [0, -15, 0]
@@ -367,15 +378,15 @@ export default function Home() {
 
                   {/* Main image container with advanced effects */}
                   <motion.div
-                    className="relative h-[400px] md:h-[500px] lg:h-[600px] w-full rounded-3xl overflow-hidden shadow-3d border border-white/20 dark:border-gray-700/30 backdrop-blur-sm"
+                    className="relative h-[400px] md:h-[500px] lg:h-[600px] w-full rounded-3xl overflow-hidden shadow-3d border border-white/30 dark:border-gray-600/40 backdrop-blur-sm transition-colors duration-500"
                     style={{
-                      background: "linear-gradient(145deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05))"
+                      background: "linear-gradient(145deg, rgba(255,255,255,0.15), rgba(255,255,255,0.08))"
                     }}
                     whileHover={{
                       rotateX: 5,
                       rotateY: -5,
                       scale: 1.05,
-                      boxShadow: "0 25px 50px rgba(99, 102, 241, 0.3)"
+                      boxShadow: "0 25px 50px rgba(99, 102, 241, 0.4)"
                     }}
                     transition={{ type: "spring", stiffness: 300, damping: 30 }}
                   >
@@ -392,7 +403,7 @@ export default function Home() {
                       }}
                       transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
                     >
-                      <div className="w-full h-full rounded-3xl overflow-hidden bg-white dark:bg-gray-900">
+                      <div className="w-full h-full rounded-3xl overflow-hidden bg-white dark:bg-gray-800 transition-colors duration-500">
                         <Image
                           src="/images/profile.jpg"
                           alt="Luka Partenadze"
