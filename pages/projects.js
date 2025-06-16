@@ -2,7 +2,10 @@
 import Head from 'next/head'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
-import { motion, AnimatePresence } from 'framer-motion'
+import CustomCursor from '../components/CustomCursor'
+import ParticleBackground from '../components/ParticleBackground'
+import ScrollAnimations from '../components/ScrollAnimations'
+import { motion, AnimatePresence, useScroll } from 'framer-motion'
 import { useState, useEffect, useRef } from 'react'
 import Tilt from 'react-parallax-tilt'
 import { ArrowTopRightOnSquareIcon } from '@heroicons/react/24/outline'
@@ -392,8 +395,19 @@ export default function Projects() {
     setFilteredCount(filtered.length);
   }, [activeTech, activeCategory, sortOrder, sortedProjects])
 
+  const { scrollYProgress } = useScroll()
+
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 dark:from-gray-950 dark:to-black transition-colors duration-500">
+    <ScrollAnimations>
+      <div className="min-h-screen bg-gradient-to-br from-white via-indigo-50/20 to-purple-50/30 dark:from-gray-950 dark:via-indigo-950/20 dark:to-purple-950/30 transition-colors duration-500 overflow-hidden">
+        <CustomCursor />
+        <ParticleBackground density={20} interactive={true} />
+        
+        {/* Scroll Progress Bar */}
+        <motion.div
+          className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 z-50 transform origin-left"
+          style={{ scaleX: scrollYProgress }}
+        />
       <Head>
         <title>Projects - Luka Portfolio</title>
         <meta
@@ -407,7 +421,7 @@ export default function Projects() {
 
       <main className="overflow-hidden">
         {/* Hero Section */}
-        <section className="relative py-24 md:py-40 overflow-hidden">
+        <section className="relative py-24 md:py-40 overflow-hidden reveal-up">
           {/* Gradient Background */}
           <div className="absolute inset-0 bg-gradient-to-br from-violet-500 to-pink-500 opacity-70 dark:opacity-50"></div>
 
@@ -500,112 +514,249 @@ export default function Projects() {
           </div>
         </section>
 
-        {/* Filter Section */}
-        <section ref={projectsRef} className="pt-8 pb-4 bg-white dark:bg-gray-950">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            {/* Combined Filter */}
-            <div className="mb-8">
-              <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4 text-center">Filter Projects</h2>
-              <div className="flex flex-wrap justify-center gap-2">
-                <button
-                  onClick={() => {
-                    setActiveTech(null);
-                    setActiveCategory(null);
-                  }}
-                  className={`px-3 py-1.5 rounded-full text-sm font-medium transition-all duration-300 ${
-                    activeTech === null && activeCategory === null
-                      ? 'bg-indigo-600 text-white shadow-md'
-                      : 'bg-gray-200 text-gray-700 dark:bg-gray-800 dark:text-gray-300 hover:bg-gray-300'
-                  }`}
-                >
-                  All Projects
-                </button>
+        {/* Enhanced Filter Section */}
+        <section ref={projectsRef} className="pt-8 pb-4 bg-white dark:bg-gray-950 relative">
+          {/* Enhanced background with animated elements */}
+          <div className="absolute inset-0 overflow-hidden">
+            <motion.div
+              className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-transparent via-indigo-500/10 to-transparent"
+              animate={{
+                x: ['-100%', '100%'],
+                opacity: [0, 1, 0]
+              }}
+              transition={{
+                duration: 5,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+            />
+            <motion.div
+              className="absolute top-4 right-8 w-12 h-12 bg-gradient-to-br from-indigo-200/20 to-purple-200/20 dark:from-indigo-800/20 dark:to-purple-800/20 rounded-full blur-xl"
+              animate={{
+                scale: [1, 1.3, 1],
+                opacity: [0.3, 0.6, 0.3]
+              }}
+              transition={{
+                duration: 4,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+            />
+          </div>
 
-                {/* Show only a few key technologies */}
-                {allTechnologies.slice(0, 5).map((tech) => (
-                  <button
-                    key={tech}
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            {/* Enhanced Filter Header */}
+            <motion.div 
+              className="text-center mb-8"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+            >
+              <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 bg-clip-text text-transparent mb-4">
+                Project Gallery
+              </h2>
+              <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto text-lg">
+                Explore my digital creations across different technologies and categories
+              </p>
+            </motion.div>
+
+            {/* Enhanced Filter Controls */}
+            <motion.div 
+              className="mb-12"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+            >
+              <div className="flex flex-col gap-6">
+                {/* Filter Tabs */}
+                <div className="flex flex-wrap justify-center gap-3">
+                  <motion.button
                     onClick={() => {
-                      setActiveTech(tech);
+                      setActiveTech(null);
                       setActiveCategory(null);
                     }}
-                    className={`px-3 py-1.5 rounded-full text-sm font-medium transition-all duration-300 ${
-                      activeTech === tech
-                        ? 'bg-indigo-600 text-white shadow-md'
-                        : 'bg-gray-200 text-gray-700 dark:bg-gray-800 dark:text-gray-300 hover:bg-gray-300'
-                    }`}
+                    className={`group relative px-6 py-3 rounded-2xl font-medium transition-all duration-300 magnetic-button ${
+                      activeTech === null && activeCategory === null
+                        ? 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-lg shadow-indigo-500/25'
+                        : 'bg-white/80 dark:bg-gray-800/80 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 border border-gray-200 dark:border-gray-700'
+                    } backdrop-blur-sm`}
+                    whileHover={{ scale: 1.05, y: -2 }}
+                    whileTap={{ scale: 0.95 }}
                   >
-                    {tech}
-                  </button>
-                ))}
+                    <span className="relative z-10">All Projects</span>
+                    {activeTech === null && activeCategory === null && (
+                      <motion.div
+                        className="absolute inset-0 rounded-2xl bg-gradient-to-r from-indigo-600 to-purple-600 opacity-20"
+                        layoutId="activeTab"
+                        transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                      />
+                    )}
+                  </motion.button>
 
-                {/* Show only a few key categories */}
-                {allCategories.slice(0, 3).map((category) => (
-                  <button
-                    key={category}
-                    onClick={() => {
-                      setActiveCategory(category);
-                      setActiveTech(null);
-                    }}
-                    className={`px-3 py-1.5 rounded-full text-sm font-medium transition-all duration-300 ${
-                      activeCategory === category
-                        ? 'bg-purple-600 text-white shadow-md'
-                        : 'bg-gray-200 text-gray-700 dark:bg-gray-800 dark:text-gray-300 hover:bg-gray-300'
-                    }`}
-                  >
-                    {category}
-                  </button>
-                ))}
+                  {/* Technology Filters */}
+                  {allTechnologies.slice(0, 6).map((tech) => (
+                    <motion.button
+                      key={tech}
+                      onClick={() => {
+                        setActiveTech(tech);
+                        setActiveCategory(null);
+                      }}
+                      className={`group relative px-5 py-3 rounded-2xl font-medium transition-all duration-300 magnetic-button ${
+                        activeTech === tech
+                          ? 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-lg shadow-indigo-500/25'
+                          : 'bg-white/80 dark:bg-gray-800/80 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 border border-gray-200 dark:border-gray-700'
+                      } backdrop-blur-sm`}
+                      whileHover={{ scale: 1.05, y: -2 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      <span className="relative z-10">{tech}</span>
+                      {activeTech === tech && (
+                        <motion.div
+                          className="absolute inset-0 rounded-2xl bg-gradient-to-r from-indigo-600 to-purple-600 opacity-20"
+                          layoutId="activeTab"
+                          transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                        />
+                      )}
+                    </motion.button>
+                  ))}
+                </div>
+
+                {/* Category Filters */}
+                <div className="flex flex-wrap justify-center gap-3">
+                  {allCategories.map((category) => (
+                    <motion.button
+                      key={category}
+                      onClick={() => {
+                        setActiveCategory(category);
+                        setActiveTech(null);
+                      }}
+                      className={`group relative px-5 py-2.5 rounded-xl text-sm font-medium transition-all duration-300 magnetic-button ${
+                        activeCategory === category
+                          ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-lg shadow-purple-500/25'
+                          : 'bg-gray-100/80 dark:bg-gray-800/80 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700 border border-gray-200 dark:border-gray-700'
+                      } backdrop-blur-sm`}
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      <span className="relative z-10">{category}</span>
+                    </motion.button>
+                  ))}
+                </div>
               </div>
-            </div>
+            </motion.div>
           </div>
         </section>
 
+        {/* Enhanced Projects Grid */}
+        <section className="pt-8 pb-20 bg-gradient-to-b from-white to-gray-50/50 dark:from-gray-950 dark:to-gray-900/50 stagger-children relative">
+          {/* Enhanced background elements */}
+          <div className="absolute inset-0 overflow-hidden">
+            <motion.div
+              className="absolute -top-32 -right-32 w-64 h-64 bg-gradient-to-br from-indigo-200/30 to-purple-200/30 dark:from-indigo-800/20 dark:to-purple-800/20 rounded-full blur-3xl"
+              animate={{
+                x: [0, 50, 0],
+                y: [0, -30, 0],
+                scale: [1, 1.2, 1]
+              }}
+              transition={{
+                duration: 12,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+            />
+            <motion.div
+              className="absolute -bottom-32 -left-32 w-72 h-72 bg-gradient-to-br from-purple-200/25 to-pink-200/25 dark:from-purple-800/15 dark:to-pink-800/15 rounded-full blur-3xl"
+              animate={{
+                x: [0, -40, 0],
+                y: [0, 20, 0],
+                scale: [1, 0.9, 1]
+              }}
+              transition={{
+                duration: 15,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: 3
+              }}
+            />
+          </div>
 
-
-        {/* Projects Grid */}
-        <section className="pt-4 pb-20 bg-white dark:bg-gray-950">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-8">
-              <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4 md:mb-0">
-                My Projects
-              </h2>
-
-              <div className="flex flex-wrap items-center gap-2">
-                {/* Sorting Dropdown */}
-                <select
-                  className="px-3 py-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg text-sm text-gray-700 dark:text-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                  value={sortOrder}
-                  onChange={(e) => setSortOrder(e.target.value)}
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            {/* Enhanced Control Bar */}
+            <motion.div 
+              className="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-12 gap-6"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+            >
+              {/* Title and Stats */}
+              <div className="flex items-center gap-4">
+                <h2 className="text-3xl font-bold text-gray-900 dark:text-white">
+                  Featured Work
+                </h2>
+                <motion.div
+                  className="px-4 py-2 bg-gradient-to-r from-indigo-100 to-purple-100 dark:from-indigo-900/30 dark:to-purple-900/30 rounded-full border border-indigo-200 dark:border-indigo-700/30"
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  transition={{ duration: 0.4, delay: 0.5 }}
                 >
-                  <option value="newest">Live Projects First</option>
-                  <option value="oldest">Completed Projects First</option>
-                  <option value="az">A-Z</option>
-                  <option value="za">Z-A</option>
-                </select>
+                  <span className="text-sm font-medium text-indigo-700 dark:text-indigo-300">
+                    {filteredCount} {filteredCount === 1 ? 'project' : 'projects'}
+                    {activeTech && ` • ${activeTech}`}
+                    {activeCategory && ` • ${activeCategory}`}
+                  </span>
+                </motion.div>
+              </div>
+
+              {/* Enhanced Controls */}
+              <div className="flex items-center gap-4">
+                {/* Sort Dropdown */}
+                <div className="relative">
+                  <select
+                    className="appearance-none bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border border-gray-200 dark:border-gray-700 rounded-xl px-4 py-2.5 pr-10 text-sm font-medium text-gray-700 dark:text-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all duration-200"
+                    value={sortOrder}
+                    onChange={(e) => setSortOrder(e.target.value)}
+                  >
+                    <option value="newest">🚀 Live Projects First</option>
+                    <option value="oldest">✅ Completed First</option>
+                    <option value="az">🔤 A-Z</option>
+                    <option value="za">🔤 Z-A</option>
+                  </select>
+                  <div className="absolute inset-y-0 right-3 flex items-center pointer-events-none">
+                    <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </div>
+                </div>
 
                 {/* View Toggle */}
-                <div className="flex rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700">
-                  <button className="p-2 bg-indigo-600 text-white">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <div className="flex rounded-xl overflow-hidden border border-gray-200 dark:border-gray-700 bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm">
+                  <motion.button 
+                    className="p-3 bg-indigo-600 text-white relative"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+                    </svg>
+                  </motion.button>
+                  <motion.button 
+                    className="p-3 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
                     </svg>
-                  </button>
-                  <button className="p-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 10h16M4 14h16M4 18h16" />
-                    </svg>
-                  </button>
+                  </motion.button>
                 </div>
               </div>
-            </div>
+            </motion.div>
 
-            <div className="text-center text-gray-500 text-sm mb-4">
-              Showing {filteredCount} {filteredCount === 1 ? 'project' : 'projects'}
-              {activeTech ? ` with "${activeTech}" technology` : ''}
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+            {/* Enhanced Projects Grid */}
+            <motion.div 
+              className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 lg:gap-10"
+              layout
+            >
               {sortedProjects
                 .filter(project => {
                   // Filter by technology
@@ -621,28 +772,38 @@ export default function Projects() {
                 })
                 .map((project, index) => (
                   <motion.div
-                    key={index}
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5, delay: index * 0.05 }}
-                    className="relative group"
+                    key={`${project.title}-${index}`}
+                    layout
+                    initial={{ opacity: 0, y: 50, scale: 0.9 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: -50, scale: 0.9 }}
+                    transition={{ 
+                      duration: 0.6, 
+                      delay: index * 0.1,
+                      type: "spring",
+                      stiffness: 100,
+                      damping: 15
+                    }}
+                    className="group relative"
                     onMouseEnter={() => !isMobile && setHoveredIndex(index)}
                     onMouseLeave={() => !isMobile && setHoveredIndex(null)}
                   >
                     <Tilt
-                      tiltMaxAngleX={isMobile ? 0 : 7}
-                      tiltMaxAngleY={isMobile ? 0 : 7}
+                      tiltMaxAngleX={isMobile ? 0 : 8}
+                      tiltMaxAngleY={isMobile ? 0 : 8}
                       glareEnable={!isMobile}
-                      glareMaxOpacity={0.15}
+                      glareMaxOpacity={0.2}
                       glareColor="white"
                       glarePosition="all"
-                      glareBorderRadius="16px"
+                      glareBorderRadius="24px"
                       className="h-full"
                     >
-                      <div className="block h-full rounded-2xl overflow-hidden bg-white dark:bg-gray-900 shadow-lg hover:shadow-2xl dark:shadow-gray-900/30 dark:hover:shadow-indigo-500/10 border border-gray-100 dark:border-gray-800 hover:border-indigo-300 dark:hover:border-indigo-800/50 transition-all duration-300 transform">
-                        {/* Project Image */}
-                        <div className="relative h-52 sm:h-60 md:h-64 overflow-hidden">
-                          {/* Mobile tap overlay - makes entire image clickable */}
+                      {/* Enhanced Project Card */}
+                      <div className="relative h-full rounded-3xl overflow-hidden bg-white dark:bg-gray-900 shadow-xl hover:shadow-2xl dark:shadow-gray-900/50 border border-gray-100 dark:border-gray-800 hover:border-indigo-200 dark:hover:border-indigo-800/50 transition-all duration-500 transform group-hover:-translate-y-2">
+                        
+                        {/* Enhanced Image Section */}
+                        <div className="relative h-64 lg:h-72 overflow-hidden">
+                          {/* Mobile Enhancement */}
                           {isMobile && (
                             <>
                               <a
@@ -652,185 +813,277 @@ export default function Projects() {
                                 className="absolute inset-0 z-20"
                                 aria-label={`View ${project.title} project`}
                               />
-                              {/* Visual indicator for mobile users */}
-                              <div className="absolute top-3 right-3 z-10 bg-white/90 dark:bg-gray-900/90 p-1.5 rounded-full shadow-md">
-                                <ArrowTopRightOnSquareIcon className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
-                              </div>
+                              <motion.div 
+                                className="absolute top-4 right-4 z-10 bg-white/95 dark:bg-gray-900/95 p-2 rounded-full shadow-lg backdrop-blur-sm"
+                                whileHover={{ scale: 1.1 }}
+                                whileTap={{ scale: 0.9 }}
+                              >
+                                <ArrowTopRightOnSquareIcon className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />
+                              </motion.div>
                             </>
                           )}
 
-                          <div className="h-full w-full">
-                            <div
-                              className="w-full h-full bg-cover bg-center transition-transform duration-700"
-                              style={{
-                                backgroundImage: `url(${project.image})`,
-                                transform: hoveredIndex === index ? 'scale(1.08)' : 'scale(1)',
-                                transition: 'transform 0.7s cubic-bezier(0.33, 1, 0.68, 1)'
-                              }}
-                            />
-                          </div>
-
-                          {/* Gradient overlay */}
-                          <div
-                            className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent opacity-60 group-hover:opacity-70 transition-opacity duration-300"
+                          {/* Enhanced Image with Parallax Effect */}
+                          <motion.div
+                            className="w-full h-full bg-cover bg-center"
+                            style={{
+                              backgroundImage: `url(${project.image})`,
+                            }}
+                            whileHover={{ scale: 1.1 }}
+                            transition={{ duration: 0.6, ease: "easeOut" }}
                           />
 
-                          {/* Status Badge */}
-                          <div className="absolute top-3 left-3">
-                            <span className={`px-3 py-1 rounded-full text-xs font-semibold backdrop-blur-sm ${
+                          {/* Enhanced Gradient Overlay */}
+                          <motion.div
+                            className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent"
+                            initial={{ opacity: 0.7 }}
+                            whileHover={{ opacity: 0.8 }}
+                            transition={{ duration: 0.3 }}
+                          />
+
+                          {/* Enhanced Status Badge */}
+                          <motion.div 
+                            className="absolute top-4 left-4 z-10"
+                            initial={{ opacity: 0, x: -20 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ delay: index * 0.1 + 0.3 }}
+                          >
+                            <span className={`px-3 py-1.5 rounded-full text-xs font-bold backdrop-blur-md border ${
                               project.status === 'Live'
-                                ? 'bg-green-500/90 text-white'
+                                ? 'bg-emerald-500/90 text-white border-emerald-400/50 shadow-emerald-500/25'
                                 : project.status === 'In Development'
-                                ? 'bg-yellow-500/90 text-white'
-                                : 'bg-blue-500/90 text-white'
-                            }`}>
+                                ? 'bg-amber-500/90 text-white border-amber-400/50 shadow-amber-500/25'
+                                : 'bg-blue-500/90 text-white border-blue-400/50 shadow-blue-500/25'
+                            } shadow-lg`}>
+                              {project.status === 'Live' && '🚀 '}
+                              {project.status === 'In Development' && '⚡ '}
+                              {project.status === 'Completed' && '✅ '}
                               {project.status}
                             </span>
-                          </div>
+                          </motion.div>
 
-
-
-                          {/* Technology badges */}
-                          <div className="absolute bottom-3 left-3 right-3 flex flex-wrap gap-1.5">
+                          {/* Enhanced Technology Badges */}
+                          <motion.div 
+                            className="absolute bottom-4 left-4 right-4 flex flex-wrap gap-2"
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: index * 0.1 + 0.4 }}
+                          >
                             {project.technologies.slice(0, 3).map((tech, i) => (
-                              <span
+                              <motion.span
                                 key={i}
-                                className={`px-2.5 py-1 text-xs font-medium rounded-full backdrop-blur-sm ${
+                                className={`px-3 py-1.5 text-xs font-medium rounded-full backdrop-blur-md border transition-all duration-200 ${
                                   tech === activeTech
-                                    ? 'bg-indigo-600/90 text-white'
-                                    : 'bg-black/70 text-white'
-                                }`}
+                                    ? 'bg-indigo-600/95 text-white border-indigo-400/50 shadow-indigo-500/30'
+                                    : 'bg-gray-900/80 text-gray-100 border-gray-700/50 hover:bg-gray-800/90'
+                                } shadow-lg`}
+                                whileHover={{ scale: 1.05 }}
+                                whileTap={{ scale: 0.95 }}
                               >
                                 {tech}
-                              </span>
+                              </motion.span>
                             ))}
                             {project.technologies.length > 3 && (
-                              <span
-                                className="px-2.5 py-1 text-xs font-medium bg-black/70 text-white rounded-full backdrop-blur-sm"
+                              <motion.span
+                                className="px-3 py-1.5 text-xs font-medium bg-gray-900/80 text-gray-100 rounded-full backdrop-blur-md border border-gray-700/50 shadow-lg"
+                                whileHover={{ scale: 1.05 }}
                               >
                                 +{project.technologies.length - 3}
-                              </span>
+                              </motion.span>
                             )}
-                          </div>
+                          </motion.div>
+
+                          {/* Floating Icons */}
+                          <motion.div
+                            className="absolute top-1/2 right-6 opacity-0 group-hover:opacity-100"
+                            initial={{ scale: 0, rotate: -10 }}
+                            whileHover={{ scale: 1, rotate: 0 }}
+                            transition={{ type: "spring", stiffness: 200, damping: 15 }}
+                          >
+                            <div className="w-8 h-8 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center">
+                              <svg className="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                              </svg>
+                            </div>
+                          </motion.div>
                         </div>
 
-                        {/* Content */}
-                        <div className="p-5 sm:p-6 bg-white dark:bg-gray-900 h-full flex flex-col">
-                          <div className="flex items-center justify-between mb-2">
-                            {isMobile ? (
-                              <a
-                                href={project.link}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-gray-100 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors duration-300 flex items-center"
-                              >
-                                {project.title}
-                                <ArrowTopRightOnSquareIcon className="w-4 h-4 ml-1.5 text-indigo-500 dark:text-indigo-400" />
-                              </a>
-                            ) : (
-                              <h3 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-gray-100 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors duration-300">
-                                {project.title}
-                              </h3>
-                            )}
-                            <span className="text-xs font-medium text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded">
+                        {/* Enhanced Content Section */}
+                        <div className="p-6 lg:p-8 bg-gradient-to-b from-white to-gray-50/50 dark:from-gray-900 dark:to-gray-900/50 h-full flex flex-col relative">
+                          {/* Enhanced Header */}
+                          <div className="flex items-start justify-between mb-4">
+                            <div className="flex-1">
+                              {isMobile ? (
+                                <a
+                                  href={project.link}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="group/title inline-flex items-center"
+                                >
+                                  <h3 className="text-2xl font-bold text-gray-900 dark:text-gray-100 group-hover/title:text-indigo-600 dark:group-hover/title:text-indigo-400 transition-colors duration-300">
+                                    {project.title}
+                                  </h3>
+                                  <ArrowTopRightOnSquareIcon className="w-5 h-5 ml-2 text-indigo-500 dark:text-indigo-400 group-hover/title:translate-x-1 group-hover/title:-translate-y-1 transition-transform duration-200" />
+                                </a>
+                              ) : (
+                                <h3 className="text-2xl font-bold text-gray-900 dark:text-gray-100 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors duration-300">
+                                  {project.title}
+                                </h3>
+                              )}
+                            </div>
+                            <motion.span 
+                              className="ml-4 px-3 py-1.5 text-xs font-semibold bg-gradient-to-r from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-700 text-gray-600 dark:text-gray-400 rounded-full border border-gray-200 dark:border-gray-700 whitespace-nowrap"
+                              whileHover={{ scale: 1.05 }}
+                            >
                               {project.category}
-                            </span>
+                            </motion.span>
                           </div>
 
-                          <p className="text-gray-700 dark:text-gray-300 mb-4 flex-grow leading-relaxed">
+                          {/* Enhanced Description */}
+                          <p className="text-gray-700 dark:text-gray-300 mb-6 flex-grow leading-relaxed text-base">
                             {project.description}
                           </p>
 
-                          {/* GitHub Stats for GitHub projects */}
+                          {/* Enhanced GitHub Stats */}
                           {project.link.includes('github') && (
-                            <div className="flex items-center gap-3 mb-4 text-xs text-gray-600 dark:text-gray-400">
-                              <div className="flex items-center">
-                                <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 16 16">
+                            <motion.div 
+                              className="flex items-center gap-4 mb-6 p-3 bg-gradient-to-r from-gray-50 to-gray-100 dark:from-gray-800/50 dark:to-gray-700/50 rounded-xl border border-gray-200 dark:border-gray-700"
+                              whileHover={{ scale: 1.02 }}
+                            >
+                              <div className="flex items-center gap-1">
+                                <svg className="w-4 h-4 text-yellow-500" fill="currentColor" viewBox="0 0 16 16">
                                   <path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z" />
                                 </svg>
-                                {project.githubStats.stars}
+                                <span className="text-sm font-medium text-gray-700 dark:text-gray-300">{project.githubStats.stars}</span>
                               </div>
-                              <div className="flex items-center">
-                                <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 16 16">
+                              <div className="flex items-center gap-1">
+                                <svg className="w-4 h-4 text-blue-500" fill="currentColor" viewBox="0 0 16 16">
                                   <path d="M5 5.372v.878c0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75v-.878a2.25 2.25 0 111.5 0v.878a2.25 2.25 0 01-2.25 2.25h-1.5v2.128a2.251 2.251 0 11-1.5 0V8.5h-1.5A2.25 2.25 0 013 6.25v-.878a2.25 2.25 0 115 0zM5 3.25a.75.75 0 10-1.5 0 .75.75 0 001.5 0zm6.75.75a.75.75 0 100-1.5.75.75 0 000 1.5zm-3 8.75a.75.75 0 10-1.5 0 .75.75 0 001.5 0z" />
                                 </svg>
-                                {project.githubStats.forks}
+                                <span className="text-sm font-medium text-gray-700 dark:text-gray-300">{project.githubStats.forks}</span>
                               </div>
-                            </div>
+                            </motion.div>
                           )}
 
-                          {/* Action Buttons */}
-                          <div className="mt-auto flex items-center justify-between gap-2">
-                            <a
+                          {/* Enhanced Action Buttons */}
+                          <div className="mt-auto flex items-center gap-3">
+                            <motion.a
                               href={project.link}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="flex-1 inline-flex items-center justify-center gap-1 px-3 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium rounded-lg transition-colors duration-300"
+                              className="flex-1 group relative overflow-hidden rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 px-6 py-3 text-white font-semibold shadow-lg hover:shadow-xl transition-all duration-300 magnetic-button"
+                              whileHover={{ scale: 1.02, y: -2 }}
+                              whileTap={{ scale: 0.98 }}
                             >
-                              View Project
-                              <ArrowTopRightOnSquareIcon className="w-4 h-4" />
-                            </a>
+                              <span className="relative z-10 flex items-center gap-3">
+                                <span>Explore Project</span>
+                                <ArrowTopRightOnSquareIcon className="w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-200" />
+                              </span>
+                              <motion.div
+                                className="absolute inset-0 bg-gradient-to-r from-purple-600 to-pink-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                                initial={{ x: "100%" }}
+                                whileHover={{ x: "0%" }}
+                                transition={{ duration: 0.3 }}
+                              />
+                            </motion.a>
 
-                            <button
+                            <motion.button
                               onClick={() => openProjectModal(project)}
-                              className="px-3 py-2 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 text-sm font-medium rounded-lg transition-colors duration-300"
+                              className="px-6 py-3 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 font-semibold rounded-xl border-2 border-gray-200 dark:border-gray-700 hover:border-indigo-300 dark:hover:border-indigo-600 transition-all duration-300 magnetic-button"
+                              whileHover={{ scale: 1.05, y: -2 }}
+                              whileTap={{ scale: 0.95 }}
                             >
                               Details
-                            </button>
+                            </motion.button>
                           </div>
                         </div>
 
-                        {/* Hover overlay */}
+                        {/* Enhanced Hover Overlay for Desktop */}
                         {!isMobile && (
-                          <a
-                            href={project.link}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="absolute inset-0 flex items-center justify-center bg-indigo-700/20 backdrop-blur-[2px] opacity-0 group-hover:opacity-100 transition-all duration-300 z-10"
-                            style={{
-                              opacity: hoveredIndex === index ? 1 : 0
-                            }}
+                          <motion.div
+                            className="absolute inset-0 bg-gradient-to-br from-indigo-600/20 via-purple-600/10 to-pink-600/20 backdrop-blur-[2px] opacity-0 group-hover:opacity-100 transition-all duration-500 z-20 rounded-3xl flex items-center justify-center"
+                            initial={{ opacity: 0 }}
+                            whileHover={{ opacity: 1 }}
                           >
-                            <div className="relative px-6 py-3 bg-white dark:bg-gray-900 text-indigo-600 dark:text-indigo-400 font-semibold rounded-xl shadow-xl hover:shadow-2xl transition-all duration-300 flex items-center gap-2 border border-indigo-200 dark:border-indigo-800">
-                              <span>Explore Project</span>
-                              <ArrowTopRightOnSquareIcon className="w-5 h-5" />
-                              <div className="absolute -inset-[3px] rounded-xl bg-indigo-400/20 -z-10"></div>
-                            </div>
-                          </a>
+                            <motion.a
+                              href={project.link}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="relative group/overlay"
+                              initial={{ scale: 0, rotate: -10 }}
+                              whileHover={{ scale: 1, rotate: 0 }}
+                              transition={{ type: "spring", stiffness: 200, damping: 15 }}
+                            >
+                              <div className="px-8 py-4 bg-white/95 dark:bg-gray-900/95 backdrop-blur-sm text-indigo-600 dark:text-indigo-400 font-bold rounded-2xl shadow-2xl border-2 border-indigo-200 dark:border-indigo-800 group-hover/overlay:shadow-indigo-500/25 transition-all duration-300">
+                                <div className="flex items-center gap-3">
+                                  <span className="text-lg">View Project</span>
+                                  <ArrowTopRightOnSquareIcon className="w-6 h-6 group-hover/overlay:translate-x-1 group-hover/overlay:-translate-y-1 transition-transform duration-200" />
+                                </div>
+                              </div>
+                              <div className="absolute -inset-2 rounded-2xl bg-gradient-to-r from-indigo-400/30 to-purple-400/30 blur-lg -z-10 group-hover/overlay:blur-xl transition-all duration-300" />
+                            </motion.a>
+                          </motion.div>
                         )}
                       </div>
                     </Tilt>
                   </motion.div>
                 ))}
-            </div>
+            </motion.div>
 
-            {/* CTA Section */}
-            <div className="mt-20 text-center">
-              <div className="max-w-3xl mx-auto rounded-3xl shadow-2xl overflow-hidden">
-                <div className="p-0.5 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-3xl">
-                  <div className="bg-gradient-to-r from-gray-50 to-white dark:from-gray-900 dark:to-gray-950 p-8 sm:p-10 rounded-[calc(1.5rem-2px)]">
-                    <h3 className="text-2xl md:text-3xl font-bold mb-3 text-gray-900 dark:text-white">
-                      Looking for more?
-                    </h3>
-                    <p className="text-gray-700 dark:text-gray-300 mb-8">
-                      Check out my GitHub repository for additional projects and code samples.
-                    </p>
-
-                    <a
-                      href="https://github.com/SetFodi"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 px-7 py-3.5 bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-700 hover:to-violet-700 text-white font-medium rounded-full transition-all duration-300 shadow-lg shadow-indigo-500/20 hover:shadow-xl hover:shadow-indigo-600/30"
+            {/* Enhanced CTA Section */}
+            <motion.div 
+              className="mt-24 text-center"
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.5 }}
+            >
+              <div className="relative max-w-4xl mx-auto">
+                {/* Enhanced background with gradient border */}
+                <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-3xl blur-xl opacity-20"></div>
+                <div className="relative bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 p-1 rounded-3xl">
+                  <div className="bg-gradient-to-br from-white via-gray-50 to-indigo-50/50 dark:from-gray-900 dark:via-gray-800 dark:to-indigo-950/50 p-12 lg:p-16 rounded-[calc(1.5rem-4px)] backdrop-blur-sm">
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.6, delay: 0.7 }}
                     >
-                      <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                        <path fillRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clipRule="evenodd" />
-                      </svg>
-                      <span>Visit GitHub Profile</span>
-                    </a>
+                      <h3 className="text-3xl lg:text-4xl font-bold mb-4 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 bg-clip-text text-transparent">
+                        Want to see more?
+                      </h3>
+                      <p className="text-lg text-gray-700 dark:text-gray-300 mb-10 max-w-2xl mx-auto leading-relaxed">
+                        Explore my complete repository of projects, experiments, and code samples on GitHub.
+                      </p>
+
+                      <motion.a
+                        href="https://github.com/SetFodi"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="group relative inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-bold rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 magnetic-button overflow-hidden"
+                        whileHover={{ scale: 1.05, y: -3 }}
+                        whileTap={{ scale: 0.95 }}
+                      >
+                        <span className="relative z-10 flex items-center gap-3">
+                          <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                            <path fillRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clipRule="evenodd" />
+                          </svg>
+                          <span>Explore GitHub Profile</span>
+                          <ArrowTopRightOnSquareIcon className="w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-200" />
+                        </span>
+                        
+                        {/* Animated background */}
+                        <motion.div
+                          className="absolute inset-0 bg-gradient-to-r from-purple-600 to-pink-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                          initial={{ x: "100%" }}
+                          whileHover={{ x: "0%" }}
+                          transition={{ duration: 0.5 }}
+                        />
+                      </motion.a>
+                    </motion.div>
                   </div>
                 </div>
               </div>
-            </div>
+            </motion.div>
           </div>
         </section>
       </main>
@@ -877,6 +1130,7 @@ export default function Projects() {
           background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%239C92AC' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
         }
       `}</style>
-    </div>
+      </div>
+    </ScrollAnimations>
   )
 }

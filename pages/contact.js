@@ -10,6 +10,9 @@ import {
 import { useState, useRef } from 'react'
 import Navbar from '../components/Navbar' // Assuming Navbar is in components
 import Footer from '../components/Footer' // Assuming Footer is in components
+import CustomCursor from '../components/CustomCursor'
+import ParticleBackground from '../components/ParticleBackground'
+import ScrollAnimations from '../components/ScrollAnimations'
 import {
   EnvelopeIcon,
   MapPinIcon,
@@ -326,29 +329,59 @@ function Contact() {
   ]
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-black relative overflow-hidden transition-colors duration-500">
-      <Head>
-        <title>Contact - Luka Partenadze</title>
-        <meta
-          name="description"
-          content="Get in touch with Luka Partenadze, Junior Full Stack Developer. Let's discuss your project or ideas."
+    <ScrollAnimations>
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 via-indigo-50/30 to-purple-50/20 dark:from-black dark:via-indigo-950/30 dark:to-purple-950/20 relative overflow-hidden transition-colors duration-500">
+        <Head>
+          <title>Contact - Luka Partenadze</title>
+          <meta
+            name="description"
+            content="Get in touch with Luka Partenadze, Junior Full Stack Developer. Let's discuss your project or ideas."
+          />
+          <link rel="icon" href="/favicon.ico" />
+        </Head>
+
+        <CustomCursor />
+        <ParticleBackground density={15} interactive={true} />
+        
+        {/* Scroll Progress Bar */}
+        <motion.div
+          className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 z-50 transform origin-left"
+          style={{ scaleX: scrollYProgress }}
         />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
 
-      {/* Background Elements */}
-      <motion.div
-        style={{ scale }}
-        className="absolute inset-0 -z-10 opacity-50 dark:opacity-70"
-      >
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-100 via-purple-100 to-pink-100 dark:from-blue-900/30 dark:via-purple-900/40 dark:to-gray-900/50" />
-      </motion.div>
-      <FloatingParticles />
+        {/* Enhanced Background Elements */}
+        <motion.div
+          style={{ scale }}
+          className="absolute inset-0 -z-10 opacity-50 dark:opacity-70"
+        >
+          <div className="absolute inset-0 bg-gradient-to-br from-blue-100 via-purple-100 to-pink-100 dark:from-blue-900/30 dark:via-purple-900/40 dark:to-gray-900/50" />
+          
+          {/* Floating gradient orbs */}
+          <motion.div
+            className="absolute top-20 right-20 w-32 h-32 bg-gradient-to-br from-indigo-300/30 to-purple-400/30 dark:from-indigo-600/20 dark:to-purple-700/20 rounded-full blur-2xl"
+            animate={{
+              x: [0, 30, 0],
+              y: [0, -20, 0],
+              scale: [1, 1.1, 1]
+            }}
+            transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+          />
+          <motion.div
+            className="absolute bottom-20 left-20 w-40 h-40 bg-gradient-to-br from-pink-300/30 to-indigo-400/30 dark:from-pink-600/20 dark:to-indigo-700/20 rounded-full blur-2xl"
+            animate={{
+              x: [0, -25, 0],
+              y: [0, 15, 0],
+              scale: [1, 0.9, 1]
+            }}
+            transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+          />
+        </motion.div>
+        <FloatingParticles />
 
-      <Navbar />
+        <Navbar />
 
       <main className="py-24 md:py-32">
-        <section className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <section className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 reveal-up">
           {/* Header */}
           <div className="max-w-2xl mx-auto text-center mb-12 md:mb-16">
             <motion.h1
@@ -456,7 +489,7 @@ function Contact() {
                   disabled={isSubmitting}
                   className={`w-full mt-4 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 
                                 text-white py-3 px-6 rounded-lg font-semibold text-lg transition-all duration-300 ease-in-out 
-                                flex items-center justify-center space-x-2
+                                flex items-center justify-center space-x-2 magnetic-button
                                 ${
                                   isSubmitting
                                     ? 'opacity-70 cursor-not-allowed'
@@ -530,7 +563,8 @@ function Contact() {
       </main>
 
       <Footer />
-    </div>
+      </div>
+    </ScrollAnimations>
   )
 }
 

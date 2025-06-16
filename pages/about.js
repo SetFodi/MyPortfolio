@@ -3,6 +3,9 @@ import { useRef } from 'react'
 import Head from 'next/head'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
+import CustomCursor from '../components/CustomCursor'
+import ParticleBackground from '../components/ParticleBackground'
+import ScrollAnimations from '../components/ScrollAnimations'
 import {
   motion,
   useScroll,
@@ -122,20 +125,30 @@ export default function About() {
   ]
 
   return (
-    <div className="bg-gray-50 dark:bg-black transition-colors duration-500 overflow-x-hidden">
-      <Head>
-        <title>About - Luka Partenadze</title>
-        <meta
-          name="description"
-          content="Learn about Luka Partenadze, a passionate Junior Full Stack Developer based in Tbilisi, Georgia."
-        />
-      </Head>
+    <ScrollAnimations>
+      <div className="bg-gradient-to-br from-gray-50 via-indigo-50/30 to-purple-50/20 dark:from-black dark:via-indigo-950/30 dark:to-purple-950/20 transition-colors duration-500 overflow-x-hidden">
+        <Head>
+          <title>About - Luka Partenadze</title>
+          <meta
+            name="description"
+            content="Learn about Luka Partenadze, a passionate Junior Full Stack Developer based in Tbilisi, Georgia."
+          />
+        </Head>
 
-      <Navbar />
+        <CustomCursor />
+        <ParticleBackground density={25} interactive={true} />
+        
+        {/* Scroll Progress Bar */}
+        <motion.div
+          className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 z-50 transform origin-left"
+          style={{ scaleX: scrollYProgress }}
+        />
+
+        <Navbar />
 
       <main className="pt-16 relative">
         {/* Hero Section - Modern Split Design */}
-        <section className="relative min-h-screen flex flex-col md:flex-row items-center overflow-hidden">
+        <section className="relative min-h-screen flex flex-col md:flex-row items-center overflow-hidden reveal-up">
           {/* Left Side - Image & Visual Elements */}
           <div className="w-full md:w-1/2 h-[40vh] md:h-screen relative overflow-hidden">
             {/* Background Gradient */}
@@ -530,7 +543,7 @@ export default function About() {
         </section>
 
         {/* Philosophy Section - Modern Design */}
-        <section className="py-24 bg-white dark:bg-gray-900 relative overflow-hidden">
+        <section className="py-24 bg-white dark:bg-gray-900 relative overflow-hidden stagger-children">
           {/* Background Elements */}
           <div className="absolute inset-0 z-0">
             <div className="absolute inset-0 bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-950/20 dark:to-purple-950/20 opacity-70"></div>
@@ -639,6 +652,7 @@ export default function About() {
 
         <Footer />
       </main>
-    </div>
+      </div>
+    </ScrollAnimations>
   )
 }
