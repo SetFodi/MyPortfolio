@@ -633,7 +633,7 @@ export default function Projects() {
   image: '/images/intprep.png',
   link: 'https://github.com/SetFodi/intprep',
   technologies: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Node.js', 'MongoDB', 'API Integration', 'AI'],
-  status: 'Live',
+  status: 'Completed',
   category: 'Education',
   githubStats: { stars: 22, forks: 4 },
   longDescription: 'AI-Powered Interview Preparation Platform'
