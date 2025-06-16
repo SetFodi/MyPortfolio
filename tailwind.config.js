@@ -37,8 +37,8 @@ module.exports = {
           '100%': { transform: 'translate(0px, 0px) scale(1)' },
         },
         shimmer: {
-          '0%': { 'background-position': '-200% 0' },
-          '100%': { 'background-position': '200% 0' },
+          '0%': { backgroundPosition: '-200% 0' },
+          '100%': { backgroundPosition: '200% 0' },
         },
         float: {
           '0%, 100%': { transform: 'translateY(0) rotate(0deg)' },
@@ -136,20 +136,5 @@ module.exports = {
       },
     },
   },
-  plugins: [
-    function({ addUtilities }) {
-      const newUtilities = {
-        '.perspective-1000': {
-          perspective: '1000px',
-        },
-        '.preserve-3d': {
-          'transform-style': 'preserve-3d',
-        },
-        '.text-shadow': {
-          'text-shadow': '0 2px 4px rgba(0,0,0,0.1)',
-        },
-      };
-      addUtilities(newUtilities);
-    },
-  ],
+  plugins: [],
 }
