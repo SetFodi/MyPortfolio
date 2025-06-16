@@ -29,7 +29,23 @@ module.exports = {
         'scale-in': 'scaleIn 0.3s ease-out forwards',
         'scale-out': 'scaleOut 0.3s ease-in forwards',
       },
-      keyframes: {},
+      keyframes: {
+        blob: {
+          '0%': { transform: 'translate(0px, 0px) scale(1)' },
+          '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
+          '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
+          '100%': { transform: 'translate(0px, 0px) scale(1)' },
+        },
+        shimmer: {
+          '0%': { 'background-position': '-200% 0' },
+          '100%': { 'background-position': '200% 0' },
+        },
+        float: {
+          '0%, 100%': { transform: 'translateY(0) rotate(0deg)' },
+          '33%': { transform: 'translateY(-10px) rotate(1deg)' },
+          '66%': { transform: 'translateY(-5px) rotate(-1deg)' },
+        },
+      },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
@@ -120,5 +136,20 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    function({ addUtilities }) {
+      const newUtilities = {
+        '.perspective-1000': {
+          perspective: '1000px',
+        },
+        '.preserve-3d': {
+          'transform-style': 'preserve-3d',
+        },
+        '.text-shadow': {
+          'text-shadow': '0 2px 4px rgba(0,0,0,0.1)',
+        },
+      };
+      addUtilities(newUtilities);
+    },
+  ],
 }
