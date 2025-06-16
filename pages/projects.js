@@ -350,6 +350,17 @@ export default function Projects() {
   githubStats: { stars: 0, forks: 0 }, // Update these when you publish
   longDescription: 'LocalEvently is a comprehensive community platform that enables users to discover and create local events within their neighborhood. The application features geolocation-based event filtering, interactive map integration, and complete event management capabilities. Users can RSVP to events, create detailed event listings, and manage their social calendar through an intuitive dashboard. The platform includes advanced authentication with JWT tokens, secure password management, comprehensive help documentation, and email notifications. Built with modern web technologies, LocalEvently offers both dark and light themes, responsive design, and seamless user experience across all devices.'
 },
+{
+  title: 'IntPrep',
+  description: 'IntPrep is a comprehensive interview preparation platform designed to help users prepare for job interviews effectively. The application offers a wide range of interview questions across different domains, including technical, behavioral, and situational questions. Users can track their progress, receive personalized feedback, and practice answering questions in a timed environment. The platform includes a comprehensive library of interview questions, detailed answer explanations, and a scoring system to evaluate performance.',
+  image: '/images/intprep.png',
+  link: 'https://github.com/SetFodi/intprep',
+  technologies: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Node.js', 'MongoDB', 'API Integration', 'AI'],
+  status: 'Live',
+  category: 'Education',
+  githubStats: { stars: 22, forks: 4 },
+  longDescription: 'AI-Powered Interview Preparation Platform'
+}
   ]
 
   // Generate technology list for filter
