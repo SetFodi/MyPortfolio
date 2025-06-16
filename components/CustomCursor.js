@@ -192,30 +192,7 @@ const CustomCursor = () => {
         }}
       />
 
-      {/* Global cursor styles */}
-      <style jsx global>{`
-        @keyframes cursor-ripple {
-          0% {
-            transform: scale(1);
-            opacity: 1;
-          }
-          100% {
-            transform: scale(2);
-            opacity: 0;
-          }
-        }
-        
-        .cursor-ripple {
-          animation: cursor-ripple 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        }
-        
-        /* Hide default cursor on desktop */
-        @media (min-width: 768px) {
-          * {
-            cursor: none !important;
-          }
-        }
-      `}</style>
+
     </>
   )
 }

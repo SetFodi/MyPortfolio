@@ -652,7 +652,7 @@ export default function About() {
 
         <Footer />
       </main>
-      </div>
+    </div>
     </ScrollAnimations>
   )
 }
