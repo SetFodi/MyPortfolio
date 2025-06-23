@@ -7,7 +7,6 @@ import ParticleBackground from '../components/ParticleBackground'
 import ScrollAnimations from '../components/ScrollAnimations'
 import { motion, AnimatePresence, useScroll } from 'framer-motion'
 import { useState, useEffect, useRef, useMemo } from 'react'
-import Tilt from 'react-parallax-tilt'
 import { ArrowTopRightOnSquareIcon, XMarkIcon, EyeIcon, CodeBracketIcon, StarIcon } from '@heroicons/react/24/outline'
 
 // Animation variants - optimized for performance
@@ -49,25 +48,21 @@ const textRevealVariants = {
   },
 }
 
-// Optimized Project Card Component
+// Optimized Project Card Component with better performance
 const ProjectCard = ({ project, index, hoveredIndex, setHoveredIndex, isMobile, activeTech, openProjectModal }) => {
   const [isHovered, setIsHovered] = useState(false)
 
   return (
     <motion.div
       key={`${project.title}-${index}`}
-      layout
-      initial={{ opacity: 0, y: 30, scale: 0.95 }} // Reduced animation intensity
-      animate={{ opacity: 1, y: 0, scale: 1 }}
-      exit={{ opacity: 0, y: -30, scale: 0.95 }}
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
       transition={{ 
-        duration: 0.4, // Reduced from 0.6
-        delay: index * 0.05, // Reduced from 0.1
-        type: "spring",
-        stiffness: 120,
-        damping: 15
+        duration: 0.3,
+        delay: index * 0.03,
+        ease: "easeOut"
       }}
-      className="group relative"
+      className="group relative will-change-transform"
       onMouseEnter={() => {
         if (!isMobile) {
           setHoveredIndex(index)
@@ -81,55 +76,31 @@ const ProjectCard = ({ project, index, hoveredIndex, setHoveredIndex, isMobile, 
         }
       }}
     >
-      {/* Simplified tilt - reduced intensity for better performance */}
-      <Tilt
-        tiltMaxAngleX={isMobile ? 0 : 6} // Reduced from 12
-        tiltMaxAngleY={isMobile ? 0 : 6} // Reduced from 12
-        glareEnable={!isMobile}
-        glareMaxOpacity={0.15} // Reduced from 0.3
-        glareColor="#ffffff"
-        glarePosition="all"
-        glareBorderRadius="32px"
-        className="h-full transform-gpu"
-      >
-        {/* Optimized Project Card */}
-        <motion.div 
-          className="relative h-full rounded-3xl overflow-hidden bg-white dark:bg-gray-900 shadow-xl hover:shadow-2xl dark:shadow-gray-900/50 border border-gray-200/50 dark:border-gray-700/50 transition-all duration-500 cursor-pointer"
-          whileHover={{ 
-            y: -4, // Reduced from -8
-            boxShadow: "0 20px 40px -12px rgba(0, 0, 0, 0.2)" // Simplified shadow
-          }}
+      {/* Removed Tilt component for better performance - using CSS transforms instead */}
+      <div className="h-full transform-gpu hover-lift">
+        {/* Simplified Project Card with CSS-based animations */}
+        <div 
+          className="project-card relative h-full rounded-3xl overflow-hidden bg-white dark:bg-gray-900 shadow-lg border border-gray-200/50 dark:border-gray-700/50 cursor-pointer transition-all duration-300 ease-out"
           onClick={() => window.open(project.link, '_blank')}
         >
           
           {/* Optimized Image Section */}
           <div className="relative h-64 lg:h-72 overflow-hidden group/image">
-            {/* Project Image with reduced zoom effect */}
-            <motion.div
-              className="absolute inset-0 bg-cover bg-center transition-all duration-500" // Reduced from 700ms
+            {/* Project Image with CSS-only hover effect */}
+            <div
+              className="absolute inset-0 bg-cover bg-center transition-transform duration-300 ease-out hover:scale-105"
               style={{
                 backgroundImage: `url(${project.image})`,
               }}
-              whileHover={{ scale: 1.05 }} // Reduced from 1.08
             />
 
             {/* Simplified gradient overlays */}
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-            <motion.div
-              className="absolute inset-0 bg-gradient-to-br from-indigo-600/15 via-purple-600/10 to-pink-600/15" // Reduced opacity
-              initial={{ opacity: 0 }}
-              whileHover={{ opacity: 1 }}
-              transition={{ duration: 0.3 }} // Reduced from 0.4
-            />
+            <div className="absolute inset-0 bg-gradient-to-br from-indigo-600/0 group-hover:from-indigo-600/10 via-purple-600/0 group-hover:via-purple-600/5 to-pink-600/0 group-hover:to-pink-600/10 transition-all duration-300" />
 
-            {/* Optimized Status Badge */}
-            <motion.div 
-              className="absolute top-4 left-4 z-10"
-              initial={{ opacity: 0, x: -15 }} // Reduced movement
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: index * 0.05 + 0.2 }} // Reduced delays
-            >
-              <span className={`px-4 py-2 rounded-2xl text-xs font-bold backdrop-blur-md border-2 shadow-lg ${
+            {/* Status Badge - no motion, faster */}
+            <div className="absolute top-4 left-4 z-10">
+              <span className={`px-4 py-2 rounded-2xl text-xs font-bold border-2 shadow-lg transition-all duration-200 ${
                 project.status === 'Live'
                   ? 'bg-emerald-500/90 text-white border-emerald-300/50'
                   : project.status === 'In Development'
@@ -141,100 +112,67 @@ const ProjectCard = ({ project, index, hoveredIndex, setHoveredIndex, isMobile, 
                 {project.status === 'Completed' && '✅ '}
                 {project.status}
               </span>
-            </motion.div>
+            </div>
 
-            {/* Optimized Technology Badges */}
-            <motion.div 
-              className="absolute bottom-4 left-4 right-4 flex items-center justify-between"
-              initial={{ opacity: 0, y: 15 }} // Reduced movement
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.05 + 0.3 }}
-            >
+            {/* Technology Badges - simplified */}
+            <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between">
               <div className="flex flex-wrap gap-2">
                 {project.technologies.slice(0, 2).map((tech, i) => (
-                  <motion.span
+                  <span
                     key={i}
-                    className={`px-3 py-1.5 text-xs font-semibold rounded-xl backdrop-blur-md border transition-all duration-200 ${
+                    className={`px-3 py-1.5 text-xs font-semibold rounded-xl border shadow-lg transition-all duration-200 hover:scale-105 ${
                       tech === activeTech
                         ? 'bg-indigo-600/90 text-white border-indigo-300/50'
                         : 'bg-gray-900/80 text-gray-100 border-gray-600/50 hover:bg-gray-800/90'
-                    } shadow-lg`}
-                    whileHover={{ scale: 1.03, y: -1 }} // Reduced animation
-                    whileTap={{ scale: 0.97 }}
+                    }`}
                   >
                     {tech}
-                  </motion.span>
+                  </span>
                 ))}
                 {project.technologies.length > 2 && (
-                  <motion.span
-                    className="px-3 py-1.5 text-xs font-semibold bg-gray-900/80 text-gray-100 rounded-xl backdrop-blur-md border border-gray-600/50 shadow-lg"
-                    whileHover={{ scale: 1.03, y: -1 }}
-                  >
+                  <span className="px-3 py-1.5 text-xs font-semibold bg-gray-900/80 text-gray-100 rounded-xl border border-gray-600/50 shadow-lg">
                     +{project.technologies.length - 2}
-                  </motion.span>
+                  </span>
                 )}
               </div>
 
-              {/* Simplified Quick Actions */}
-              <motion.div
-                className="flex gap-2 opacity-0 group-hover/image:opacity-100 transition-all duration-200"
-                initial={{ x: 15 }} // Reduced movement
-                whileHover={{ x: 0 }}
-              >
-                <motion.button
+              {/* Quick Actions - CSS only hover */}
+              <div className="flex gap-2 opacity-0 group-hover/image:opacity-100 transition-opacity duration-200">
+                <button
                   onClick={(e) => {
                     e.stopPropagation()
                     openProjectModal(project)
                   }}
-                  className="p-2.5 bg-white/90 hover:bg-white text-gray-700 rounded-xl backdrop-blur-sm shadow-lg hover:shadow-xl border border-gray-200/50 transition-all duration-200"
-                  whileHover={{ scale: 1.05 }} // Removed rotation for performance
-                  whileTap={{ scale: 0.95 }}
+                  className="p-2.5 bg-white/90 hover:bg-white text-gray-700 rounded-xl shadow-lg hover:shadow-xl border border-gray-200/50 transition-all duration-200 hover:scale-105"
                 >
                   <EyeIcon className="w-4 h-4" />
-                </motion.button>
-                <motion.a
+                </button>
+                <a
                   href={project.link}
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={(e) => e.stopPropagation()}
-                  className="p-2.5 bg-indigo-600/90 hover:bg-indigo-700 text-white rounded-xl backdrop-blur-sm shadow-lg hover:shadow-xl border border-indigo-400/50 transition-all duration-200"
-                  whileHover={{ scale: 1.05 }} // Removed rotation for performance
-                  whileTap={{ scale: 0.95 }}
+                  className="p-2.5 bg-indigo-600/90 hover:bg-indigo-700 text-white rounded-xl shadow-lg hover:shadow-xl border border-indigo-400/50 transition-all duration-200 hover:scale-105"
                 >
                   <ArrowTopRightOnSquareIcon className="w-4 h-4" />
-                </motion.a>
-              </motion.div>
-            </motion.div>
+                </a>
+              </div>
+            </div>
           </div>
 
-          {/* Optimized Content Section */}
+          {/* Content Section - optimized */}
           <div className="p-6 lg:p-8">
             <div className="flex items-start justify-between mb-4">
               <div className="flex-1">
-                <motion.h3 
-                  className="text-xl lg:text-2xl font-bold text-gray-900 dark:text-white mb-2 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors duration-200"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: index * 0.05 + 0.4 }}
-                >
+                <h3 className="text-xl lg:text-2xl font-bold text-gray-900 dark:text-white mb-2 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors duration-200">
                   {project.title}
-                </motion.h3>
-                <motion.span 
-                  className="inline-block px-3 py-1 text-xs font-medium bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 rounded-lg"
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: index * 0.05 + 0.5 }}
-                >
+                </h3>
+                <span className="inline-block px-3 py-1 text-xs font-medium bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 rounded-lg">
                   {project.category}
-                </motion.span>
+                </span>
               </div>
               {project.githubStats && (
-                <motion.div 
-                  className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400"
-                  initial={{ opacity: 0, x: 10 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: index * 0.05 + 0.6 }}
-                >
+                <div className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
                   <div className="flex items-center gap-1">
                     <StarIcon className="w-4 h-4" />
                     <span>{project.githubStats.stars}</span>
@@ -243,26 +181,16 @@ const ProjectCard = ({ project, index, hoveredIndex, setHoveredIndex, isMobile, 
                     <CodeBracketIcon className="w-4 h-4" />
                     <span>{project.githubStats.forks}</span>
                   </div>
-                </motion.div>
+                </div>
               )}
             </div>
 
-            <motion.p 
-              className="text-gray-700 dark:text-gray-300 text-sm lg:text-base leading-relaxed mb-6"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: index * 0.05 + 0.7 }}
-            >
+            <p className="text-gray-700 dark:text-gray-300 text-sm lg:text-base leading-relaxed mb-6">
               {project.description}
-            </motion.p>
+            </p>
 
-            {/* Simplified Tech Stack */}
-            <motion.div 
-              className="flex flex-wrap gap-2 mb-6"
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.05 + 0.8 }}
-            >
+            {/* Tech Stack - no motion */}
+            <div className="flex flex-wrap gap-2 mb-6">
               {project.technologies.slice(0, 4).map((tech, i) => (
                 <span
                   key={i}
@@ -280,41 +208,32 @@ const ProjectCard = ({ project, index, hoveredIndex, setHoveredIndex, isMobile, 
                   +{project.technologies.length - 4} more
                 </span>
               )}
-            </motion.div>
+            </div>
 
-            {/* Simplified Action Buttons */}
-            <motion.div 
-              className="flex gap-3"
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.05 + 0.9 }}
-            >
-              <motion.button
+            {/* Action Buttons - no motion */}
+            <div className="flex gap-3">
+              <button
                 onClick={(e) => {
                   e.stopPropagation()
                   openProjectModal(project)
                 }}
-                className="flex-1 px-4 py-2.5 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white text-sm font-medium rounded-xl shadow-md hover:shadow-lg transition-all duration-200"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
+                className="flex-1 px-4 py-2.5 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white text-sm font-medium rounded-xl shadow-md hover:shadow-lg transition-all duration-200 hover:scale-105"
               >
                 View Details
-              </motion.button>
-              <motion.a
+              </button>
+              <a
                 href={project.link}
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={(e) => e.stopPropagation()}
-                className="px-4 py-2.5 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 text-sm font-medium rounded-xl border border-gray-200 dark:border-gray-700 shadow-md hover:shadow-lg transition-all duration-200"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
+                className="px-4 py-2.5 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 text-sm font-medium rounded-xl border border-gray-200 dark:border-gray-700 shadow-md hover:shadow-lg transition-all duration-200 hover:scale-105"
               >
                 <ArrowTopRightOnSquareIcon className="w-4 h-4" />
-              </motion.a>
-            </motion.div>
+              </a>
+            </div>
           </div>
-        </motion.div>
-      </Tilt>
+        </div>
+      </div>
     </motion.div>
   )
 }
@@ -681,7 +600,7 @@ export default function Projects() {
     <ScrollAnimations>
       <div className="min-h-screen bg-gradient-to-br from-white via-indigo-50/20 to-purple-50/30 dark:from-gray-950 dark:via-indigo-950/20 dark:to-purple-950/30 transition-colors duration-500 overflow-hidden">
         <CustomCursor />
-        <ParticleBackground density={8} interactive={false} />
+        <ParticleBackground density={4} interactive={false} />
         
         {/* Scroll Progress Bar */}
         <motion.div
@@ -705,28 +624,20 @@ export default function Projects() {
           {/* Simplified Gradient Background */}
           <div className="absolute inset-0 bg-gradient-to-br from-violet-500 to-pink-500 opacity-60 dark:opacity-40"></div>
 
-          {/* Reduced Animated Particles - Performance Optimized */}
+          {/* Simplified Static Particles - Better Performance */}
           <div className="absolute inset-0 overflow-hidden">
             <div className="absolute top-0 left-0 w-full h-full">
-              {Array.from({ length: 8 }).map((_, i) => (
-                <motion.div
+              {Array.from({ length: 4 }).map((_, i) => (
+                <div
                   key={i}
-                  className="absolute rounded-full bg-white/50 dark:bg-white/30"
+                  className="absolute rounded-full bg-white/30 dark:bg-white/20 animate-pulse"
                   style={{
-                    width: Math.random() * 8 + 4,
-                    height: Math.random() * 8 + 4,
+                    width: Math.random() * 6 + 3,
+                    height: Math.random() * 6 + 3,
                     top: `${Math.random() * 100}%`,
                     left: `${Math.random() * 100}%`,
-                  }}
-                  animate={{
-                    y: [0, Math.random() * 40 - 20],
-                    x: [0, Math.random() * 40 - 20],
-                    opacity: [0.5, 0.2, 0.5],
-                  }}
-                  transition={{
-                    duration: Math.random() * 6 + 8,
-                    repeat: Infinity,
-                    ease: "easeInOut",
+                    animationDelay: `${i * 0.5}s`,
+                    animationDuration: `${3 + i}s`,
                   }}
                 />
               ))}
@@ -1093,6 +1004,34 @@ export default function Projects() {
 
         .bg-grid-pattern {
           background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%239C92AC' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        /* Performance optimizations for smooth hover effects */
+        .project-card {
+          transform: translateZ(0);
+          backface-visibility: hidden;
+          perspective: 1000px;
+          will-change: transform, box-shadow;
+        }
+
+        .hover-lift:hover .project-card {
+          transform: translateY(-8px) translateZ(0);
+          box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+
+        .transform-gpu {
+          transform: translateZ(0);
+          backface-visibility: hidden;
+          perspective: 1000px;
+        }
+
+        /* Reduce motion for users who prefer it */
+        @media (prefers-reduced-motion: reduce) {
+          .project-card,
+          .hover-lift:hover .project-card {
+            transform: none !important;
+            transition: none !important;
+          }
         }
       `}</style>
       </div>
