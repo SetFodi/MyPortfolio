@@ -2,15 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Import Inter font */
+/* Import Inter font with optimized loading */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 
-/* Basic animations */
+/* Simplified animations for better performance */
 @keyframes blob {
-  0% { transform: translate(0px, 0px) scale(1); }
-  33% { transform: translate(30px, -50px) scale(1.1); }
-  66% { transform: translate(-20px, 20px) scale(0.9); }
-  100% { transform: translate(0px, 0px) scale(1); }
+  0%, 100% { transform: translate(0px, 0px) scale(1); }
+  50% { transform: translate(15px, -25px) scale(1.05); }
 }
 
 @keyframes shimmer {
@@ -20,19 +18,18 @@
 
 @keyframes float {
   0%, 100% { transform: translateY(0) rotate(0deg); }
-  33% { transform: translateY(-10px) rotate(1deg); }
-  66% { transform: translateY(-5px) rotate(-1deg); }
+  50% { transform: translateY(-8px) rotate(0.5deg); }
 }
 
 @keyframes glow {
-  0% { box-shadow: 0 0 20px rgba(99, 102, 241, 0.3); }
-  100% { box-shadow: 0 0 40px rgba(99, 102, 241, 0.6); }
+  0%, 100% { box-shadow: 0 0 15px rgba(99, 102, 241, 0.2); }
+  50% { box-shadow: 0 0 25px rgba(99, 102, 241, 0.4); }
 }
 
 @keyframes slide-up {
   from { 
     opacity: 0;
-    transform: translateY(30px);
+    transform: translateY(20px);
   }
   to { 
     opacity: 1;
@@ -47,43 +44,74 @@
 
 @keyframes cursor-ripple {
   0% { transform: scale(1); opacity: 1; }
-  100% { transform: scale(2); opacity: 0; }
+  100% { transform: scale(1.5); opacity: 0; }
 }
 
-/* Animation classes */
-.animate-blob { animation: blob 7s infinite; }
-.animate-shimmer { animation: shimmer 2s infinite linear; }
-.animate-float { animation: float 6s ease-in-out infinite; }
-.animate-glow { animation: glow 2s ease-in-out infinite alternate; }
-.animate-slide-up { animation: slide-up 0.6s ease-out forwards; }
-.animate-fade-in { animation: fadeIn 0.5s ease-in forwards; }
-.cursor-ripple { animation: cursor-ripple 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
+/* Performance-optimized animation classes */
+.animate-blob { 
+  animation: blob 8s ease-in-out infinite; 
+  will-change: transform;
+}
+.animate-shimmer { 
+  animation: shimmer 3s infinite linear; 
+  will-change: background-position;
+}
+.animate-float { 
+  animation: float 4s ease-in-out infinite; 
+  will-change: transform;
+}
+.animate-glow { 
+  animation: glow 3s ease-in-out infinite alternate; 
+  will-change: box-shadow;
+}
+.animate-slide-up { 
+  animation: slide-up 0.5s ease-out forwards; 
+  will-change: opacity, transform;
+}
+.animate-fade-in { 
+  animation: fadeIn 0.4s ease-in forwards; 
+  will-change: opacity;
+}
+.cursor-ripple { 
+  animation: cursor-ripple 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94); 
+  will-change: transform, opacity;
+}
 
-/* Base styles */
-html { scroll-behavior: smooth; }
+/* Base styles with performance optimizations */
+html { 
+  scroll-behavior: smooth; 
+}
+
 body { 
   font-family: 'Inter', sans-serif; 
   overflow-x: hidden;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   min-height: 100vh;
+  /* Performance optimizations */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
-/* Hide default cursor on desktop */
-@media (min-width: 768px) {
+/* Hide default cursor on desktop only when appropriate */
+@media (min-width: 768px) and (hover: hover) {
   * { cursor: none !important; }
 }
 
-/* Custom scrollbar */
-::-webkit-scrollbar { width: 8px; }
+/* Custom scrollbar with GPU acceleration */
+::-webkit-scrollbar { 
+  width: 6px; 
+}
 ::-webkit-scrollbar-track { 
   background: rgba(241, 245, 249, 0.1);
-  border-radius: 10px;
+  border-radius: 8px;
 }
 ::-webkit-scrollbar-thumb { 
   background: linear-gradient(180deg, #6366f1 0%, #8b5cf6 100%);
-  border-radius: 10px;
-  border: 2px solid transparent;
+  border-radius: 8px;
+  border: 1px solid transparent;
   background-clip: content-box;
+  will-change: background;
 }
 
 ::-webkit-scrollbar-thumb:hover {
@@ -98,38 +126,41 @@ body {
   background: linear-gradient(180deg, #6366f1 0%, #8b5cf6 100%); 
 }
 
-/* Scroll progress bar */
+/* Simplified scroll progress bar */
 .scroll-progress {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  height: 4px;
-  background: linear-gradient(90deg, #6366f1, #8b5cf6, #ec4899, #f59e0b);
+  height: 3px;
+  background: linear-gradient(90deg, #6366f1, #8b5cf6, #ec4899);
   transform-origin: 0%;
   z-index: 9999;
+  will-change: transform;
 }
 
-/* Magnetic effect utilities */
+/* Performance-optimized magnetic effect */
 .magnetic-hover {
-  transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transition: transform 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  will-change: transform;
 }
 
 .magnetic-hover:hover {
-  transform: scale(1.05);
+  transform: scale(1.02);
 }
 
-/* Text gradient utilities */
+/* Text gradient utilities with GPU acceleration */
 .text-gradient {
   background: linear-gradient(45deg, #6366f1, #8b5cf6, #ec4899);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  will-change: background;
 }
 
 /* Theme transition utilities */
 .theme-transition {
-  transition: background-color 0.5s ease, color 0.5s ease, border-color 0.5s ease;
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
 
 /* Enhanced dark mode support */
@@ -140,7 +171,7 @@ body {
   background-clip: text;
 }
 
-/* Enhanced button styles */
+/* Enhanced button styles with performance optimizations */
 .button-enhanced {
   position: relative;
   overflow: hidden;
@@ -150,8 +181,9 @@ body {
   padding: 0.75rem 1.5rem;
   color: white;
   font-weight: 600;
-  transition: all 0.3s ease;
+  transition: all 0.2s ease;
   transform: translateZ(0);
+  will-change: transform, box-shadow;
 }
 
 .button-enhanced::before {
@@ -160,7 +192,7 @@ body {
   inset: 0;
   background: linear-gradient(45deg, #4f46e5, #7c3aed);
   opacity: 0;
-  transition: opacity 0.3s ease;
+  transition: opacity 0.2s ease;
 }
 
 .button-enhanced:hover::before {
@@ -168,46 +200,109 @@ body {
 }
 
 .button-enhanced:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
+  transform: translateY(-1px) translateZ(0);
+  box-shadow: 0 8px 25px rgba(99, 102, 241, 0.25);
 }
 
-/* Card enhancements */
+/* Card enhancements with performance optimizations */
 .card-enhanced {
   background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(8px);
   border: 1px solid rgba(255, 255, 255, 0.2);
-  transition: all 0.3s ease;
+  transition: all 0.2s ease;
+  will-change: transform, background, border-color;
 }
 
 .card-enhanced:hover {
   background: rgba(255, 255, 255, 0.15);
   border-color: rgba(99, 102, 241, 0.3);
-  transform: translateY(-5px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px) translateZ(0);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
 }
 
-/* Responsive design */
+/* Mobile and reduced motion optimizations */
 @media (max-width: 768px) {
   .animate-blob {
-    animation-duration: 10s;
+    animation-duration: 12s;
+    animation-timing-function: ease-in-out;
   }
   
   .animate-float {
-    animation-duration: 8s;
+    animation-duration: 6s;
   }
   
   .magnetic-hover:hover {
     transform: none;
   }
+  
+  /* Disable heavy effects on mobile */
+  .card-enhanced {
+    backdrop-filter: none;
+    background: rgba(255, 255, 255, 0.9);
+  }
+  
+  .dark .card-enhanced {
+    background: rgba(0, 0, 0, 0.8);
+  }
 }
 
-/* Accessibility */
+/* Respect user's motion preferences */
 @media (prefers-reduced-motion: reduce) {
-  * {
+  *,
+  *::before,
+  *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
   }
+  
+  .animate-blob,
+  .animate-shimmer,
+  .animate-float,
+  .animate-glow {
+    animation: none !important;
+  }
+  
+  .magnetic-hover:hover {
+    transform: none !important;
+  }
+  
+  .scroll-progress {
+    display: none;
+  }
+}
+
+/* Performance utilities */
+.gpu-accelerated {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+.performance-mode {
+  will-change: auto;
+}
+
+.performance-mode:hover {
+  will-change: transform;
+}
+
+/* Optimized text rendering */
+.text-optimized {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Container query support for better responsiveness */
+@container (max-width: 768px) {
+  .container-responsive {
+    padding: 1rem;
+  }
+}
+
+/* Focus management for accessibility */
+.focus-visible:focus-visible {
+  outline: 2px solid #6366f1;
+  outline-offset: 2px;
 }

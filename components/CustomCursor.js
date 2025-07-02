@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useState, useRef, useCallback } from 'react'
 
 const CustomCursor = () => {
   const cursorRef = useRef(null)
@@ -6,17 +6,62 @@ const CustomCursor = () => {
   const [isVisible, setIsVisible] = useState(false)
   const [isHovering, setIsHovering] = useState(false)
   const [cursorVariant, setCursorVariant] = useState('default')
+  const [isReduced, setIsReduced] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
   
   const mouse = useRef({ x: 0, y: 0 })
   const delayedMouse = useRef({ x: 0, y: 0 })
   const rafId = useRef()
+  const lastUpdate = useRef(0)
 
-  // Smooth animation loop using requestAnimationFrame
-  const animateCursor = () => {
-    const delay = 0.15 // Smooth follow delay
+  // Check for reduced motion and mobile
+  useEffect(() => {
+    const checkReducedMotion = () => {
+      const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)')
+      setIsReduced(mediaQuery.matches)
+    }
     
-    delayedMouse.current.x += (mouse.current.x - delayedMouse.current.x) * delay
-    delayedMouse.current.y += (mouse.current.y - delayedMouse.current.y) * delay
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768 || !window.matchMedia('(hover: hover)').matches)
+    }
+    
+    checkReducedMotion()
+    checkMobile()
+    
+    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)')
+    const handleChange = () => checkReducedMotion()
+    const handleResize = () => checkMobile()
+    
+    mediaQuery.addEventListener('change', handleChange)
+    window.addEventListener('resize', handleResize)
+    
+    return () => {
+      mediaQuery.removeEventListener('change', handleChange)
+      window.removeEventListener('resize', handleResize)
+    }
+  }, [])
+
+  // Optimized animation loop with frame rate limiting
+  const animateCursor = useCallback(() => {
+    const now = performance.now()
+    
+    // Limit to ~60fps but allow skipping frames if needed
+    if (now - lastUpdate.current < 16) {
+      rafId.current = requestAnimationFrame(animateCursor)
+      return
+    }
+    
+    lastUpdate.current = now
+    
+    const delay = isReduced ? 1 : 0.15 // Instant movement if reduced motion
+    
+    if (!isReduced) {
+      delayedMouse.current.x += (mouse.current.x - delayedMouse.current.x) * delay
+      delayedMouse.current.y += (mouse.current.y - delayedMouse.current.y) * delay
+    } else {
+      delayedMouse.current.x = mouse.current.x
+      delayedMouse.current.y = mouse.current.y
+    }
     
     if (cursorRef.current) {
       cursorRef.current.style.transform = `translate3d(${delayedMouse.current.x}px, ${delayedMouse.current.y}px, 0)`
@@ -27,10 +72,21 @@ const CustomCursor = () => {
     }
     
     rafId.current = requestAnimationFrame(animateCursor)
-  }
+  }, [isReduced])
 
   useEffect(() => {
+    // Don't initialize cursor on mobile or if reduced motion is preferred
+    if (isMobile || isReduced) return
+
+    let lastMouseUpdate = 0
+    
     const handleMouseMove = (e) => {
+      const now = performance.now()
+      
+      // Throttle mouse updates to reduce performance impact
+      if (now - lastMouseUpdate < 8) return // ~120fps throttle
+      lastMouseUpdate = now
+      
       mouse.current.x = e.clientX
       mouse.current.y = e.clientY
       
@@ -42,15 +98,18 @@ const CustomCursor = () => {
     const handleMouseEnter = () => setIsVisible(true)
     const handleMouseLeave = () => setIsVisible(false)
 
-    // Enhanced hover detection for interactive elements
+    // Simplified hover detection with debouncing
+    let hoverTimeout
     const handleMouseOver = (e) => {
+      clearTimeout(hoverTimeout)
+      
       const target = e.target
       const isInteractive = target.matches('a, button, [role="button"], input, textarea, select, .magnetic-button, .cursor-pointer, [data-cursor]')
       
       if (isInteractive) {
         setIsHovering(true)
         
-        // Set cursor variant based on element type
+        // Simplified cursor variant detection
         if (target.matches('a[href^="mailto:"], a[href^="tel:"]')) {
           setCursorVariant('contact')
         } else if (target.matches('a[href*="github"], a[href*="linkedin"]')) {
@@ -63,22 +122,26 @@ const CustomCursor = () => {
           setCursorVariant('hover')
         }
       } else {
-        setIsHovering(false)
-        setCursorVariant('default')
+        // Debounce the hover state change
+        hoverTimeout = setTimeout(() => {
+          setIsHovering(false)
+          setCursorVariant('default')
+        }, 50)
       }
     }
 
     // Start animation loop
     rafId.current = requestAnimationFrame(animateCursor)
 
-    // Add event listeners
-    document.addEventListener('mousemove', handleMouseMove)
-    document.addEventListener('mouseenter', handleMouseEnter)
-    document.addEventListener('mouseleave', handleMouseLeave)
-    document.addEventListener('mouseover', handleMouseOver)
+    // Add event listeners with passive option for better performance
+    document.addEventListener('mousemove', handleMouseMove, { passive: true })
+    document.addEventListener('mouseenter', handleMouseEnter, { passive: true })
+    document.addEventListener('mouseleave', handleMouseLeave, { passive: true })
+    document.addEventListener('mouseover', handleMouseOver, { passive: true })
 
     return () => {
       // Cleanup
+      clearTimeout(hoverTimeout)
       if (rafId.current) {
         cancelAnimationFrame(rafId.current)
       }
@@ -87,32 +150,33 @@ const CustomCursor = () => {
       document.removeEventListener('mouseleave', handleMouseLeave)
       document.removeEventListener('mouseover', handleMouseOver)
     }
-  }, [isVisible])
+  }, [animateCursor, isVisible, isMobile, isReduced])
 
-  // Don't render on mobile devices
-  if (typeof window !== 'undefined' && window.innerWidth < 768) {
+  // Don't render on mobile devices or if reduced motion is preferred
+  if (isMobile || isReduced) {
     return null
   }
 
   return (
     <>
-      {/* Main cursor ring */}
+      {/* Main cursor ring - simplified */}
       <div
         ref={cursorRef}
-        className={`fixed top-0 left-0 pointer-events-none z-[9999] transition-opacity duration-300 ${
+        className={`fixed top-0 left-0 pointer-events-none z-[9999] transition-opacity duration-200 ${
           isVisible ? 'opacity-100' : 'opacity-0'
         }`}
         style={{
-          width: isHovering ? '60px' : '40px',
-          height: isHovering ? '60px' : '40px',
-          marginLeft: isHovering ? '-30px' : '-20px',
-          marginTop: isHovering ? '-30px' : '-20px',
-          transition: 'width 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), height 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), margin 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+          width: isHovering ? '50px' : '32px',
+          height: isHovering ? '50px' : '32px',
+          marginLeft: isHovering ? '-25px' : '-16px',
+          marginTop: isHovering ? '-25px' : '-16px',
+          transition: 'width 0.2s ease, height 0.2s ease, margin 0.2s ease',
+          willChange: 'transform',
         }}
       >
-        {/* Outer ring with gradient */}
+        {/* Simplified outer ring */}
         <div
-          className={`w-full h-full rounded-full border-2 transition-all duration-300 ${
+          className={`w-full h-full rounded-full border-2 transition-all duration-200 ${
             cursorVariant === 'contact'
               ? 'border-emerald-400 bg-emerald-400/10'
               : cursorVariant === 'social'
@@ -124,42 +188,41 @@ const CustomCursor = () => {
               : 'border-gray-400 dark:border-gray-300 bg-gray-400/5 dark:bg-gray-300/5'
           } ${isHovering ? 'scale-100' : 'scale-75'}`}
           style={{
-            backdropFilter: 'blur(8px)',
-            transition: 'all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+            backdropFilter: 'blur(4px)',
+            transition: 'all 0.2s ease',
+            willChange: 'transform, background, border-color',
           }}
         >
-          {/* Inner glow effect */}
+          {/* Simplified inner element */}
           <div
-            className={`absolute inset-1 rounded-full transition-all duration-300 ${
+            className={`absolute inset-2 rounded-full transition-all duration-200 ${
               cursorVariant === 'contact'
-                ? 'bg-gradient-to-br from-emerald-400/20 to-emerald-600/20'
+                ? 'bg-emerald-400/15'
                 : cursorVariant === 'social'
-                ? 'bg-gradient-to-br from-blue-400/20 to-blue-600/20'
+                ? 'bg-blue-400/15'
                 : cursorVariant === 'button'
-                ? 'bg-gradient-to-br from-purple-400/20 to-purple-600/20'
+                ? 'bg-purple-400/15'
                 : cursorVariant === 'link'
-                ? 'bg-gradient-to-br from-indigo-400/20 to-indigo-600/20'
-                : 'bg-gradient-to-br from-gray-400/10 to-gray-600/10 dark:from-gray-300/10 dark:to-gray-100/10'
+                ? 'bg-indigo-400/15'
+                : 'bg-gray-400/8 dark:bg-gray-300/8'
             } ${isHovering ? 'opacity-100' : 'opacity-60'}`}
           />
           
-          {/* Center icon for different states */}
+          {/* Simplified center icon for different states */}
           {isHovering && (
             <div className="absolute inset-0 flex items-center justify-center">
               {cursorVariant === 'contact' && (
-                <svg className="w-4 h-4 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg className="w-3 h-3 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                 </svg>
               )}
               {cursorVariant === 'social' && (
-                <svg className="w-4 h-4 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg className="w-3 h-3 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                 </svg>
               )}
               {cursorVariant === 'button' && (
-                <svg className="w-4 h-4 text-purple-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122" />
-                </svg>
+                <div className="w-2 h-2 bg-purple-500 rounded-full" />
               )}
               {cursorVariant === 'link' && (
                 <svg className="w-3 h-3 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -171,10 +234,10 @@ const CustomCursor = () => {
         </div>
       </div>
 
-      {/* Instant follow dot */}
+      {/* Simplified instant follow dot */}
       <div
         ref={cursorDotRef}
-        className={`fixed top-0 left-0 pointer-events-none z-[10000] w-2 h-2 -ml-1 -mt-1 rounded-full transition-opacity duration-300 ${
+        className={`fixed top-0 left-0 pointer-events-none z-[10000] w-2 h-2 -ml-1 -mt-1 rounded-full transition-opacity duration-200 ${
           isVisible ? 'opacity-100' : 'opacity-0'
         } ${
           cursorVariant === 'contact'
@@ -188,11 +251,10 @@ const CustomCursor = () => {
             : 'bg-gray-600 dark:bg-gray-300'
         }`}
         style={{
-          transition: 'background-color 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+          transition: 'background-color 0.2s ease',
+          willChange: 'transform',
         }}
       />
-
-
     </>
   )
 }
