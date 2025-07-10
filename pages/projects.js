@@ -541,7 +541,7 @@ export default function Projects() {
 },
 {
   title: 'IntPrep',
-  description: 'IntPrep is a comprehensive interview preparation platform designed to help users prepare for job interviews effectively. The application offers a wide range of interview questions across different domains, including technical, behavioral, and situational questions. Users can track their progress, receive personalized feedback, and practice answering questions in a timed environment.,
+  description: 'IntPrep is a comprehensive interview preparation platform designed to help users prepare for job interviews effectively. The application offers a wide range of interview questions across different domains, including technical, behavioral, and situational questions. Users can track their progress, receive personalized feedback, and practice answering questions in a timed environment.',
     image: '/images/intprep.png',
   link: 'https://github.com/SetFodi/intprep',
   technologies: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Node.js', 'MongoDB', 'API Integration', 'AI'],
