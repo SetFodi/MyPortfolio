@@ -49,7 +49,7 @@ const textRevealVariants = {
 }
 
 // Optimized Project Card Component with better performance
-const ProjectCard = ({ project, index, hoveredIndex, setHoveredIndex, isMobile, activeTech, openProjectModal }) => {
+const ProjectCard = ({ project, index, hoveredIndex, setHoveredIndex, isMobile, activeTech, openProjectModal, viewMode }) => {
   const [isHovered, setIsHovered] = useState(false)
 
   return (
@@ -62,7 +62,7 @@ const ProjectCard = ({ project, index, hoveredIndex, setHoveredIndex, isMobile, 
         delay: index * 0.03,
         ease: "easeOut"
       }}
-      className="group relative will-change-transform"
+      className={`group relative will-change-transform ${viewMode === 'list' ? 'w-full max-w-3xl mx-auto' : ''}`}
       onMouseEnter={() => {
         if (!isMobile) {
           setHoveredIndex(index)
@@ -908,7 +908,7 @@ export default function Projects() {
 
             {/* Optimized Projects Grid */}
             <motion.div
-              className={`${viewMode === 'grid' ? 'grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 lg:gap-10' : 'grid grid-cols-1 gap-8'}`}
+              className={`${viewMode === 'grid' ? 'grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 lg:gap-10' : 'grid grid-cols-1 gap-8 justify-items-center'}`}
               layout
             >
               {filteredProjects.map((project, index) => (
@@ -921,6 +921,7 @@ export default function Projects() {
                   isMobile={isMobile}
                   activeTech={activeTech}
                   openProjectModal={openProjectModal}
+                  viewMode={viewMode}
                 />
               ))}
             </motion.div>
