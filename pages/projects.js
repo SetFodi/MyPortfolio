@@ -379,6 +379,8 @@ export default function Projects() {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [activeCategory, setActiveCategory] = useState(null)
   const [sortOrder, setSortOrder] = useState('newest')
+  // View mode state: 'grid' (default) or 'list'
+  const [viewMode, setViewMode] = useState('grid')
   const projectsRef = useRef(null)
 
   // Function to open project modal
@@ -553,7 +555,7 @@ export default function Projects() {
 {
   title: 'AndLearn',
   description: 'Interactive programming-tutorial platform with live code execution, progress tracking, and multilingual UI.',
-  image: '/images/andlearn.jpg',       // update path if different
+  image: '/images/andlearn.png',       // update path if different
   link: 'https://andlearn.dev',        // or GitHub repo link
   technologies: ['HTML', 'CSS', 'JavaScript', 'Tailwind CSS', 'Service Worker'],
   status: 'Completed',
@@ -878,8 +880,10 @@ export default function Projects() {
 
                 {/* View Toggle */}
                 <div className="flex rounded-xl overflow-hidden border border-gray-200 dark:border-gray-700 bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm">
+                  {/* Grid view button */}
                   <motion.button
-                    className="p-3 bg-indigo-600 text-white relative"
+                    onClick={() => setViewMode('grid')}
+                    className={`p-3 relative ${viewMode === 'grid' ? 'bg-indigo-600 text-white' : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700'}`}
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                   >
@@ -887,8 +891,10 @@ export default function Projects() {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
                     </svg>
                   </motion.button>
+                  {/* List view button */}
                   <motion.button
-                    className="p-3 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                    onClick={() => setViewMode('list')}
+                    className={`p-3 relative ${viewMode === 'list' ? 'bg-indigo-600 text-white' : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700'}`}
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                   >
@@ -902,7 +908,7 @@ export default function Projects() {
 
             {/* Optimized Projects Grid */}
             <motion.div
-              className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 lg:gap-10"
+              className={`${viewMode === 'grid' ? 'grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 lg:gap-10' : 'grid grid-cols-1 gap-8'}`}
               layout
             >
               {filteredProjects.map((project, index) => (
