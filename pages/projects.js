@@ -549,6 +549,18 @@ export default function Projects() {
   category: 'Education',
   githubStats: { stars: 22, forks: 4 },
   longDescription: 'AI-Powered Interview Preparation Platform'
+},
+{
+  title: 'AndLearn',
+  description: 'Interactive programming-tutorial platform with live code execution, progress tracking, and multilingual UI.',
+  image: '/images/andlearn.jpg',       // update path if different
+  link: 'https://andlearn.dev',        // or GitHub repo link
+  technologies: ['HTML', 'CSS', 'JavaScript', 'Tailwind CSS', 'Service Worker'],
+  status: 'Completed',
+  category: 'Education',
+  githubStats: { stars: 0, forks: 0 }, // update once published
+  longDescription:
+    'AndLearn is a hands-on learning platform that teaches JavaScript, Python, React, and TypeScript through interactive lessons. It features real-time code execution, bilingual support (English & Georgian), dark/light themes, and dynamic progress tracking, all wrapped in a modern glass-morphism UI.'
 }
   ]
 
