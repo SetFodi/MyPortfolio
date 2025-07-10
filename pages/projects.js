@@ -57,7 +57,7 @@ const ProjectCard = ({ project, index, hoveredIndex, setHoveredIndex, isMobile, 
       key={`${project.title}-${index}`}
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ 
+      transition={{
         duration: 0.3,
         delay: index * 0.03,
         ease: "easeOut"
@@ -79,11 +79,11 @@ const ProjectCard = ({ project, index, hoveredIndex, setHoveredIndex, isMobile, 
       {/* Removed Tilt component for better performance - using CSS transforms instead */}
       <div className="h-full transform-gpu hover-lift">
         {/* Simplified Project Card with CSS-based animations */}
-        <div 
+        <div
           className="project-card relative h-full rounded-3xl overflow-hidden bg-white dark:bg-gray-900 shadow-lg border border-gray-200/50 dark:border-gray-700/50 cursor-pointer transition-all duration-300 ease-out"
           onClick={() => window.open(project.link, '_blank')}
         >
-          
+
           {/* Optimized Image Section */}
           <div className="relative h-64 lg:h-72 overflow-hidden group/image">
             {/* Project Image with CSS-only hover effect */}
@@ -541,8 +541,8 @@ export default function Projects() {
 },
 {
   title: 'IntPrep',
-  description: 'IntPrep is a comprehensive interview preparation platform designed to help users prepare for job interviews effectively. The application offers a wide range of interview questions across different domains, including technical, behavioral, and situational questions. Users can track their progress, receive personalized feedback, and practice answering questions in a timed environment. The platform includes a comprehensive library of interview questions, detailed answer explanations, and a scoring system to evaluate performance.',
-  image: '/images/intprep.png',
+  description: 'IntPrep is a comprehensive interview preparation platform designed to help users prepare for job interviews effectively. The application offers a wide range of interview questions across different domains, including technical, behavioral, and situational questions. Users can track their progress, receive personalized feedback, and practice answering questions in a timed environment.,
+    image: '/images/intprep.png',
   link: 'https://github.com/SetFodi/intprep',
   technologies: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Node.js', 'MongoDB', 'API Integration', 'AI'],
   status: 'Completed',
@@ -601,7 +601,7 @@ export default function Projects() {
       <div className="min-h-screen bg-gradient-to-br from-white via-indigo-50/20 to-purple-50/30 dark:from-gray-950 dark:via-indigo-950/20 dark:to-purple-950/30 transition-colors duration-500 overflow-hidden">
         <CustomCursor />
         <ParticleBackground density={4} interactive={false} />
-        
+
         {/* Scroll Progress Bar */}
         <motion.div
           className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 z-50 transform origin-left"
@@ -707,7 +707,7 @@ export default function Projects() {
 
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             {/* Enhanced Filter Header */}
-            <motion.div 
+            <motion.div
               className="text-center mb-8"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -722,7 +722,7 @@ export default function Projects() {
             </motion.div>
 
             {/* Enhanced Filter Controls */}
-            <motion.div 
+            <motion.div
               className="mb-12"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
@@ -818,7 +818,7 @@ export default function Projects() {
 
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             {/* Enhanced Control Bar */}
-            <motion.div 
+            <motion.div
               className="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-12 gap-6"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -866,7 +866,7 @@ export default function Projects() {
 
                 {/* View Toggle */}
                 <div className="flex rounded-xl overflow-hidden border border-gray-200 dark:border-gray-700 bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm">
-                  <motion.button 
+                  <motion.button
                     className="p-3 bg-indigo-600 text-white relative"
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
@@ -875,7 +875,7 @@ export default function Projects() {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
                     </svg>
                   </motion.button>
-                  <motion.button 
+                  <motion.button
                     className="p-3 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
@@ -889,7 +889,7 @@ export default function Projects() {
             </motion.div>
 
             {/* Optimized Projects Grid */}
-            <motion.div 
+            <motion.div
               className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 lg:gap-10"
               layout
             >
@@ -908,7 +908,7 @@ export default function Projects() {
             </motion.div>
 
             {/* Enhanced CTA Section */}
-            <motion.div 
+            <motion.div
               className="mt-24 text-center"
               initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
@@ -946,7 +946,7 @@ export default function Projects() {
                           <span>Explore GitHub Profile</span>
                           <ArrowTopRightOnSquareIcon className="w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-200" />
                         </span>
-                        
+
                         {/* Animated background */}
                         <motion.div
                           className="absolute inset-0 bg-gradient-to-r from-purple-600 to-pink-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
