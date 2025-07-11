@@ -556,9 +556,9 @@ export default function Projects() {
   title: 'AndLearn',
   description: 'Interactive programming-tutorial platform with live code execution, progress tracking, and multilingual UI.',
   image: 'images/AndLearn.png',       // update path if different
-  link: 'https://github.com/SetFodi/andlearn',        // or GitHub repo link
+  link: 'https://andlearn-livid.vercel.app/',        // or GitHub repo link
   technologies: ['HTML', 'CSS', 'JavaScript', 'Tailwind CSS', 'Service Worker'],
-  status: 'Completed',
+  status: 'Live',
   category: 'Education',
   githubStats: { stars: 0, forks: 0 }, // update once published
   longDescription:
