@@ -1,4 +1,5 @@
 import { useEffect, useState, useRef, useCallback } from 'react'
+import { createPortal } from 'react-dom'
 
 const CustomCursor = () => {
   const cursorRef = useRef(null)
@@ -153,11 +154,13 @@ const CustomCursor = () => {
   }, [animateCursor, isVisible, isMobile, isReduced])
 
   // Don't render on mobile devices or if reduced motion is preferred
-  if (isMobile || isReduced) {
+  const [mounted, setMounted] = useState(false)
+  useEffect(() => setMounted(true), [])
+  if (isMobile || isReduced || !mounted) {
     return null
   }
 
-  return (
+  const cursorUI = (
     <>
       {/* Main cursor ring - simplified */}
       <div
@@ -257,6 +260,9 @@ const CustomCursor = () => {
       />
     </>
   )
+
+  // Render via portal to avoid clipping/containment issues
+  return createPortal(cursorUI, document.body)
 }
 
 export default CustomCursor 

@@ -294,6 +294,12 @@ body {
   text-rendering: optimizeLegibility;
 }
 
+/* Content-visibility utility for offscreen sections */
+.cv-auto {
+  content-visibility: auto;
+  contain-intrinsic-size: 1000px 800px; /* Reserve space to prevent layout shift */
+}
+
 /* Container query support for better responsiveness */
 @container (max-width: 768px) {
   .container-responsive {

@@ -1,5 +1,6 @@
 'use client'
 import { useState, useRef, useEffect } from 'react'
+import dynamic from 'next/dynamic'
 import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -7,9 +8,10 @@ import { motion, useScroll, useTransform } from 'framer-motion'
 
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
-import CustomCursor from '../components/CustomCursor'
-import ParticleBackground from '../components/ParticleBackground'
-import ScrollAnimations from '../components/ScrollAnimations'
+// Defer heavy/animated components to improve initial render performance
+const CustomCursor = dynamic(() => import('../components/CustomCursor'), { ssr: false })
+const ParticleBackground = dynamic(() => import('../components/ParticleBackground'), { ssr: false })
+const ScrollAnimations = dynamic(() => import('../components/ScrollAnimations'), { ssr: false })
 import { skillData, projects } from '../data/homeData'
 
 export default function Home() {
@@ -111,7 +113,7 @@ export default function Home() {
         </Head>
 
         <CustomCursor />
-        <ParticleBackground density={isMobile ? 5 : 12} interactive={false} />
+        <ParticleBackground density={isMobile ? 4 : 10} interactive={false} />
         
         {/* Simplified Scroll Progress Bar */}
         {!isReduced && (

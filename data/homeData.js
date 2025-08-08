@@ -14,6 +14,7 @@ export const skillData = [
   { name: 'PHP', category: 'backend', color: '#777BB4' },
   { name: 'Laravel', category: 'backend', color: '#FF2D20' },
   { name: 'C#', category: 'backend', color: '#512BD4' },
+  { name: 'Odoo', category: 'backend', color: '#714B67' },
 
   // Database skills
   { name: 'MongoDB', category: 'database', color: '#47A248' },

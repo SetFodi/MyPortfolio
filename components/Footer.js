@@ -108,7 +108,7 @@ export default function Footer() {
   ]
 
   return (
-    <footer className="relative bg-gradient-to-br from-white/95 via-indigo-50/80 to-purple-50/60 dark:from-gray-950/98 dark:via-indigo-950/90 dark:to-purple-950/80 backdrop-blur-xl border-t border-gray-200/30 dark:border-gray-800/30 overflow-hidden">
+    <footer className="relative bg-gradient-to-br from-white via-indigo-50/60 to-purple-50/40 dark:from-gray-950 dark:via-indigo-950/80 dark:to-purple-950/60 border-t border-gray-200/40 dark:border-gray-800/40 overflow-hidden">
       {/* Enhanced background with multiple gradient layers */}
       <div className="absolute inset-0 z-0 overflow-hidden">
         {/* Animated gradient mesh */}
@@ -127,81 +127,27 @@ export default function Footer() {
           }}
         />
 
-        {/* Floating gradient orbs */}
-        <motion.div
-          className="absolute -top-20 -right-32 w-64 h-64 bg-gradient-to-br from-indigo-300/20 to-purple-400/20 dark:from-indigo-600/15 dark:to-purple-700/15 rounded-full blur-3xl"
-          animate={{
-            x: [0, 30, 0],
-            y: [0, -20, 0],
-            scale: [1, 1.1, 1],
-            opacity: [0.3, 0.6, 0.3]
-          }}
-          transition={{
-            duration: 8,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-        />
-        <motion.div
-          className="absolute -bottom-16 -left-32 w-72 h-72 bg-gradient-to-br from-blue-300/15 to-cyan-400/15 dark:from-blue-600/10 dark:to-cyan-700/10 rounded-full blur-3xl"
-          animate={{
-            x: [0, -25, 0],
-            y: [0, 15, 0],
-            scale: [1, 0.9, 1],
-            opacity: [0.2, 0.5, 0.2]
-          }}
-          transition={{
-            duration: 10,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: 2
-          }}
-        />
-        <motion.div
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-br from-pink-300/10 to-indigo-400/10 dark:from-pink-600/8 dark:to-indigo-700/8 rounded-full blur-3xl"
-          animate={{
-            scale: [1, 1.2, 1],
-            opacity: [0.1, 0.3, 0.1],
-            rotate: [0, 180, 360]
-          }}
-          transition={{
-            duration: 15,
-            repeat: Infinity,
-            ease: "linear"
-          }}
-        />
+        {/* Subtle gradient shapes (reduced motion and count) */}
+        <div className="absolute -top-20 -right-32 w-64 h-64 bg-gradient-to-br from-indigo-300/15 to-purple-400/15 dark:from-indigo-600/10 dark:to-purple-700/10 rounded-full blur-3xl" />
+        <div className="absolute -bottom-16 -left-32 w-72 h-72 bg-gradient-to-br from-blue-300/10 to-cyan-400/10 dark:from-blue-600/8 dark:to-cyan-700/8 rounded-full blur-3xl" />
 
-        {/* Enhanced floating particles */}
-        {Array.from({ length: 25 }).map((_, i) => (
-          <motion.div
+        {/* Fewer subtle dots */}
+        {Array.from({ length: 8 }).map((_, i) => (
+          <div
             key={i}
             className={`absolute w-1 h-1 rounded-full ${
-              i % 3 === 0 ? 'bg-indigo-400/40' : 
-              i % 3 === 1 ? 'bg-purple-400/40' : 'bg-pink-400/40'
+              i % 3 === 0 ? 'bg-indigo-400/30' : 
+              i % 3 === 1 ? 'bg-purple-400/30' : 'bg-pink-400/30'
             } dark:opacity-60`}
             style={{
               left: `${Math.random() * 100}%`,
               top: `${Math.random() * 100}%`,
             }}
-            variants={particleVariants}
-            animate="animate"
-            custom={i}
           />
         ))}
 
-        {/* Animated wave patterns */}
-        <motion.div
-          className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-transparent via-indigo-500/20 to-transparent"
-          animate={{
-            x: ['-100%', '100%'],
-            opacity: [0, 1, 0]
-          }}
-          transition={{
-            duration: 4,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-        />
+        {/* Static divider accent */}
+        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-indigo-500/20 to-transparent" />
       </div>
 
       <div className="container mx-auto px-4 py-16 lg:py-20 relative z-10">

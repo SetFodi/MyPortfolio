@@ -117,11 +117,21 @@ const ParticleBackground = ({ density = 15, interactive = false }) => {
     }
   }
 
-  const animate = () => {
+  const lastFrameTimeRef = useRef(0)
+
+  const animate = (timestamp) => {
     const canvas = canvasRef.current
     if (!canvas) return
 
     const ctx = canvas.getContext('2d')
+    // Throttle to ~30fps
+    const last = lastFrameTimeRef.current || 0
+    if (timestamp && timestamp - last < 33) {
+      animationRef.current = requestAnimationFrame(animate)
+      return
+    }
+    lastFrameTimeRef.current = timestamp
+
     ctx.clearRect(0, 0, dimensions.width, dimensions.height)
 
     // Update and draw particles
@@ -176,7 +186,7 @@ const ParticleBackground = ({ density = 15, interactive = false }) => {
       initParticles()
       // Don't start animation if reduced motion is preferred
       if (!isReduced) {
-        animate()
+        animationRef.current = requestAnimationFrame(animate)
       }
     }
 
@@ -186,6 +196,19 @@ const ParticleBackground = ({ density = 15, interactive = false }) => {
       }
     }
   }, [dimensions, isReduced])
+
+  // Pause when tab hidden to avoid background CPU usage
+  useEffect(() => {
+    const handleVisibility = () => {
+      if (document.hidden && animationRef.current) {
+        cancelAnimationFrame(animationRef.current)
+      } else if (!document.hidden && !isReduced) {
+        animationRef.current = requestAnimationFrame(animate)
+      }
+    }
+    document.addEventListener('visibilitychange', handleVisibility)
+    return () => document.removeEventListener('visibilitychange', handleVisibility)
+  }, [isReduced])
 
   // Don't render on mobile or if reduced motion
   if (typeof window !== 'undefined' && (window.innerWidth < 768 || isReduced)) {
