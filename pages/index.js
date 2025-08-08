@@ -34,6 +34,7 @@ export default function Home() {
   // Check for reduced motion and mobile
   const [isReduced, setIsReduced] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
+  const [isSafariLike, setIsSafariLike] = useState(false)
 
   useEffect(() => {
     // Check reduced motion preference
@@ -42,6 +43,11 @@ export default function Home() {
     
     // Check mobile
     setIsMobile(window.innerWidth < 768)
+    // Detect Safari/Orion for perf-friendly fallbacks
+    const ua = navigator.userAgent
+    const isSafari = /Safari/i.test(ua) && !/Chrome|Chromium|Edg/i.test(ua)
+    const isOrion = /Orion/i.test(ua)
+    setIsSafariLike(isSafari || isOrion)
     
     const handleChange = (e) => setIsReduced(e.matches)
     const handleResize = () => setIsMobile(window.innerWidth < 768)
@@ -133,8 +139,8 @@ export default function Home() {
         >
           {/* Simplified Background */}
           <div className="absolute inset-0 z-0">
-            {/* Static gradient base for mobile, animated for desktop */}
-            {!isReduced && !isMobile ? (
+            {/* Static gradient for mobile/Safari, animated for desktop/non-Safari */}
+            {!isReduced && !isMobile && !isSafariLike ? (
               <motion.div 
                 className="absolute inset-0"
                 animate={{
@@ -152,8 +158,8 @@ export default function Home() {
             {/* Dark mode overlay */}
             <div className="absolute inset-0 bg-gray-900/20 dark:bg-gray-900/60 transition-colors duration-500" />
 
-            {/* Simplified gradient blobs - fewer and less intensive */}
-            {!isReduced && !isMobile && (
+            {/* Simplified gradient blobs - disabled on Safari-like browsers */}
+            {!isReduced && !isMobile && !isSafariLike && (
               <>
                 <motion.div 
                   className="absolute top-0 right-0 w-80 h-80 bg-gradient-to-br from-indigo-400/20 to-purple-500/20 dark:from-indigo-500/15 dark:to-purple-600/15 rounded-full blur-3xl"
@@ -176,8 +182,8 @@ export default function Home() {
               </>
             )}
 
-            {/* Simplified floating shapes - only on desktop and no reduced motion */}
-            {!isReduced && !isMobile && (
+            {/* Simplified floating shapes - disabled on Safari-like browsers */}
+            {!isReduced && !isMobile && !isSafariLike && (
               <>
                 <motion.div 
                   className="absolute top-20 left-20 w-12 h-12 border-2 border-indigo-400/30 dark:border-indigo-400/50 rounded-lg"
@@ -331,7 +337,7 @@ export default function Home() {
                   transition={{ type: "spring", stiffness: 300, damping: 30 }}
                 >
                   {/* Simplified floating elements around image */}
-                  {!isReduced && !isMobile && (
+                  {!isReduced && !isMobile && !isSafariLike && (
                     <>
                       <motion.div
                         className="absolute -top-6 -left-6 w-12 h-12 bg-gradient-to-br from-indigo-400 to-purple-500 dark:from-indigo-500 dark:to-purple-600 rounded-full blur-sm opacity-30 dark:opacity-20"
@@ -354,7 +360,7 @@ export default function Home() {
 
                   {/* Main image container with simplified effects */}
                   <motion.div
-                    className="relative h-[400px] md:h-[500px] lg:h-[600px] w-full rounded-3xl overflow-hidden shadow-2xl border border-white/20 dark:border-gray-600/30 backdrop-blur-sm"
+                    className={`relative h-[400px] md:h-[500px] lg:h-[600px] w-full rounded-3xl overflow-hidden shadow-2xl border border-white/20 dark:border-gray-600/30 ${isSafariLike ? '' : 'backdrop-blur-sm'}`}
                     whileHover={!isReduced ? {
                       rotateX: 2,
                       rotateY: -2,
@@ -364,7 +370,7 @@ export default function Home() {
                     transition={{ type: "spring", stiffness: 300, damping: 30 }}
                   >
                     {/* Simplified animated border */}
-                    {!isReduced && (
+                    {!isReduced && !isSafariLike && (
                       <motion.div
                         className="absolute inset-0 rounded-3xl"
                         style={{
@@ -391,9 +397,7 @@ export default function Home() {
                       {/* Simplified overlay effect */}
                       <motion.div
                         className="absolute inset-0 bg-gradient-to-t from-indigo-600/20 via-transparent to-purple-600/20 rounded-3xl"
-                        animate={!isReduced ? {
-                          opacity: [0.2, 0.3, 0.2]
-                        } : {}}
+                        animate={!isReduced && !isSafariLike ? { opacity: [0.2, 0.3, 0.2] } : {}}
                         transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
                       />
                     </div>
@@ -401,7 +405,7 @@ export default function Home() {
 
                   {/* Simplified stats overlay */}
                   <motion.div
-                    className="absolute -bottom-6 left-4 right-4 p-4 bg-white/90 dark:bg-gray-900/90 backdrop-blur-md rounded-2xl border border-white/20 dark:border-gray-700/30 shadow-lg"
+                    className={`absolute -bottom-6 left-4 right-4 p-4 bg-white/90 dark:bg-gray-900/90 ${isSafariLike ? '' : 'backdrop-blur-md'} rounded-2xl border border-white/20 dark:border-gray-700/30 shadow-lg`}
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6, delay: 0.8 }}
