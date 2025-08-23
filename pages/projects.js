@@ -553,6 +553,17 @@ export default function Projects() {
   longDescription: 'AI-Powered Interview Preparation Platform'
 },
 {
+  title: 'AndScore',
+  description: 'Modern football scores and fixtures platform providing live updates, match details, and league standings for top European competitions.',
+  image: '/images/andscore.png', // You'll need to add this image
+  link: 'https://andscore.site', // Update with your actual deployment URL
+  technologies: ['Next.js 15', 'TypeScript', 'Tailwind CSS', 'Framer Motion', 'Football-Data API', 'Radix UI'],
+  status: 'Live',
+  category: 'Sports',
+  githubStats: { stars: 0, forks: 0 }, // Update these when you publish the repo
+  longDescription: 'AndScore is a clean, fast football platform focused on delivering live scores, fixtures, and standings for the top European leagues including Premier League, LaLiga, Serie A, Bundesliga, Ligue 1, and Champions League. The application features a modern glass-morphism design with smooth animations, real-time match updates, favorite team tracking, and comprehensive filtering options. Users can browse matches by date, league, or status (live, upcoming, finished), view detailed match information in modal popups, and enjoy a fully responsive experience across all devices. Built with performance in mind, AndScore offers both dark and light themes, intuitive navigation, and a football-themed aesthetic that puts the beautiful game first.'
+},
+{
   title: 'AndLearn',
   description: 'Interactive programming-tutorial platform with live code execution, progress tracking, and multilingual UI.',
   image: 'images/AndLearn.png',       // update path if different
