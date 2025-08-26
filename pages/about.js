@@ -122,6 +122,13 @@ export default function About() {
       icon: BriefcaseIcon,
       isLeft: false,
     },
+    {
+    year: '2025',
+    title: 'First Job',
+    description: 'Getting the first Job as a Backend Developer (Odoo Python) at Fostral',
+    icon: BriefcaseIcon,
+    isLeft: true,
+    }
   ]
 
   return (
@@ -137,7 +144,7 @@ export default function About() {
 
         <CustomCursor />
         <ParticleBackground density={25} interactive={true} />
-        
+
         {/* Scroll Progress Bar */}
         <motion.div
           className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 z-50 transform origin-left"
@@ -414,7 +421,7 @@ export default function About() {
                 </div>
                 <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4">Backend</h3>
                 <div className="space-y-3">
-                  {['Node.js', 'Python', 'PHP', 'Laravel', 'C#', 'RESTful APIs'].map((skill, i) => (
+                  {['Node.js', 'Python', 'PHP', 'Laravel', 'C#', 'Odoo'].map((skill, i) => (
                     <div key={i} className="flex items-center">
                       <div className="w-2 h-2 rounded-full bg-purple-500 mr-3"></div>
                       <span className="text-gray-700 dark:text-gray-300">{skill}</span>
@@ -436,7 +443,7 @@ export default function About() {
                 </div>
                 <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4">Database & Deployment</h3>
                 <div className="space-y-3">
-                  {['MongoDB', 'MySQL', 'PostgreSQL', 'Git', 'Vercel', 'Netlify', 'Render'].map((skill, i) => (
+                  {['MongoDB', 'MySQL', 'PostgreSQL', 'Git', 'Docker', 'Lua'].map((skill, i) => (
                     <div key={i} className="flex items-center">
                       <div className="w-2 h-2 rounded-full bg-blue-500 mr-3"></div>
                       <span className="text-gray-700 dark:text-gray-300">{skill}</span>
