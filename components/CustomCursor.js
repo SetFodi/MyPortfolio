@@ -3,7 +3,6 @@ import { createPortal } from 'react-dom'
 
 const CustomCursor = () => {
   const cursorRef = useRef(null)
-  const cursorDotRef = useRef(null)
   const [isVisible, setIsVisible] = useState(false)
   const [isHovering, setIsHovering] = useState(false)
   const [cursorVariant, setCursorVariant] = useState('default')
@@ -68,9 +67,6 @@ const CustomCursor = () => {
       cursorRef.current.style.transform = `translate3d(${delayedMouse.current.x}px, ${delayedMouse.current.y}px, 0)`
     }
     
-    if (cursorDotRef.current) {
-      cursorDotRef.current.style.transform = `translate3d(${mouse.current.x}px, ${mouse.current.y}px, 0)`
-    }
     
     rafId.current = requestAnimationFrame(animateCursor)
   }, [isReduced])
@@ -237,27 +233,6 @@ const CustomCursor = () => {
         </div>
       </div>
 
-      {/* Simplified instant follow dot */}
-      <div
-        ref={cursorDotRef}
-        className={`fixed top-0 left-0 pointer-events-none z-[10000] w-2 h-2 -ml-1 -mt-1 rounded-full transition-opacity duration-200 ${
-          isVisible ? 'opacity-100' : 'opacity-0'
-        } ${
-          cursorVariant === 'contact'
-            ? 'bg-emerald-500'
-            : cursorVariant === 'social'
-            ? 'bg-blue-500'
-            : cursorVariant === 'button'
-            ? 'bg-purple-500'
-            : cursorVariant === 'link'
-            ? 'bg-indigo-500'
-            : 'bg-gray-600 dark:bg-gray-300'
-        }`}
-        style={{
-          transition: 'background-color 0.2s ease',
-          willChange: 'transform',
-        }}
-      />
     </>
   )
 
