@@ -1,274 +1,29 @@
 'use client'
+import { useState, useEffect } from 'react'
 import Head from 'next/head'
+import { motion } from 'framer-motion'
 import { useForm } from 'react-hook-form'
-import {
-  motion,
-  AnimatePresence,
-  useScroll,
-  useTransform,
-} from 'framer-motion'
-import { useState, useRef } from 'react'
-import Navbar from '../components/Navbar' // Assuming Navbar is in components
-import Footer from '../components/Footer' // Assuming Footer is in components
-import CustomCursor from '../components/CustomCursor'
-import ParticleBackground from '../components/ParticleBackground'
-import ScrollAnimations from '../components/ScrollAnimations'
-import {
-  EnvelopeIcon,
-  MapPinIcon,
-  ShareIcon,
-  PaperAirplaneIcon,
-  ExclamationCircleIcon,
-  CheckCircleIcon,
-} from '@heroicons/react/24/outline'
-import Link from 'next/link' // Import Link for social icons if needed
+import Navbar from '../components/Navbar'
+import Footer from '../components/Footer'
 
-// --- Variants for Animations ---
-const fadeIn = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' } },
-}
+export default function Contact() {
+  const [mounted, setMounted] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitSuccess, setSubmitSuccess] = useState('')
+  const [submitError, setSubmitError] = useState('')
 
-const staggerContainer = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.1,
-      delayChildren: 0.2,
-    },
-  },
-}
-
-// --- Enhanced Particles (Subtle floating dots) ---
-const FloatingParticles = () => {
-  const particleCount = 25 // Reduced count for subtlety
-  const particles = Array.from({ length: particleCount }).map((_, i) => ({
-    id: i,
-    x: Math.random() * 100,
-    y: Math.random() * 100,
-    size: Math.random() * 2.5 + 1, // Smaller size range
-    duration: Math.random() * 5 + 8, // Longer, varied duration
-    delay: Math.random() * 3,
-  }))
-
-  return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none -z-10">
-      {particles.map((particle) => (
-        <motion.div
-          key={particle.id}
-          className="absolute rounded-full bg-gradient-to-br from-blue-400 to-purple-400 dark:from-blue-600 dark:to-purple-600 opacity-10 dark:opacity-15" // Gradient dots
-          style={{
-            width: particle.size,
-            height: particle.size,
-            left: `${particle.x}%`,
-            top: `${particle.y}%`,
-          }}
-          animate={{
-            y: [0, Math.random() * 40 - 20, 0], // Random vertical drift
-            x: [0, Math.random() * 30 - 15, 0], // Random horizontal drift
-            scale: [1, 1.1, 1], // Subtle pulse
-          }}
-          transition={{
-            duration: particle.duration,
-            repeat: Infinity,
-            ease: 'easeInOut',
-            delay: particle.delay,
-          }}
-        />
-      ))}
-    </div>
-  )
-}
-
-// --- Enhanced Form Input ---
-const FormInput = ({
-  label,
-  type = 'text',
-  register,
-  name,
-  rules,
-  errors,
-  placeholder = '',
-  isFocused,
-  setIsFocused,
-}) => {
-  const hasError = !!errors[name]
-
-  return (
-    <motion.div
-      className="mb-6 relative"
-      variants={fadeIn} // Use fadeIn variant from parent stagger
-    >
-      <label
-        htmlFor={name}
-        className="block text-gray-700 dark:text-gray-300 text-sm font-medium mb-2 transition-colors duration-300"
-      >
-        {label}
-      </label>
-      <div className="relative">
-        {type === 'textarea' ? (
-          <textarea
-            id={name}
-            {...register(name, rules)}
-            rows="5"
-            placeholder={placeholder}
-            onFocus={() => setIsFocused(name)}
-            onBlur={() => setIsFocused(null)}
-            className={`w-full px-4 py-3 rounded-lg border-2 bg-white dark:bg-gray-800/50 
-                        text-gray-800 dark:text-gray-200 placeholder-gray-400 dark:placeholder-gray-500
-                        focus:outline-none transition-all duration-300 ease-in-out
-                        ${
-                          hasError
-                            ? 'border-red-400 focus:border-red-500 focus:ring-red-500/30'
-                            : 'border-gray-200 dark:border-gray-600 focus:border-purple-500 focus:ring-purple-500/30'
-                        }
-                        focus:ring-2`} // Added focus:ring
-          />
-        ) : (
-          <input
-            id={name}
-            type={type}
-            {...register(name, rules)}
-            placeholder={placeholder}
-            onFocus={() => setIsFocused(name)}
-            onBlur={() => setIsFocused(null)}
-            className={`w-full px-4 py-3 rounded-lg border-2 bg-white dark:bg-gray-800/50 
-                        text-gray-800 dark:text-gray-200 placeholder-gray-400 dark:placeholder-gray-500
-                        focus:outline-none transition-all duration-300 ease-in-out
-                        ${
-                          hasError
-                            ? 'border-red-400 focus:border-red-500 focus:ring-red-500/30'
-                            : 'border-gray-200 dark:border-gray-600 focus:border-purple-500 focus:ring-purple-500/30'
-                        }
-                        focus:ring-2`} // Added focus:ring
-          />
-        )}
-
-        {/* Animated Underline/Border Effect */}
-        <motion.div
-          className={`absolute bottom-0 left-0 h-0.5 bg-purple-500 ${
-            hasError ? 'bg-red-500' : 'bg-purple-500'
-          }`}
-          initial={{ width: '0%' }}
-          animate={{ width: isFocused === name ? '100%' : '0%' }}
-          transition={{ duration: 0.4, ease: 'easeOut' }}
-        />
-      </div>
-
-      {/* Error message */}
-      <AnimatePresence>
-        {hasError && (
-          <motion.p
-            initial={{ opacity: 0, y: -5, height: 0 }}
-            animate={{ opacity: 1, y: 0, height: 'auto' }}
-            exit={{ opacity: 0, y: -5, height: 0 }}
-            transition={{ duration: 0.3 }}
-            className="text-red-500 text-xs mt-1 flex items-center"
-          >
-            <ExclamationCircleIcon className="w-4 h-4 mr-1" />
-            {errors[name].message}
-          </motion.p>
-        )}
-      </AnimatePresence>
-    </motion.div>
-  )
-}
-
-// --- Enhanced Status Message ---
-const StatusMessage = ({ success, error }) => {
-  const isVisible = success || error
-  const message = success || error
-  const isSuccess = !!success
-
-  return (
-    <AnimatePresence>
-      {isVisible && (
-        <motion.div
-          initial={{ opacity: 0, y: 10, scale: 0.95 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          exit={{ opacity: 0, y: 10, scale: 0.95 }}
-          transition={{ duration: 0.4, ease: 'easeOut' }}
-          className={`mt-6 p-4 rounded-lg border ${
-            isSuccess
-              ? 'bg-green-50 border-green-300 dark:bg-green-900/30 dark:border-green-700'
-              : 'bg-red-50 border-red-300 dark:bg-red-900/30 dark:border-red-700'
-          }`}
-        >
-          <div className="flex items-center">
-            {isSuccess ? (
-              <CheckCircleIcon className="w-5 h-5 mr-3 text-green-500" />
-            ) : (
-              <ExclamationCircleIcon className="w-5 h-5 mr-3 text-red-500" />
-            )}
-            <p
-              className={`text-sm font-medium ${
-                isSuccess
-                  ? 'text-green-700 dark:text-green-300'
-                  : 'text-red-700 dark:text-red-300'
-              }`}
-            >
-              {message}
-            </p>
-          </div>
-        </motion.div>
-      )}
-    </AnimatePresence>
-  )
-}
-
-// --- Enhanced Contact Info Card ---
-const ContactInfoCard = ({ icon: Icon, title, value, link, index }) => {
-  const cardContent = (
-    <motion.div
-      whileHover={{
-        y: -6,
-        boxShadow: '0 15px 30px rgba(0, 0, 0, 0.12)',
-      }}
-      className="bg-white/60 dark:bg-gray-800/60 backdrop-blur-lg p-6 rounded-xl shadow-lg flex flex-col items-center text-center transition-all duration-300 border border-gray-200 dark:border-gray-700 hover:border-purple-300 dark:hover:border-purple-600 h-full" // Added h-full
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 0.6 + index * 0.15, duration: 0.5 }} // Staggered delay
-    >
-      <div className="p-3 bg-gradient-to-br from-blue-100 to-purple-100 dark:from-blue-900/50 dark:to-purple-900/50 rounded-full mb-4 shadow-inner">
-        <Icon className="w-7 h-7 text-blue-600 dark:text-blue-400" />
-      </div>
-      <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-1">
-        {title}
-      </h3>
-      <p className="text-sm text-gray-600 dark:text-gray-400 break-words">
-        {value}
-      </p>
-    </motion.div>
-  )
-
-  // If it's a link (like email), wrap in an anchor tag
-  if (link) {
-    return (
-      <a href={link} target="_blank" rel="noopener noreferrer" className="block h-full">
-        {cardContent}
-      </a>
-    )
-  }
-  // Otherwise, just render the div
-  return cardContent
-}
-
-function Contact() {
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm({ mode: 'onTouched' }) // Validate on blur
+  } = useForm()
 
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const [submitSuccess, setSubmitSuccess] = useState('')
-  const [submitError, setSubmitError] = useState('')
-  const [focusedField, setFocusedField] = useState(null) // Track focused field
+  useEffect(() => {
+    setMounted(true)
+  }, [])
 
-  const { scrollYProgress } = useScroll()
-  const scale = useTransform(scrollYProgress, [0, 1], [1, 1.15]) // Background scale effect
+  if (!mounted) return null
 
   const onSubmit = async (data) => {
     setIsSubmitting(true)
@@ -285,23 +40,13 @@ function Contact() {
       })
 
       if (!res.ok) {
-        const errorData = await res.json().catch(() => ({})) // Try to parse error
-        throw new Error(
-          errorData.message ||
-            'Failed to send message. Please check your details or try again later.'
-        )
+        throw new Error('Failed to send message')
       }
 
-      setSubmitSuccess(
-        "Message sent successfully! I'll be in touch soon. ✨"
-      )
+      setSubmitSuccess("Message sent successfully! I'll be in touch soon.")
       reset()
-      setFocusedField(null) // Reset focus state
     } catch (error) {
-      console.error('Contact form error:', error)
-      setSubmitError(
-        error.message || 'An unexpected error occurred. Please try again.'
-      )
+      setSubmitError('Failed to send message. Please try again.')
     } finally {
       setIsSubmitting(false)
     }
@@ -309,263 +54,207 @@ function Contact() {
 
   const contactInfo = [
     {
-      title: 'Email Me',
+      label: 'Email',
       value: 'lukafartenadze2004@gmail.com',
-      icon: EnvelopeIcon,
-      link: 'mailto:lukafartenadze2004@gmail.com',
+      href: 'mailto:lukafartenadze2004@gmail.com'
     },
     {
-      title: 'Location',
-      value: 'Tbilisi, Georgia',
-      icon: MapPinIcon,
+      label: 'Location',
+      value: 'Tbilisi, Georgia'
     },
     {
-      title: 'Socials',
-      value: 'Connect on LinkedIn/GitHub', // Or list icons directly
-      icon: ShareIcon,
-      // Optional: Add a link to a specific profile or keep it general
-      // link: "https://www.linkedin.com/in/luka-partenadze-394675348/"
-    },
+      label: 'GitHub',
+      value: 'github.com/SetFodi',
+      href: 'https://github.com/SetFodi'
+    }
   ]
 
   return (
-    <ScrollAnimations>
-      <div className="min-h-screen bg-gradient-to-br from-gray-50 via-indigo-50/30 to-purple-50/20 dark:from-black dark:via-indigo-950/30 dark:to-purple-950/20 relative overflow-hidden transition-colors duration-500">
-        <Head>
-          <title>Contact - Luka Partenadze</title>
-          <meta
-            name="description"
-            content="Get in touch with Luka Partenadze, Junior Full Stack Developer. Let's discuss your project or ideas."
-          />
-          <link rel="icon" href="/favicon.ico" />
-        </Head>
+    <div className="min-h-screen bg-[#0a0a0a] text-white">
+      <Head>
+        <title>Contact - Luka Partenadze</title>
+        <meta name="description" content="Get in touch with Luka Partenadze" />
+      </Head>
 
-        <CustomCursor />
-        <ParticleBackground density={15} interactive={true} />
-        
-        {/* Scroll Progress Bar */}
-        <motion.div
-          className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 z-50 transform origin-left"
-          style={{ scaleX: scrollYProgress }}
-        />
+      <Navbar />
 
-        {/* Enhanced Background Elements */}
-        <motion.div
-          style={{ scale }}
-          className="absolute inset-0 -z-10 opacity-50 dark:opacity-70"
-        >
-          <div className="absolute inset-0 bg-gradient-to-br from-blue-100 via-purple-100 to-pink-100 dark:from-blue-900/30 dark:via-purple-900/40 dark:to-gray-900/50" />
-          
-          {/* Floating gradient orbs */}
-          <motion.div
-            className="absolute top-20 right-20 w-32 h-32 bg-gradient-to-br from-indigo-300/30 to-purple-400/30 dark:from-indigo-600/20 dark:to-purple-700/20 rounded-full blur-2xl"
-            animate={{
-              x: [0, 30, 0],
-              y: [0, -20, 0],
-              scale: [1, 1.1, 1]
-            }}
-            transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-          />
-          <motion.div
-            className="absolute bottom-20 left-20 w-40 h-40 bg-gradient-to-br from-pink-300/30 to-indigo-400/30 dark:from-pink-600/20 dark:to-indigo-700/20 rounded-full blur-2xl"
-            animate={{
-              x: [0, -25, 0],
-              y: [0, 15, 0],
-              scale: [1, 0.9, 1]
-            }}
-            transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-          />
-        </motion.div>
-        <FloatingParticles />
-
-        <Navbar />
-
-      <main className="py-24 md:py-32">
-        <section className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 reveal-up">
-          {/* Header */}
-          <div className="max-w-2xl mx-auto text-center mb-12 md:mb-16">
-            <motion.h1
-              className="text-4xl sm:text-5xl md:text-6xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-500 bg-clip-text text-transparent mb-4 md:mb-6"
-              initial={{ opacity: 0, y: -20 }}
+      <main>
+        {/* Hero Section */}
+        <section className="pt-32 pb-20">
+          <div className="max-w-5xl mx-auto px-6 lg:px-8">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, ease: 'easeOut' }}
+              transition={{ duration: 0.6 }}
+              className="max-w-3xl"
             >
-              Let's Connect
-            </motion.h1>
-            <motion.p
-              className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.7, delay: 0.2, ease: 'easeOut' }}
-            >
-              Have a project in mind, a question, or just want to say hello?
-              Drop me a line!
-            </motion.p>
-          </div>
-
-          {/* Form Card */}
-          <motion.div
-            initial={{ opacity: 0, y: 30, scale: 0.95 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.3, ease: 'easeOut' }}
-            className="max-w-xl mx-auto"
-          >
-            <motion.div
-              className="bg-white/70 dark:bg-gray-800/70 backdrop-blur-lg p-8 md:p-10 rounded-2xl shadow-xl relative z-10 border border-gray-200 dark:border-gray-700"
-              whileHover={{ boxShadow: '0 20px 40px rgba(0, 0, 0, 0.1)' }}
-              transition={{ duration: 0.3 }}
-            >
-              {/* Form Header Deco */}
-              <div className="mb-8 flex items-center justify-center space-x-2">
-                <div className="w-10 h-1.5 bg-blue-500 rounded-full"></div>
-                <div className="w-10 h-1.5 bg-purple-500 rounded-full"></div>
-                <div className="w-10 h-1.5 bg-pink-500 rounded-full"></div>
-              </div>
-
-              <motion.form
-                onSubmit={handleSubmit(onSubmit)}
-                variants={staggerContainer} // Apply stagger to form inputs
-                initial="hidden"
-                animate="visible"
-              >
-                <FormInput
-                  label="Full Name"
-                  register={register}
-                  name="name"
-                  rules={{ required: 'Please enter your name' }}
-                  errors={errors}
-                  placeholder="e.g., Jane Doe"
-                  isFocused={focusedField === 'name'}
-                  setIsFocused={setFocusedField}
-                />
-
-                <FormInput
-                  label="Email Address"
-                  type="email"
-                  register={register}
-                  name="email"
-                  rules={{
-                    required: 'An email address is required',
-                    pattern: {
-                      value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                      message: 'Please enter a valid email address',
-                    },
-                  }}
-                  errors={errors}
-                  placeholder="your.email@example.com"
-                  isFocused={focusedField === 'email'}
-                  setIsFocused={setFocusedField}
-                />
-
-                <FormInput
-                  label="Your Message"
-                  type="textarea"
-                  register={register}
-                  name="message"
-                  rules={{
-                    required: 'Please write a message',
-                    minLength: {
-                      value: 10,
-                      message: 'Message should be at least 10 characters',
-                    },
-                    maxLength: {
-                      value: 1000, // Add a max length
-                      message: 'Message cannot exceed 1000 characters',
-                    },
-                  }}
-                  errors={errors}
-                  placeholder="What's on your mind?"
-                  isFocused={focusedField === 'message'}
-                  setIsFocused={setFocusedField}
-                />
-
-                <motion.button
-                  whileHover={{
-                    scale: 1.03,
-                    boxShadow: '0 10px 25px rgba(124, 58, 237, 0.3)',
-                  }}
-                  whileTap={{ scale: 0.97 }}
-                  type="submit"
-                  disabled={isSubmitting}
-                  className={`w-full mt-4 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 
-                                text-white py-3 px-6 rounded-lg font-semibold text-lg transition-all duration-300 ease-in-out 
-                                flex items-center justify-center space-x-2 magnetic-button
-                                ${
-                                  isSubmitting
-                                    ? 'opacity-70 cursor-not-allowed'
-                                    : 'hover:shadow-lg'
-                                }`}
-                >
-                  {isSubmitting ? (
-                    <>
-                      <svg
-                        className="animate-spin h-5 w-5 text-white"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                      >
-                        <circle
-                          className="opacity-25"
-                          cx="12"
-                          cy="12"
-                          r="10"
-                          stroke="currentColor"
-                          strokeWidth="4"
-                        ></circle>
-                        <path
-                          className="opacity-75"
-                          fill="currentColor"
-                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                        ></path>
-                      </svg>
-                      <span>Sending...</span>
-                    </>
-                  ) : (
-                    <>
-                      <PaperAirplaneIcon className="w-5 h-5" />
-                      <span>Send Message</span>
-                    </>
-                  )}
-                </motion.button>
-
-                {/* Status message */}
-                <StatusMessage success={submitSuccess} error={submitError} />
-              </motion.form>
-            </motion.div>
-          </motion.div>
-
-          {/* Contact info cards */}
-          <div className="mt-16 md:mt-20 max-w-4xl mx-auto">
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.8, delay: 0.6 }}
-            >
-              <h2 className="text-2xl md:text-3xl font-semibold text-gray-800 dark:text-gray-200 mb-8 text-center">
-                Other Ways to Reach Me
-              </h2>
-
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
-                {contactInfo.map((item, index) => (
-                  <ContactInfoCard
-                    key={index}
-                    icon={item.icon}
-                    title={item.title}
-                    value={item.value}
-                    link={item.link}
-                    index={index} // Pass index for stagger
-                  />
-                ))}
-              </div>
+              <p className="text-sm tracking-widest text-white/40 uppercase mb-4">Get in Touch</p>
+              <h1 className="text-5xl md:text-7xl font-light mb-6">
+                Let's Talk
+              </h1>
+              <p className="text-lg text-white/60 leading-relaxed">
+                Have a project in mind or just want to chat? 
+                Drop me a message and I'll get back to you as soon as possible.
+              </p>
             </motion.div>
           </div>
         </section>
-      </main>
 
-      <Footer />
-      </div>
-    </ScrollAnimations>
+        {/* Contact Section */}
+        <section className="py-20">
+          <div className="max-w-5xl mx-auto px-6 lg:px-8">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
+              {/* Contact Form */}
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+              >
+                <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+                  <div>
+                    <label className="block text-sm tracking-wider text-white/60 mb-2">
+                      NAME
+                    </label>
+                    <input
+                      {...register('name', { required: 'Name is required' })}
+                      type="text"
+                      className="w-full bg-white/5 border border-white/10 px-4 py-3 text-white placeholder-white/30 focus:outline-none focus:border-white/30 transition-colors"
+                      placeholder="Your name"
+                    />
+                    {errors.name && (
+                      <p className="text-red-400 text-xs mt-1">{errors.name.message}</p>
+                    )}
+                  </div>
+
+                  <div>
+                    <label className="block text-sm tracking-wider text-white/60 mb-2">
+                      EMAIL
+                    </label>
+                    <input
+                      {...register('email', {
+                        required: 'Email is required',
+                        pattern: {
+                          value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                          message: 'Invalid email address',
+                        },
+                      })}
+                      type="email"
+                      className="w-full bg-white/5 border border-white/10 px-4 py-3 text-white placeholder-white/30 focus:outline-none focus:border-white/30 transition-colors"
+                      placeholder="your.email@example.com"
+                    />
+                    {errors.email && (
+                      <p className="text-red-400 text-xs mt-1">{errors.email.message}</p>
+                    )}
+                  </div>
+
+                  <div>
+                    <label className="block text-sm tracking-wider text-white/60 mb-2">
+                      MESSAGE
+                    </label>
+                    <textarea
+                      {...register('message', {
+                        required: 'Message is required',
+                        minLength: {
+                          value: 10,
+                          message: 'Message must be at least 10 characters',
+                        },
+                      })}
+                      rows="6"
+                      className="w-full bg-white/5 border border-white/10 px-4 py-3 text-white placeholder-white/30 focus:outline-none focus:border-white/30 transition-colors resize-none"
+                      placeholder="Your message..."
+                    />
+                    {errors.message && (
+                      <p className="text-red-400 text-xs mt-1">{errors.message.message}</p>
+                    )}
+                  </div>
+
+                  <motion.button
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="w-full px-8 py-4 bg-white text-black text-sm tracking-wide hover:bg-white/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    {isSubmitting ? 'SENDING...' : 'SEND MESSAGE'}
+                  </motion.button>
+
+                  {submitSuccess && (
+                    <p className="text-green-400 text-sm">{submitSuccess}</p>
+                  )}
+                  {submitError && (
+                    <p className="text-red-400 text-sm">{submitError}</p>
+                  )}
+                </form>
+              </motion.div>
+
+              {/* Contact Info */}
+              <motion.div
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.6, delay: 0.4 }}
+                className="space-y-12"
+              >
+                <div>
+                  <h2 className="text-2xl font-light mb-6">Contact Information</h2>
+                  <div className="space-y-6">
+                    {contactInfo.map((info, idx) => (
+                      <div key={idx}>
+                        <p className="text-sm tracking-wider text-white/40 mb-1">
+                          {info.label}
+                        </p>
+                        {info.href ? (
+                          <a
+                            href={info.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-white/80 hover:text-white transition-colors"
+                          >
+                            {info.value}
+                          </a>
+                        ) : (
+                          <p className="text-white/80">{info.value}</p>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="pt-8 border-t border-white/10">
+                  <h3 className="text-sm tracking-wider text-white/40 mb-4">SOCIAL LINKS</h3>
+                  <div className="flex gap-4">
+                    <a
+                      href="https://github.com/SetFodi"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-white/60 hover:text-white transition-colors"
+                    >
+                      GitHub
+                    </a>
+                    <a
+                      href="https://www.linkedin.com/in/luka-partenadze-394675348/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-white/60 hover:text-white transition-colors"
+                    >
+                      LinkedIn
+                    </a>
+                    <a
+                      href="https://www.instagram.com/fartenadzeluka/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-white/60 hover:text-white transition-colors"
+                    >
+                      Instagram
+                    </a>
+                  </div>
+                </div>
+              </motion.div>
+            </div>
+          </div>
+        </section>
+
+        <Footer />
+      </main>
+    </div>
   )
 }
-
-export default Contact
