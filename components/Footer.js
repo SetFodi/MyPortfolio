@@ -1,5 +1,6 @@
 'use client'
 import Link from 'next/link'
+import { motion } from 'framer-motion'
 import { FaGithub, FaLinkedin, FaInstagram, FaEnvelope } from 'react-icons/fa'
 
 export default function Footer() {
@@ -74,16 +75,20 @@ export default function Footer() {
             <h4 className="text-sm font-medium tracking-wider text-white mb-4">CONNECT</h4>
             <div className="space-y-3">
               {socialLinks.map((social) => (
-                <a
+                <motion.a
                   key={social.name}
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center text-sm text-white/40 hover:text-purple-400 transition-all duration-300 group"
+                  whileHover={{ x: 5 }}
+                  className="flex items-center text-sm text-white/40 hover:text-purple-400 transition-all duration-300 group relative"
                 >
-                  <social.icon className="w-4 h-4 mr-3 group-hover:scale-110 transition-transform" />
-                  <span className="group-hover:translate-x-1 transition-transform">{social.name}</span>
-                </a>
+                  <social.icon className="w-4 h-4 mr-3 group-hover:scale-125 group-hover:rotate-12 transition-all duration-300" />
+                  <span>{social.name}</span>
+                  <svg className="w-3 h-3 ml-2 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                  </svg>
+                </motion.a>
               ))}
             </div>
           </div>

@@ -270,3 +270,146 @@ body::before {
 main {
   animation: fadeIn 0.5s ease-in;
 }
+
+/* Bento Grid specific styles */
+.bento-card-lg {
+  min-height: 560px;
+}
+
+.bento-card-md {
+  min-height: 280px;
+}
+
+.bento-card-sm {
+  min-height: 280px;
+}
+
+/* Smooth hover scale */
+.scale-hover {
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.scale-hover:hover {
+  transform: scale(1.02);
+}
+
+/* Section spacing consistency */
+section {
+  scroll-margin-top: 80px;
+}
+
+/* Better focus states for interactive elements */
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid rgba(120, 119, 198, 0.5);
+  outline-offset: 4px;
+}
+
+/* Smooth scroll behavior */
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* Image loading animation */
+@keyframes shimmerLoading {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+.image-loading {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.05) 25%,
+    rgba(255, 255, 255, 0.1) 50%,
+    rgba(255, 255, 255, 0.05) 75%
+  );
+  background-size: 1000px 100%;
+  animation: shimmerLoading 2s infinite;
+}
+
+/* Tooltip styles */
+.tooltip {
+  position: relative;
+}
+
+.tooltip::before {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-8px);
+  padding: 8px 12px;
+  background: rgba(0, 0, 0, 0.9);
+  color: white;
+  font-size: 12px;
+  white-space: nowrap;
+  border-radius: 6px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s, transform 0.3s;
+  z-index: 100;
+}
+
+.tooltip::after {
+  content: '';
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 6px solid transparent;
+  border-top-color: rgba(0, 0, 0, 0.9);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+
+.tooltip:hover::before,
+.tooltip:hover::after {
+  opacity: 1;
+  transform: translateX(-50%) translateY(-4px);
+}
+
+/* Custom selection for code blocks */
+code::selection,
+pre::selection {
+  background: rgba(120, 119, 198, 0.3);
+}
+
+/* Enhance link hover states */
+a {
+  position: relative;
+  text-decoration: none;
+}
+
+/* Accessibility improvements */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Skill bar shimmer animation */
+@keyframes animate-shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.animate-shimmer {
+  animation: animate-shimmer 2s infinite;
+}

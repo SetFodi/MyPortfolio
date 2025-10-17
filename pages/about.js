@@ -17,11 +17,43 @@ export default function About() {
   if (!mounted) return null
 
   const timeline = [
-    { year: '2020', title: 'Started Journey', description: 'Began learning web development fundamentals' },
-    { year: '2021', title: 'First Projects', description: 'Built first websites and web applications' },
-    { year: '2022', title: 'Full Stack', description: 'Expanded into backend technologies' },
-    { year: '2024', title: 'Professional Growth', description: 'Working on complex real-world projects' },
-    { year: '2025', title: 'Backend Developer', description: 'Joined Fostral as Backend Developer (Odoo Python)' },
+    { 
+      year: '2020', 
+      title: 'Started Journey', 
+      description: 'Began learning web development fundamentals',
+      icon: '🚀'
+    },
+    { 
+      year: '2021', 
+      title: 'First Projects', 
+      description: 'Built first websites and web applications',
+      icon: '💻'
+    },
+    { 
+      year: '2022', 
+      title: 'Full Stack', 
+      description: 'Expanded into backend technologies',
+      icon: '⚡'
+    },
+    { 
+      year: '2024', 
+      title: 'Professional Growth', 
+      description: 'Working on complex real-world projects',
+      icon: '📈'
+    },
+    { 
+      year: '2025', 
+      title: 'Backend Developer', 
+      description: 'Joined Fostral as Backend Developer (Odoo Python)',
+      icon: '🎯'
+    },
+  ]
+
+  const stats = [
+    { label: 'Projects Completed', value: '15+', suffix: '' },
+    { label: 'Years of Experience', value: '5+', suffix: '' },
+    { label: 'Technologies', value: '20+', suffix: '' },
+    { label: 'Code Quality', value: '100', suffix: '%' },
   ]
 
   const skills = {
@@ -66,7 +98,7 @@ export default function About() {
                     src="/images/profile.jpg"
                     alt="Luka Partenadze"
                     fill
-                    className="object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
+                    className="object-cover group-hover:scale-105 group-hover:brightness-110 transition-all duration-700"
                     priority
                     sizes="(max-width: 768px) 100vw, 50vw"
                   />
@@ -122,10 +154,35 @@ export default function About() {
                   </motion.p>
                 </div>
 
+                {/* Stats Grid */}
                 <motion.div 
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.6 }}
+                  className="grid grid-cols-2 gap-4 pt-4"
+                >
+                  {stats.map((stat, idx) => (
+                    <motion.div
+                      key={stat.label}
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ duration: 0.5, delay: 0.7 + idx * 0.1 }}
+                      className="glass rounded-xl p-4 border border-white/10 hover:border-purple-500/30 transition-all duration-300 group cursor-default"
+                    >
+                      <div className="text-3xl font-light gradient-text mb-1 group-hover:scale-110 transition-transform duration-300 inline-block">
+                        {stat.value}{stat.suffix}
+                      </div>
+                      <div className="text-xs text-white/40 group-hover:text-white/60 transition-colors">
+                        {stat.label}
+                      </div>
+                    </motion.div>
+                  ))}
+                </motion.div>
+
+                <motion.div 
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 1 }}
                   className="flex flex-wrap gap-4 pt-4"
                 >
                   <Link href="/projects">
@@ -203,10 +260,14 @@ export default function About() {
                           whileInView={{ opacity: 1, x: 0 }}
                           viewport={{ once: true }}
                           transition={{ duration: 0.3, delay: idx * 0.1 + skillIdx * 0.05 }}
-                          className="text-white/60 hover:text-white transition-all duration-300 flex items-center gap-2 group/item"
+                          whileHover={{ x: 5 }}
+                          className="text-white/60 hover:text-white transition-all duration-300 flex items-center gap-3 group/item cursor-default"
                         >
-                          <span className="w-1 h-1 rounded-full bg-white/20 group-hover/item:bg-purple-400 group-hover/item:w-2 transition-all duration-300"></span>
-                          {skill}
+                          <span className="w-1 h-1 rounded-full bg-white/20 group-hover/item:bg-purple-400 group-hover/item:w-2 group-hover/item:shadow-lg group-hover/item:shadow-purple-400/50 transition-all duration-300"></span>
+                          <span className="flex-1">{skill}</span>
+                          <span className="text-xs text-white/20 group-hover/item:text-purple-400/50 transition-colors">
+                            ⦿
+                          </span>
                         </motion.div>
                       ))}
                     </div>
@@ -237,7 +298,7 @@ export default function About() {
               </h2>
             </motion.div>
 
-            <div className="space-y-12">
+            <div className="space-y-8">
               {timeline.map((item, idx) => (
                 <motion.div
                   key={idx}
@@ -245,23 +306,27 @@ export default function About() {
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true, amount: 0.3 }}
                   transition={{ duration: 0.5, delay: idx * 0.1 }}
-                  className="flex gap-8 items-start group"
+                  className="flex gap-6 items-start group"
                 >
-                  <div className="flex-shrink-0 w-20 text-right">
+                  <div className="flex-shrink-0 w-24 text-right">
                     <span className="text-sm tracking-wider text-white/40 group-hover:text-purple-400 transition-colors font-medium">
                       {item.year}
                     </span>
                   </div>
-                  <div className="flex-shrink-0 w-px h-20 bg-gradient-to-b from-purple-500/20 to-transparent relative">
-                    <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3 h-3 rounded-full bg-purple-500/40 group-hover:bg-purple-400 group-hover:scale-125 transition-all duration-300 border-2 border-[#0a0a0a]"></div>
-                    <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3 h-3 rounded-full bg-purple-400 animate-ping opacity-20"></div>
+                  <div className="flex-shrink-0 relative">
+                    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-500/20 to-blue-500/20 flex items-center justify-center group-hover:scale-110 group-hover:from-purple-500/30 group-hover:to-blue-500/30 transition-all duration-300 border border-white/10 group-hover:border-purple-500/30">
+                      <span className="text-2xl">{item.icon}</span>
+                    </div>
+                    {idx !== timeline.length - 1 && (
+                      <div className="absolute top-12 left-1/2 -translate-x-1/2 w-px h-8 bg-gradient-to-b from-purple-500/20 to-transparent"></div>
+                    )}
                   </div>
-                  <div className="flex-1 pb-12">
+                  <div className="flex-1 pb-8">
                     <div className="glass rounded-xl p-6 hover:bg-white/5 transition-all duration-300 border border-white/5 group-hover:border-purple-500/20">
                       <h3 className="text-xl font-light mb-2 group-hover:text-purple-400 transition-colors">
                         {item.title}
                       </h3>
-                      <p className="text-white/50 group-hover:text-white/70 transition-colors">
+                      <p className="text-white/50 group-hover:text-white/70 transition-colors leading-relaxed">
                         {item.description}
                       </p>
                     </div>

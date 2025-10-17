@@ -11,6 +11,7 @@ export default function Contact() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitSuccess, setSubmitSuccess] = useState('')
   const [submitError, setSubmitError] = useState('')
+  const [copiedEmail, setCopiedEmail] = useState(false)
 
   const {
     register,
@@ -52,11 +53,18 @@ export default function Contact() {
     }
   }
 
+  const copyEmail = () => {
+    navigator.clipboard.writeText('lukafartenadze2004@gmail.com')
+    setCopiedEmail(true)
+    setTimeout(() => setCopiedEmail(false), 2000)
+  }
+
   const contactInfo = [
     {
       label: 'Email',
       value: 'lukafartenadze2004@gmail.com',
-      href: 'mailto:lukafartenadze2004@gmail.com'
+      href: 'mailto:lukafartenadze2004@gmail.com',
+      copyable: true
     },
     {
       label: 'Location',
@@ -264,7 +272,36 @@ export default function Contact() {
                         <p className="text-sm tracking-wider text-white/40 mb-2 font-medium uppercase">
                           {info.label}
                         </p>
-                        {info.href ? (
+                        {info.copyable ? (
+                          <div className="flex items-center gap-2">
+                            <a
+                              href={info.href}
+                              className="text-white/80 hover:text-purple-400 transition-all duration-300"
+                            >
+                              {info.value}
+                            </a>
+                            <button
+                              onClick={copyEmail}
+                              className="p-2 hover:bg-white/10 rounded-lg transition-all duration-300 relative group"
+                              aria-label="Copy email"
+                            >
+                              {copiedEmail ? (
+                                <svg className="w-4 h-4 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                                </svg>
+                              ) : (
+                                <svg className="w-4 h-4 text-white/60 group-hover:text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                                </svg>
+                              )}
+                              {copiedEmail && (
+                                <span className="absolute -top-8 left-1/2 -translate-x-1/2 text-xs bg-green-500 text-white px-2 py-1 rounded whitespace-nowrap">
+                                  Copied!
+                                </span>
+                              )}
+                            </button>
+                          </div>
+                        ) : info.href ? (
                           <a
                             href={info.href}
                             target="_blank"

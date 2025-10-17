@@ -2,15 +2,22 @@
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { usePathname } from 'next/navigation'
-import { motion, useScroll, useMotionValueEvent } from 'framer-motion'
+import { motion, useScroll, useMotionValueEvent, useSpring } from 'framer-motion'
 import useMounted from '../hooks/useMounted'
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
   const [hidden, setHidden] = useState(false)
   const mounted = useMounted()
-  const { scrollY } = useScroll()
+  const { scrollY, scrollYProgress } = useScroll()
   const pathname = usePathname()
+  
+  // Smooth scroll progress animation
+  const scaleX = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001
+  })
 
   useMotionValueEvent(scrollY, 'change', (latest) => {
     const previous = scrollY.getPrevious() ?? 0
@@ -39,6 +46,11 @@ export default function Navbar() {
         transition={{ duration: 0.3, ease: 'easeInOut' }}
         className="fixed top-0 left-0 right-0 z-50 glass-strong border-b border-white/10"
       >
+        {/* Scroll Progress Bar */}
+        <motion.div
+          className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-purple-500 to-blue-500 origin-left"
+          style={{ scaleX }}
+        />
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="flex items-center justify-between h-20">
             {/* Logo */}

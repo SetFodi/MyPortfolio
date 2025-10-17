@@ -278,16 +278,16 @@ export default function Projects() {
                   className="group cursor-pointer card-hover"
                   onClick={() => setSelectedProject(project)}
                 >
-                  <div className="glass rounded-2xl overflow-hidden border border-white/10 group-hover:border-purple-500/30 transition-all duration-300">
+                  <div className="glass rounded-2xl overflow-hidden border border-white/10 group-hover:border-purple-500/50 group-hover:shadow-xl group-hover:shadow-purple-500/10 transition-all duration-500">
                     <div className="aspect-[4/3] relative overflow-hidden">
                       {/* Gradient overlay */}
-                      <div className="absolute inset-0 bg-gradient-to-br from-purple-500/20 via-transparent to-blue-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10"></div>
+                      <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 via-transparent to-blue-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10 mix-blend-overlay"></div>
                       
                       <Image
                         src={project.image}
                         alt={project.title}
                         fill
-                        className="object-cover grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-110"
+                        className="object-cover transition-all duration-700 group-hover:scale-110 group-hover:brightness-110"
                         sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                       />
                       
