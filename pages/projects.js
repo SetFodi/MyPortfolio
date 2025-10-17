@@ -201,24 +201,42 @@ export default function Projects() {
 
       <Navbar />
 
-      <main>
+      <main className="relative z-10">
         {/* Hero Section */}
-        <section className="pt-32 pb-20">
-          <div className="max-w-7xl mx-auto px-6 lg:px-8">
+        <section className="pt-32 pb-20 relative overflow-hidden">
+          {/* Decorative elements */}
+          <div className="absolute inset-0 overflow-hidden pointer-events-none">
+            <div className="absolute top-0 right-1/4 w-96 h-96 bg-purple-500/5 rounded-full blur-3xl"></div>
+            <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-500/5 rounded-full blur-3xl"></div>
+          </div>
+
+          <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
               className="max-w-3xl"
             >
-              <p className="text-sm tracking-widest text-white/40 uppercase mb-4">Portfolio</p>
+              <motion.p 
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                className="text-sm tracking-widest text-white/40 uppercase mb-4"
+              >
+                Portfolio
+              </motion.p>
               <h1 className="text-5xl md:text-7xl font-light mb-6">
-                Selected Work
+                Selected <span className="gradient-text-vibrant">Work</span>
               </h1>
-              <p className="text-lg text-white/60 leading-relaxed">
+              <motion.p 
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.6, delay: 0.4 }}
+                className="text-lg text-white/60 leading-relaxed"
+              >
                 A collection of projects showcasing my skills in full-stack development,
                 UI/UX design, and problem-solving.
-              </p>
+              </motion.p>
             </motion.div>
           </div>
         </section>
@@ -231,78 +249,94 @@ export default function Projects() {
                 <motion.button
                   key={category}
                   initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
+                  animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.3, delay: idx * 0.05 }}
                   onClick={() => setSelectedCategory(category)}
-                  className={`px-6 py-2 text-sm tracking-wider transition-colors ${
+                  className={`px-6 py-2 text-sm tracking-wider rounded-lg transition-all duration-300 relative overflow-hidden ${
                     selectedCategory === category
-                      ? 'bg-white text-black'
-                      : 'border border-white/20 text-white/60 hover:text-white hover:border-white/40'
+                      ? 'bg-gradient-to-r from-purple-500 to-blue-500 text-white shadow-lg shadow-purple-500/30'
+                      : 'border border-white/20 text-white/60 hover:text-white hover:border-purple-500/50 hover:bg-white/5'
                   }`}
                 >
                   {category}
                 </motion.button>
               ))}
-          </div>
+            </div>
           </div>
         </section>
 
         {/* Projects Grid */}
-        <section className="py-20">
+        <section className="py-20 relative">
           <div className="max-w-7xl mx-auto px-6 lg:px-8">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {filteredProjects.map((project, idx) => (
-            <motion.div
+                <motion.div
                   key={project.title}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.4, delay: idx * 0.05 }}
-                  className="group cursor-pointer"
+                  className="group cursor-pointer card-hover"
                   onClick={() => setSelectedProject(project)}
                 >
-                  <div className="aspect-[4/3] relative overflow-hidden bg-white/5 mb-4">
-                    <Image
-                      src={project.image}
-                      alt={project.title}
-                      fill
-                      className="object-cover grayscale group-hover:grayscale-0 transition-all duration-500 group-hover:scale-105"
-                      sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                    />
-                    <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                      <span className="text-sm tracking-wider">VIEW PROJECT</span>
+                  <div className="glass rounded-2xl overflow-hidden border border-white/10 group-hover:border-purple-500/30 transition-all duration-300">
+                    <div className="aspect-[4/3] relative overflow-hidden">
+                      {/* Gradient overlay */}
+                      <div className="absolute inset-0 bg-gradient-to-br from-purple-500/20 via-transparent to-blue-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10"></div>
+                      
+                      <Image
+                        src={project.image}
+                        alt={project.title}
+                        fill
+                        className="object-cover grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-110"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      />
+                      
+                      {/* Hover overlay */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center z-20">
+                        <span className="text-sm tracking-wider font-medium px-6 py-3 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20">VIEW PROJECT</span>
+                      </div>
+
+                      {/* Status badge */}
+                      <div className="absolute top-4 right-4 z-20">
+                        <span className={`text-xs tracking-wider px-3 py-1 rounded-full backdrop-blur-sm ${
+                          project.status === 'Live' 
+                            ? 'bg-green-500/20 text-green-400 border border-green-500/30' 
+                            : 'bg-white/10 text-white/60 border border-white/20'
+                        }`}>
+                          {project.status}
+                        </span>
+                      </div>
+                    </div>
+                    
+                    <div className="p-6 space-y-3">
+                      <div>
+                        <p className="text-xs tracking-widest text-purple-400/70 uppercase mb-2 font-medium">{project.category}</p>
+                        <h3 className="text-xl font-light mb-2 group-hover:text-purple-400 transition-colors">
+                          {project.title}
+                        </h3>
+                        <p className="text-sm text-white/50 line-clamp-2 leading-relaxed">
+                          {project.description}
+                        </p>
+                      </div>
+                      
+                      <div className="flex flex-wrap gap-2 pt-2">
+                        {project.technologies.slice(0, 3).map((tech) => (
+                          <span
+                            key={tech}
+                            className="text-xs text-white/40 border border-white/10 px-2 py-1 rounded group-hover:border-purple-500/30 group-hover:text-white/60 transition-all"
+                          >
+                            {tech}
+                          </span>
+                        ))}
+                        {project.technologies.length > 3 && (
+                          <span className="text-xs text-white/40 group-hover:text-purple-400 transition-colors">
+                            +{project.technologies.length - 3} more
+                          </span>
+                        )}
+                      </div>
                     </div>
                   </div>
-                  <div className="space-y-2">
-                    <div className="flex items-center justify-between">
-                      <h3 className="text-lg font-light group-hover:text-white/80 transition-colors">
-                        {project.title}
-                      </h3>
-                      <span className={`text-xs tracking-wider ${
-                        project.status === 'Live' ? 'text-green-400' : 'text-white/40'
-                      }`}>
-                        {project.status}
-                      </span>
-                    </div>
-                    <p className="text-sm text-white/50 line-clamp-2">
-                      {project.description}
-                    </p>
-                    <div className="flex flex-wrap gap-2 pt-2">
-                      {project.technologies.slice(0, 3).map((tech) => (
-                        <span
-                      key={tech}
-                          className="text-xs text-white/40 border border-white/10 px-2 py-1"
-                        >
-                          {tech}
-                        </span>
-                      ))}
-                      {project.technologies.length > 3 && (
-                        <span className="text-xs text-white/40">
-                          +{project.technologies.length - 3}
-                        </span>
-                      )}
-                </div>
-              </div>
-            </motion.div>
+                </motion.div>
               ))}
             </div>
           </div>
@@ -328,11 +362,12 @@ export default function Projects() {
               >
                 <div className="min-h-screen px-4 flex items-center justify-center">
                   <div
-                    className="bg-[#0a0a0a] border border-white/10 max-w-4xl w-full"
+                    className="bg-[#0a0a0a] border border-white/10 max-w-4xl w-full rounded-2xl overflow-hidden shadow-2xl"
                     onClick={(e) => e.stopPropagation()}
                   >
                     {/* Image */}
                     <div className="aspect-[16/9] relative">
+                      <div className="absolute inset-0 bg-gradient-to-br from-purple-500/20 via-transparent to-blue-500/20 z-10"></div>
                       <Image
                         src={selectedProject.image}
                         alt={selectedProject.title}
@@ -340,30 +375,30 @@ export default function Projects() {
                         className="object-cover"
                         sizes="(max-width: 896px) 100vw, 896px"
                       />
-          </div>
+                    </div>
 
                     {/* Content */}
                     <div className="p-8 md:p-12">
                       <div className="flex items-start justify-between mb-6">
                         <div>
                           <h2 className="text-3xl md:text-4xl font-light mb-2">
-                            {selectedProject.title}
-                </h2>
+                            <span className="gradient-text">{selectedProject.title}</span>
+                          </h2>
                           <div className="flex items-center gap-4 text-sm text-white/40">
-                            <span>{selectedProject.category}</span>
+                            <span className="text-purple-400/70">{selectedProject.category}</span>
                             <span>•</span>
-                            <span className={selectedProject.status === 'Live' ? 'text-green-400' : ''}>
+                            <span className={selectedProject.status === 'Live' ? 'text-green-400' : 'text-white/60'}>
                               {selectedProject.status}
                             </span>
                           </div>
                         </div>
                         <button
                           onClick={() => setSelectedProject(null)}
-                          className="text-white/60 hover:text-white transition-colors"
+                          className="text-white/60 hover:text-white transition-colors p-2 hover:bg-white/5 rounded-lg"
                         >
                           <XMarkIcon className="w-6 h-6" />
                         </button>
-              </div>
+                      </div>
 
                       <p className="text-white/60 leading-relaxed mb-8">
                         {selectedProject.longDescription}
@@ -371,48 +406,54 @@ export default function Projects() {
 
                       <div className="space-y-6 pb-8 border-b border-white/10">
                         <div>
-                          <h3 className="text-sm tracking-wider text-white/40 mb-3">TECHNOLOGIES</h3>
+                          <h3 className="text-sm tracking-wider text-white/40 mb-3 font-medium">TECHNOLOGIES</h3>
                           <div className="flex flex-wrap gap-2">
                             {selectedProject.technologies.map((tech) => (
                               <span
                                 key={tech}
-                                className="text-sm text-white/60 border border-white/20 px-3 py-1"
+                                className="text-sm text-white/60 border border-white/20 px-3 py-1 rounded-lg hover:border-purple-500/50 hover:bg-white/5 transition-all"
                               >
                                 {tech}
                               </span>
                             ))}
-                  </div>
-                </div>
+                          </div>
+                        </div>
 
                         {selectedProject.githubStats && (
                           <div>
-                            <h3 className="text-sm tracking-wider text-white/40 mb-3">GITHUB STATS</h3>
+                            <h3 className="text-sm tracking-wider text-white/40 mb-3 font-medium">GITHUB STATS</h3>
                             <div className="flex gap-6 text-sm text-white/60">
-                              <span>★ {selectedProject.githubStats.stars} stars</span>
-                              <span>⑂ {selectedProject.githubStats.forks} forks</span>
-                </div>
-              </div>
+                              <span className="flex items-center gap-2">
+                                <span className="text-yellow-400">★</span>
+                                {selectedProject.githubStats.stars} stars
+                              </span>
+                              <span className="flex items-center gap-2">
+                                <span className="text-blue-400">⑂</span>
+                                {selectedProject.githubStats.forks} forks
+                              </span>
+                            </div>
+                          </div>
                         )}
                       </div>
 
                       <div className="pt-8 flex gap-4">
                         <a
                           href={selectedProject.link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                          className="px-8 py-3 bg-white text-black text-sm tracking-wide hover:bg-white/90 transition-colors"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="px-8 py-3 bg-gradient-to-r from-purple-500 to-blue-500 text-white text-sm tracking-wide rounded-lg font-medium shadow-lg shadow-purple-500/30 hover:shadow-purple-500/50 transition-all duration-300"
                         >
                           VISIT PROJECT
                         </a>
                         <button
                           onClick={() => setSelectedProject(null)}
-                          className="px-8 py-3 border border-white/20 text-sm tracking-wide hover:border-white/40 transition-colors"
+                          className="px-8 py-3 border border-white/20 text-sm tracking-wide rounded-lg hover:border-purple-500/50 hover:bg-white/5 transition-all"
                         >
                           CLOSE
                         </button>
                       </div>
+                    </div>
                   </div>
-                </div>
               </div>
             </motion.div>
             </>

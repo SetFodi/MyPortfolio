@@ -37,28 +37,37 @@ export default function Navbar() {
       <motion.nav
         animate={hidden ? { y: -100 } : { y: 0 }}
         transition={{ duration: 0.3, ease: 'easeInOut' }}
-        className="fixed top-0 left-0 right-0 z-50 bg-[#0a0a0a]/80 backdrop-blur-xl border-b border-white/5"
+        className="fixed top-0 left-0 right-0 z-50 glass-strong border-b border-white/10"
       >
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="flex items-center justify-between h-20">
             {/* Logo */}
-            <Link href="/" className="text-xl font-light tracking-wider text-white hover:text-white/80 transition-colors">
-              LUKA
+            <Link href="/" className="text-xl font-light tracking-wider text-white hover:scale-105 transition-all duration-300 relative group">
+              <span className="relative z-10">LUKA</span>
+              <span className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-blue-500/20 blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg"></span>
             </Link>
 
             {/* Desktop Navigation */}
-            <div className="hidden md:flex items-center space-x-8">
+            <div className="hidden md:flex items-center space-x-2">
               {navItems.map((item) => (
                 <Link
                   key={item.path}
                   href={item.path}
-                  className={`text-sm font-light tracking-wide transition-colors ${
+                  className={`relative text-sm font-light tracking-wide transition-all duration-300 px-4 py-2 rounded-lg group ${
                     pathname === item.path
                       ? 'text-white'
                       : 'text-white/60 hover:text-white'
                   }`}
                 >
                   {item.name}
+                  {pathname === item.path && (
+                    <motion.span
+                      layoutId="navbar-indicator"
+                      className="absolute inset-0 bg-white/10 rounded-lg -z-10"
+                      transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                    />
+                  )}
+                  <span className="absolute inset-0 bg-gradient-to-r from-purple-500/10 to-blue-500/10 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10"></span>
                 </Link>
               ))}
             </div>
@@ -66,7 +75,7 @@ export default function Navbar() {
             {/* Mobile Menu Button */}
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="md:hidden text-white/60 hover:text-white transition-colors"
+              className="md:hidden text-white/60 hover:text-white transition-colors p-2 hover:bg-white/10 rounded-lg"
               aria-label="Toggle menu"
             >
               <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -86,18 +95,18 @@ export default function Navbar() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-[#0a0a0a]/95 backdrop-blur-xl border-t border-white/5"
+            className="md:hidden glass-strong border-t border-white/10"
           >
-            <div className="px-6 py-6 space-y-4">
+            <div className="px-6 py-6 space-y-2">
               {navItems.map((item) => (
                 <Link
                   key={item.path}
                   href={item.path}
                   onClick={() => setIsOpen(false)}
-                  className={`block text-base font-light tracking-wide transition-colors ${
+                  className={`block text-base font-light tracking-wide transition-all duration-300 px-4 py-3 rounded-lg ${
                     pathname === item.path
-                      ? 'text-white'
-                      : 'text-white/60 hover:text-white'
+                      ? 'text-white bg-white/10'
+                      : 'text-white/60 hover:text-white hover:bg-white/5'
                   }`}
                 >
                   {item.name}

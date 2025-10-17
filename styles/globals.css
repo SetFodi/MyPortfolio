@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 /* Import Inter font for professional typography */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&display=swap');
 
 /* Base styles */
 html { 
@@ -18,11 +18,34 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
+  position: relative;
 }
 
-/* Minimalist scrollbar */
+/* Animated gradient background */
+body::before {
+  content: '';
+  position: fixed;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle at 20% 50%, rgba(120, 119, 198, 0.03) 0%, transparent 50%),
+              radial-gradient(circle at 80% 80%, rgba(99, 102, 241, 0.03) 0%, transparent 50%),
+              radial-gradient(circle at 40% 20%, rgba(168, 85, 247, 0.02) 0%, transparent 50%);
+  animation: gradient-shift 15s ease infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+
+@keyframes gradient-shift {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  33% { transform: translate(10%, 10%) rotate(120deg); }
+  66% { transform: translate(-10%, 5%) rotate(240deg); }
+}
+
+/* Smooth scrollbar */
 ::-webkit-scrollbar { 
-  width: 8px; 
+  width: 10px; 
 }
 
 ::-webkit-scrollbar-track { 
@@ -30,29 +53,193 @@ body {
 }
 
 ::-webkit-scrollbar-thumb { 
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 4px;
+  background: linear-gradient(180deg, rgba(120, 119, 198, 0.3), rgba(99, 102, 241, 0.3));
+  border-radius: 10px;
+  border: 2px solid #0a0a0a;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.2);
+  background: linear-gradient(180deg, rgba(120, 119, 198, 0.5), rgba(99, 102, 241, 0.5));
 }
 
 /* Focus styles for accessibility */
 *:focus-visible {
-  outline: 2px solid rgba(255, 255, 255, 0.3);
+  outline: 2px solid rgba(120, 119, 198, 0.5);
   outline-offset: 2px;
 }
 
 /* Selection styles */
 ::selection {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(120, 119, 198, 0.3);
   color: #ffffff;
 }
 
 /* Smooth transitions */
 * {
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Glassmorphism utility class */
+.glass {
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.glass-strong {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Gradient text */
+.gradient-text {
+  background: linear-gradient(135deg, #ffffff 0%, rgba(120, 119, 198, 0.8) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gradient-text-vibrant {
+  background: linear-gradient(135deg, #ffffff 0%, #7877c6 50%, #6366f1 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradient-flow 3s ease infinite;
+  background-size: 200% auto;
+}
+
+@keyframes gradient-flow {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+/* Hover glow effect */
+.hover-glow {
+  position: relative;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hover-glow::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  background: linear-gradient(135deg, rgba(120, 119, 198, 0.5), rgba(99, 102, 241, 0.5));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: -1;
+  filter: blur(10px);
+}
+
+.hover-glow:hover::before {
+  opacity: 0.7;
+}
+
+/* Floating animation */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+}
+
+.float {
+  animation: float 6s ease-in-out infinite;
+}
+
+/* Shimmer effect */
+@keyframes shimmer {
+  0% { background-position: -1000px 0; }
+  100% { background-position: 1000px 0; }
+}
+
+.shimmer {
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+  background-size: 1000px 100%;
+  animation: shimmer 3s infinite;
+}
+
+/* Magnetic effect (will be enhanced with JS) */
+.magnetic {
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Reveal animation */
+@keyframes reveal {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.reveal {
+  animation: reveal 0.8s ease-out forwards;
+}
+
+/* Card hover lift */
+.card-hover {
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card-hover:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3),
+              0 0 0 1px rgba(120, 119, 198, 0.1),
+              0 0 50px rgba(120, 119, 198, 0.1);
+}
+
+/* Gradient border animation */
+@keyframes border-rotate {
+  0% { --angle: 0deg; }
+  100% { --angle: 360deg; }
+}
+
+@property --angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+.gradient-border {
+  position: relative;
+  border-radius: inherit;
+}
+
+.gradient-border::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(var(--angle), #7877c6, #6366f1, #a855f7, #7877c6);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  animation: border-rotate 3s linear infinite;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.gradient-border:hover::before {
+  opacity: 1;
+}
+
+/* Text shadow glow */
+.text-glow {
+  text-shadow: 0 0 20px rgba(120, 119, 198, 0.3),
+               0 0 40px rgba(120, 119, 198, 0.2),
+               0 0 60px rgba(120, 119, 198, 0.1);
+}
+
+/* Blur backdrop for modals */
+.backdrop-blur-xl {
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
 }
 
 /* Respect user's motion preferences */
@@ -68,4 +255,18 @@ body {
   html {
     scroll-behavior: auto;
   }
+  
+  body::before {
+    animation: none;
+  }
+}
+
+/* Smooth page transitions */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+main {
+  animation: fadeIn 0.5s ease-in;
 }
