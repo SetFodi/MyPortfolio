@@ -2,7 +2,6 @@
 import Link from 'next/link'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { useRef } from 'react'
-import Magnetic from './Magnetic'
 import { FaGithub, FaLinkedin, FaInstagram, FaEnvelope } from 'react-icons/fa'
 
 export default function Footer() {
@@ -43,16 +42,15 @@ export default function Footer() {
           <div className="flex flex-col md:flex-row justify-between items-end gap-12">
             <div className="flex gap-4 flex-wrap">
               {socialLinks.map((link, i) => (
-                <Magnetic key={i}>
-                  <a 
-                    href={link.href} 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="flex items-center justify-center w-16 h-16 rounded-full border border-white/10 hover:bg-white text-white hover:text-black transition-all duration-300"
-                  >
-                    <link.icon className="w-6 h-6" />
-                  </a>
-                </Magnetic>
+                <a 
+                  key={i}
+                  href={link.href} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center w-16 h-16 rounded-full border border-white/10 hover:bg-white text-white hover:text-black transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-purple-500/20"
+                >
+                  <link.icon className="w-6 h-6" />
+                </a>
               ))}
             </div>
             <div className="flex flex-col items-end gap-2">

@@ -5,6 +5,7 @@ import { motion } from 'framer-motion'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import Magnetic from '../components/Magnetic'
+import Logo from '../components/Logo'
 import { FaGithub, FaLinkedin, FaInstagram, FaCode, FaServer, FaDatabase, FaTools } from 'react-icons/fa'
 
 export default function About() {
@@ -17,8 +18,8 @@ export default function About() {
   if (!mounted) return null
 
   const stats = [
-    { label: 'Years Experience', value: '2+' },
-    { label: 'Projects Completed', value: '10+' },
+    { label: 'Years Experience', value: '3+' },
+    { label: 'Projects Completed', value: '15+' },
     { label: 'Happy Clients', value: '100%' },
   ]
 
@@ -56,9 +57,10 @@ export default function About() {
         <meta name="description" content="Learn more about Luka Partenadze, a Full Stack Developer." />
       </Head>
 
+      <Logo />
       <Navbar />
 
-      <main className="pt-32 pb-20">
+      <main className="pt-20 pb-32">
         
         {/* HEADER SECTION */}
         <section className="px-6 md:px-12 max-w-7xl mx-auto mb-32">
@@ -70,12 +72,12 @@ export default function About() {
             >
                <span className="text-purple-400 uppercase tracking-widest text-sm font-medium mb-4 block">Who I Am</span>
                <h1 className="text-5xl md:text-7xl font-bold mb-8 leading-tight">
-                 Design-driven <br/>
+                 Full Stack <br/>
                  <span className="text-white/50">Developer.</span>
                </h1>
                <p className="text-lg text-white/60 leading-relaxed mb-8 max-w-lg">
                  I'm Luka Partenadze, a passionate developer based in Tbilisi, Georgia. 
-                 I specialize in building exceptional digital experiences that merge clean code with thoughtful design.
+                 I specialize in building robust, scalable, and high-performance web applications.
                </p>
                
                <div className="flex gap-8 border-t border-white/10 pt-8">
@@ -158,9 +160,10 @@ export default function About() {
 
            <div className="space-y-12">
               {[
-                { year: '2024 - Present', title: 'Freelance Developer', role: 'Full Stack Developer', desc: 'Building custom web solutions for diverse clients using Next.js and modern technologies.' },
-                { year: '2023 - 2024', title: 'Personal Projects', role: 'Frontend Focus', desc: 'Developed multiple high-performance web applications to master modern frontend frameworks.' },
                 { year: '2022 - 2023', title: 'Self-Taught Journey', role: 'Student', desc: 'Deep dive into computer science fundamentals, algorithms, and web development basics.' },
+                { year: '2023 - 2024', title: 'Personal Projects', role: 'Frontend Focus', desc: 'Developed multiple high-performance web applications to master modern frontend frameworks.' },
+                { year: '2024 - 2025', title: 'Freelance Developer', role: 'Full Stack Developer', desc: 'Building custom web solutions for diverse clients using Next.js and modern technologies.' },
+                { year: '2025 - Present', title: 'Fostral', role: 'Junior Odoo Developer', desc: 'Developing and customizing Odoo ERP modules, optimizing business workflows, and ensuring seamless system integration for enterprise clients.' },
               ].map((item, i) => (
                  <motion.div 
                    key={i}

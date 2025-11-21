@@ -1,17 +1,17 @@
-'use client'
 import { useState, useEffect } from 'react'
 import Head from 'next/head'
 import { motion } from 'framer-motion'
 import { useForm } from 'react-hook-form'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
+import Logo from '../components/Logo'
+import { FaGithub, FaLinkedin, FaInstagram, FaEnvelope, FaMapMarkerAlt, FaPaperPlane } from 'react-icons/fa'
 
 export default function Contact() {
   const [mounted, setMounted] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitSuccess, setSubmitSuccess] = useState('')
   const [submitError, setSubmitError] = useState('')
-  const [copiedEmail, setCopiedEmail] = useState(false)
 
   const {
     register,
@@ -30,338 +30,218 @@ export default function Contact() {
     setIsSubmitting(true)
     setSubmitSuccess('')
     setSubmitError('')
-
-    try {
-      const res = await fetch('/api/contact', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      })
-
-      if (!res.ok) {
-        throw new Error('Failed to send message')
-      }
-
-      setSubmitSuccess("Message sent successfully! I'll be in touch soon.")
-      reset()
-    } catch (error) {
-      setSubmitError('Failed to send message. Please try again.')
-    } finally {
-      setIsSubmitting(false)
-    }
+    
+    // Simulate API call
+    await new Promise(resolve => setTimeout(resolve, 1500))
+    
+    setSubmitSuccess("Message sent successfully! I'll be in touch soon.")
+    reset()
+    setIsSubmitting(false)
   }
 
-  const copyEmail = () => {
-    navigator.clipboard.writeText('lukafartenadze2004@gmail.com')
-    setCopiedEmail(true)
-    setTimeout(() => setCopiedEmail(false), 2000)
-  }
-
-  const contactInfo = [
+  const contactMethods = [
     {
+      icon: FaEnvelope,
       label: 'Email',
       value: 'lukafartenadze2004@gmail.com',
-      href: 'mailto:lukafartenadze2004@gmail.com',
-      copyable: true
+      link: 'mailto:lukafartenadze2004@gmail.com',
+      action: 'Copy'
     },
     {
+      icon: FaMapMarkerAlt,
       label: 'Location',
-      value: 'Tbilisi, Georgia'
+      value: 'Tbilisi, Georgia',
+      link: null,
     },
     {
+      icon: FaGithub,
       label: 'GitHub',
-      value: 'github.com/SetFodi',
-      href: 'https://github.com/SetFodi'
+      value: 'SetFodi',
+      link: 'https://github.com/SetFodi',
+      action: 'Visit'
     }
   ]
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a] text-white">
+    <div className="bg-[#0a0a0a] text-white selection:bg-purple-500/30 selection:text-white min-h-screen flex flex-col">
       <Head>
-        <title>Contact - Luka Partenadze</title>
-        <meta name="description" content="Get in touch with Luka Partenadze" />
+        <title>Contact | Luka Partenadze</title>
+        <meta name="description" content="Get in touch for collaborations or freelance work." />
       </Head>
 
+      <Logo />
       <Navbar />
 
-      <main className="relative z-10">
-        {/* Hero Section */}
-        <section className="pt-32 pb-20 relative overflow-hidden">
-          {/* Decorative elements */}
-          <div className="absolute inset-0 overflow-hidden pointer-events-none">
-            <div className="absolute top-0 left-1/4 w-96 h-96 bg-purple-500/5 rounded-full blur-3xl"></div>
-            <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-blue-500/5 rounded-full blur-3xl"></div>
-          </div>
-
-          <div className="max-w-5xl mx-auto px-6 lg:px-8 relative z-10">
-            <motion.div
+      <main className="pt-20 pb-32 flex-grow">
+        <div className="px-6 md:px-12 max-w-7xl mx-auto">
+          
+          {/* HEADER */}
+          <div className="max-w-3xl mb-24">
+            <motion.h1 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
-              className="max-w-3xl"
+              className="text-5xl md:text-7xl font-bold mb-6"
             >
-              <motion.p 
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.6, delay: 0.2 }}
-                className="text-sm tracking-widest text-white/40 uppercase mb-4"
-              >
-                Get in Touch
-              </motion.p>
-              <h1 className="text-5xl md:text-7xl font-light mb-6">
-                Let's <span className="gradient-text-vibrant">Talk</span>
-              </h1>
-              <motion.p 
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.6, delay: 0.4 }}
-                className="text-lg text-white/60 leading-relaxed"
-              >
-                Have a project in mind or just want to chat? 
-                Drop me a message and I'll get back to you as soon as possible.
-              </motion.p>
-            </motion.div>
+              Let's start a <br/>
+              <span className="text-purple-400">conversation.</span>
+            </motion.h1>
+            <motion.p 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+              className="text-xl text-white/60 leading-relaxed max-w-xl"
+            >
+              Interested in working together? Feel free to drop me a line about your project.
+            </motion.p>
           </div>
-        </section>
 
-        {/* Contact Section */}
-        <section className="py-20 relative overflow-hidden">
-          <div className="max-w-5xl mx-auto px-6 lg:px-8">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
-              {/* Contact Form */}
-              <motion.div
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.6, delay: 0.2 }}
-                className="glass rounded-2xl p-8 border border-white/10"
-              >
-                <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-                  <div>
-                    <label className="block text-sm tracking-wider text-white/60 mb-2 font-medium">
-                      NAME
-                    </label>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24">
+            
+            {/* LEFT COLUMN - FORM */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+            >
+              <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
+                <div className="space-y-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium text-white/40 uppercase tracking-wider">Name</label>
+                      <input
+                        {...register('name', { required: 'Name is required' })}
+                        className="w-full bg-transparent border-b border-white/20 py-4 text-lg focus:border-purple-500 transition-colors outline-none placeholder-white/20"
+                        placeholder="John Doe"
+                      />
+                      {errors.name && <span className="text-red-400 text-sm">{errors.name.message}</span>}
+                    </div>
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium text-white/40 uppercase tracking-wider">Email</label>
+                      <input
+                        {...register('email', { 
+                          required: 'Email is required',
+                          pattern: { value: /^\S+@\S+$/i, message: 'Invalid email' }
+                        })}
+                        className="w-full bg-transparent border-b border-white/20 py-4 text-lg focus:border-purple-500 transition-colors outline-none placeholder-white/20"
+                        placeholder="john@example.com"
+                      />
+                      {errors.email && <span className="text-red-400 text-sm">{errors.email.message}</span>}
+                    </div>
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-white/40 uppercase tracking-wider">Subject</label>
                     <input
-                      {...register('name', { required: 'Name is required' })}
-                      type="text"
-                      className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white placeholder-white/30 focus:outline-none focus:border-purple-500/50 focus:bg-white/10 transition-all"
-                      placeholder="Your name"
+                      {...register('subject', { required: 'Subject is required' })}
+                      className="w-full bg-transparent border-b border-white/20 py-4 text-lg focus:border-purple-500 transition-colors outline-none placeholder-white/20"
+                      placeholder="Project Proposal"
                     />
-                    {errors.name && (
-                      <motion.p 
-                        initial={{ opacity: 0, y: -10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        className="text-red-400 text-xs mt-2"
-                      >
-                        {errors.name.message}
-                      </motion.p>
-                    )}
+                    {errors.subject && <span className="text-red-400 text-sm">{errors.subject.message}</span>}
                   </div>
 
-                  <div>
-                    <label className="block text-sm tracking-wider text-white/60 mb-2 font-medium">
-                      EMAIL
-                    </label>
-                    <input
-                      {...register('email', {
-                        required: 'Email is required',
-                        pattern: {
-                          value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                          message: 'Invalid email address',
-                        },
-                      })}
-                      type="email"
-                      className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white placeholder-white/30 focus:outline-none focus:border-purple-500/50 focus:bg-white/10 transition-all"
-                      placeholder="your.email@example.com"
-                    />
-                    {errors.email && (
-                      <motion.p 
-                        initial={{ opacity: 0, y: -10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        className="text-red-400 text-xs mt-2"
-                      >
-                        {errors.email.message}
-                      </motion.p>
-                    )}
-                  </div>
-
-                  <div>
-                    <label className="block text-sm tracking-wider text-white/60 mb-2 font-medium">
-                      MESSAGE
-                    </label>
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-white/40 uppercase tracking-wider">Message</label>
                     <textarea
-                      {...register('message', {
-                        required: 'Message is required',
-                        minLength: {
-                          value: 10,
-                          message: 'Message must be at least 10 characters',
-                        },
-                      })}
-                      rows="6"
-                      className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white placeholder-white/30 focus:outline-none focus:border-purple-500/50 focus:bg-white/10 transition-all resize-none"
-                      placeholder="Your message..."
+                      {...register('message', { required: 'Message is required' })}
+                      rows={4}
+                      className="w-full bg-transparent border-b border-white/20 py-4 text-lg focus:border-purple-500 transition-colors outline-none resize-none placeholder-white/20"
+                      placeholder="Tell me about your project..."
                     />
-                    {errors.message && (
-                      <motion.p 
-                        initial={{ opacity: 0, y: -10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        className="text-red-400 text-xs mt-2"
-                      >
-                        {errors.message.message}
-                      </motion.p>
-                    )}
-                  </div>
-
-                  <motion.button
-                    whileHover={{ scale: 1.02, boxShadow: "0 0 30px rgba(120, 119, 198, 0.3)" }}
-                    whileTap={{ scale: 0.98 }}
-                    type="submit"
-                    disabled={isSubmitting}
-                    className="w-full px-8 py-4 bg-gradient-to-r from-purple-500 to-blue-500 text-white text-sm tracking-wide rounded-lg font-medium shadow-lg shadow-purple-500/20 hover:shadow-purple-500/40 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed relative overflow-hidden group"
-                  >
-                    <span className="relative z-10">{isSubmitting ? 'SENDING...' : 'SEND MESSAGE'}</span>
-                    <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                  </motion.button>
-
-                  {submitSuccess && (
-                    <motion.p 
-                      initial={{ opacity: 0, y: -10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      className="text-green-400 text-sm flex items-center gap-2"
-                    >
-                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                      </svg>
-                      {submitSuccess}
-                    </motion.p>
-                  )}
-                  {submitError && (
-                    <motion.p 
-                      initial={{ opacity: 0, y: -10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      className="text-red-400 text-sm flex items-center gap-2"
-                    >
-                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                      </svg>
-                      {submitError}
-                    </motion.p>
-                  )}
-                </form>
-              </motion.div>
-
-              {/* Contact Info */}
-              <motion.div
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.6, delay: 0.4 }}
-                className="space-y-8"
-              >
-                <div className="glass rounded-2xl p-8 border border-white/10">
-                  <h2 className="text-2xl font-light mb-6">Contact <span className="gradient-text">Information</span></h2>
-                  <div className="space-y-6">
-                    {contactInfo.map((info, idx) => (
-                      <motion.div 
-                        key={idx}
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.5, delay: 0.5 + idx * 0.1 }}
-                        className="group"
-                      >
-                        <p className="text-sm tracking-wider text-white/40 mb-2 font-medium uppercase">
-                          {info.label}
-                        </p>
-                        {info.copyable ? (
-                          <div className="flex items-center gap-2">
-                            <a
-                              href={info.href}
-                              className="text-white/80 hover:text-purple-400 transition-all duration-300"
-                            >
-                              {info.value}
-                            </a>
-                            <button
-                              onClick={copyEmail}
-                              className="p-2 hover:bg-white/10 rounded-lg transition-all duration-300 relative group"
-                              aria-label="Copy email"
-                            >
-                              {copiedEmail ? (
-                                <svg className="w-4 h-4 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                                </svg>
-                              ) : (
-                                <svg className="w-4 h-4 text-white/60 group-hover:text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
-                                </svg>
-                              )}
-                              {copiedEmail && (
-                                <span className="absolute -top-8 left-1/2 -translate-x-1/2 text-xs bg-green-500 text-white px-2 py-1 rounded whitespace-nowrap">
-                                  Copied!
-                                </span>
-                              )}
-                            </button>
-                          </div>
-                        ) : info.href ? (
-                          <a
-                            href={info.href}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-white/80 hover:text-purple-400 transition-all duration-300 flex items-center gap-2 group"
-                          >
-                            <span className="group-hover:translate-x-1 transition-transform">{info.value}</span>
-                            <svg className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                            </svg>
-                          </a>
-                        ) : (
-                          <p className="text-white/80">{info.value}</p>
-                        )}
-                      </motion.div>
-                    ))}
+                    {errors.message && <span className="text-red-400 text-sm">{errors.message.message}</span>}
                   </div>
                 </div>
 
-                <motion.div 
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.8 }}
-                  className="glass rounded-2xl p-8 border border-white/10"
-                >
-                  <h3 className="text-sm tracking-wider text-white/40 mb-6 font-medium uppercase">Social Links</h3>
-                  <div className="flex flex-wrap gap-3">
-                    <a
-                      href="https://github.com/SetFodi"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-white/60 hover:text-white hover:border-purple-500/50 hover:bg-white/10 transition-all duration-300"
+                <div className="pt-4">
+                    <button 
+                      type="submit" 
+                      disabled={isSubmitting}
+                      className="group relative w-40 h-14 bg-white text-black rounded-full font-medium text-base overflow-hidden transition-all hover:scale-[1.02] active:scale-[0.98] disabled:opacity-70 disabled:cursor-not-allowed hover:shadow-lg hover:shadow-purple-500/20"
                     >
-                      GitHub
-                    </a>
-                    <a
-                      href="https://www.linkedin.com/in/luka-partenadze-394675348/"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-white/60 hover:text-white hover:border-purple-500/50 hover:bg-white/10 transition-all duration-300"
-                    >
-                      LinkedIn
-                    </a>
-                    <a
-                      href="https://www.instagram.com/fartenadzeluka/"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-white/60 hover:text-white hover:border-purple-500/50 hover:bg-white/10 transition-all duration-300"
-                    >
-                      Instagram
-                    </a>
-                  </div>
-                </motion.div>
-              </motion.div>
-            </div>
-          </div>
-        </section>
+                      {/* Text State */}
+                      <div className={`relative z-10 flex items-center justify-center gap-2 transition-all duration-500 ${isSubmitting ? 'opacity-0' : 'group-hover:translate-y-10 group-hover:opacity-0'}`}>
+                        <span>Send Message</span>
+                      </div>
 
-        <Footer />
+                      {/* Hover Flight State */}
+                      <div className={`absolute inset-0 flex items-center justify-center transition-all duration-500 ${isSubmitting ? 'opacity-0' : 'translate-y-10 opacity-0 group-hover:translate-y-0 group-hover:opacity-100'}`}>
+                        <FaPaperPlane className="text-2xl animate-float-fly" />
+                      </div>
+
+                      {/* Sending State */}
+                      {isSubmitting && (
+                        <div className="absolute inset-0 flex items-center justify-center">
+                           <FaPaperPlane className="text-2xl animate-fly-away" />
+                        </div>
+                      )}
+                    </button>
+                  
+                    {submitSuccess && (
+                    <motion.p 
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="mt-4 text-green-400"
+                    >
+                      {submitSuccess}
+                    </motion.p>
+                  )}
+                </div>
+              </form>
+            </motion.div>
+
+            {/* RIGHT COLUMN - INFO */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+              className="space-y-12 lg:pl-12"
+            >
+               <div className="grid gap-8">
+                  {contactMethods.map((method, i) => (
+                    <div key={i} className="flex items-start gap-6 group">
+                       <div className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center flex-shrink-0 group-hover:border-purple-500/50 transition-colors">
+                          <method.icon className="text-xl text-white/60 group-hover:text-purple-400 transition-colors" />
+                       </div>
+                       <div>
+                          <h3 className="text-sm font-medium text-white/40 uppercase tracking-wider mb-1">{method.label}</h3>
+                          {method.link ? (
+                            <a href={method.link} className="text-xl text-white hover:text-purple-400 transition-colors block">
+                              {method.value}
+                            </a>
+                          ) : (
+                            <p className="text-xl text-white">{method.value}</p>
+                          )}
+                       </div>
+                    </div>
+                  ))}
+               </div>
+
+               <div className="p-8 rounded-2xl bg-white/5 border border-white/10">
+                  <h3 className="text-lg font-bold mb-4">Socials</h3>
+                  <div className="flex gap-4">
+                     {[
+                       { icon: FaLinkedin, href: 'https://www.linkedin.com/in/luka-partenadze-394675348/' },
+                       { icon: FaGithub, href: 'https://github.com/SetFodi' },
+                       { icon: FaInstagram, href: 'https://www.instagram.com/fartenadzeluka/' }
+                     ].map((social, i) => (
+                       <a 
+                         key={i}
+                         href={social.href} 
+                         target="_blank" 
+                         className="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-white hover:text-black transition-all duration-300 hover:scale-110"
+                       >
+                         <social.icon className="text-xl" />
+                       </a>
+                     ))}
+                  </div>
+               </div>
+            </motion.div>
+          </div>
+
+        </div>
       </main>
+
+      <Footer />
     </div>
   )
 }

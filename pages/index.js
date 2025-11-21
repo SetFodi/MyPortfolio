@@ -6,9 +6,11 @@ import Link from 'next/link'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
-import Magnetic from '../components/Magnetic'
+import FlightButton from '../components/FlightButton'
+import Logo from '../components/Logo'
 import { projects } from '../data/homeData'
 import { skillData } from '../data/homeData' // Assuming skillData is exported from here
+import { FaLayerGroup, FaEnvelope } from 'react-icons/fa'
 
 export default function Home() {
   const [mounted, setMounted] = useState(false)
@@ -27,12 +29,13 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
 
+      <Logo />
       <Navbar />
 
       <main ref={containerRef} className="relative z-10">
         
         {/* HERO SECTION */}
-        <section className="relative min-h-screen flex flex-col justify-center items-center px-4 pt-20">
+        <section className="relative min-h-screen flex flex-col justify-center items-center px-4">
           <div className="z-10 text-center max-w-4xl mx-auto space-y-8">
              
              {/* Subtle Status Indicator */}
@@ -40,10 +43,14 @@ export default function Home() {
                initial={{ opacity: 0, y: 20 }}
                animate={{ opacity: 1, y: 0 }}
                transition={{ duration: 0.5 }}
-               className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 backdrop-blur-md mb-4"
+               className="inline-flex flex-col md:flex-row items-center gap-3 px-4 py-2 rounded-full bg-white/5 border border-white/10 backdrop-blur-md mb-4 text-center md:text-left"
              >
-               <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
-               <span className="text-xs text-white/60 uppercase tracking-widest">Available for work</span>
+               <div className="flex items-center gap-2">
+                 <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+                 <span className="text-xs text-white/90 font-medium tracking-wide">Junior Odoo Developer @ Fostral</span>
+               </div>
+               <span className="hidden md:block w-1 h-1 rounded-full bg-white/20"></span>
+               <span className="text-xs text-white/50 uppercase tracking-wider">Available for freelance & side projects</span>
              </motion.div>
 
              <motion.h1
@@ -64,8 +71,8 @@ export default function Home() {
                transition={{ duration: 0.8, delay: 0.4 }}
                className="text-lg text-white/50 max-w-2xl mx-auto leading-relaxed"
              >
-               Crafting <span className="text-white/80">digital experiences</span> that matter. 
-               Blending technical expertise with a keen eye for minimal design.
+               Building <span className="text-white/80">robust applications</span> that scale. 
+               Focused on clean code, performance, and modern web technologies.
              </motion.p>
 
              <motion.div
@@ -74,20 +81,17 @@ export default function Home() {
                transition={{ duration: 0.8, delay: 0.6 }}
                className="flex flex-wrap justify-center gap-4 pt-4"
              >
-                <Link href="/projects">
-                  <Magnetic>
-                    <button className="px-8 py-4 bg-white text-black rounded-full font-medium text-sm tracking-wide hover:bg-gray-200 transition-colors">
-                      View Projects
-                    </button>
-                  </Magnetic>
-                </Link>
-                <Link href="/contact">
-                  <Magnetic>
-                    <button className="px-8 py-4 bg-transparent border border-white/20 text-white rounded-full font-medium text-sm tracking-wide hover:bg-white/5 transition-colors">
-                      Contact Me
-                    </button>
-                  </Magnetic>
-                </Link>
+                <FlightButton 
+                  href="/projects" 
+                  text="View Projects" 
+                  icon={FaLayerGroup} 
+                />
+                <FlightButton 
+                  href="/contact" 
+                  text="Contact Me" 
+                  icon={FaEnvelope} 
+                  className="bg-transparent border border-white/20 text-white hover:bg-white/5 hover:border-white/40"
+                />
              </motion.div>
           </div>
 
@@ -158,34 +162,75 @@ export default function Home() {
            </div>
         </section>
 
-        {/* TECH STACK - CLEAN GRID */}
-        <section className="py-32 bg-[#0d0d0d] border-y border-white/5">
+        {/* TECH STACK - CREATIVE INTERACTIVE GRID */}
+        <section className="py-32 bg-[#0d0d0d] border-y border-white/5 overflow-hidden">
            <div className="max-w-7xl mx-auto px-6 md:px-12">
-              <div className="text-center mb-16">
+              <div className="text-center mb-24">
                  <span className="text-sm text-purple-400 uppercase tracking-widest font-medium">Expertise</span>
-                 <h2 className="text-3xl md:text-4xl font-bold mt-4">Tools & Technologies</h2>
+                 <h2 className="text-4xl md:text-5xl font-bold mt-4 mb-6">Tools & Technologies</h2>
+                 <p className="text-white/50 max-w-2xl mx-auto">
+                   My preferred stack for building scalable, high-performance applications.
+                 </p>
               </div>
               
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-                 {['Frontend', 'Backend', 'Database', 'Design'].map((cat, i) => (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
+                 {[
+                   { 
+                     category: 'Frontend', 
+                     desc: 'Building immersive user interfaces',
+                     skills: ['JavaScript', 'TypeScript', 'React', 'Next.js', 'Tailwind CSS', 'Framer Motion'],
+                     gradient: 'from-purple-500/20 to-blue-500/20'
+                   },
+                   { 
+                     category: 'Backend', 
+                     desc: 'Powering robust server-side logic',
+                     skills: ['Node.js', 'Python', 'PHP', 'Laravel', 'Odoo'],
+                     gradient: 'from-green-500/20 to-emerald-500/20'
+                   },
+                   { 
+                     category: 'Database', 
+                     desc: 'Architecting reliable data storage',
+                     skills: ['MongoDB', 'MySQL', 'PostgreSQL', 'Redis'],
+                     gradient: 'from-orange-500/20 to-red-500/20'
+                   },
+                   { 
+                     category: 'DevOps & Tools', 
+                     desc: 'Streamlining deployment & workflow',
+                     skills: ['Git', 'Docker', 'Swagger', 'Postman', 'Linux'],
+                     gradient: 'from-blue-500/20 to-cyan-500/20'
+                   }
+                 ].map((cat, i) => (
                     <motion.div 
                       key={i}
                       initial={{ opacity: 0, y: 20 }}
                       whileInView={{ opacity: 1, y: 0 }}
                       viewport={{ once: true }}
                       transition={{ delay: i * 0.1 }}
-                      className="p-6 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 transition-colors"
+                      className="group relative p-8 rounded-3xl bg-white/5 border border-white/10 overflow-hidden hover:border-white/20 transition-colors duration-500"
                     >
-                       <h3 className="text-lg font-semibold mb-4 text-white/90">{cat}</h3>
-                       <ul className="space-y-2">
-                          {/* Placeholder filtering, in real app map actual skills */}
-                          {skillData.filter(s => s.category.toLowerCase().includes(cat.toLowerCase()) || (cat === 'Design' && s.category === 'tools')).slice(0, 4).map((skill, j) => (
-                             <li key={j} className="flex items-center gap-2 text-sm text-white/60">
-                                <span className="w-1.5 h-1.5 rounded-full bg-purple-500/50"></span>
-                                {skill.name}
-                             </li>
-                          ))}
-                       </ul>
+                       {/* Hover Gradient Background */}
+                       <div className={`absolute inset-0 bg-gradient-to-br ${cat.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl`}></div>
+                       
+                       <div className="relative z-10">
+                         <div className="flex justify-between items-start mb-8">
+                           <div>
+                             <h3 className="text-2xl font-bold text-white mb-2">{cat.category}</h3>
+                             <p className="text-white/40 text-sm">{cat.desc}</p>
+                           </div>
+                           <span className="text-xs font-mono text-white/30 px-2 py-1 rounded border border-white/10">0{i + 1}</span>
+                         </div>
+
+                         <div className="flex flex-wrap gap-3">
+                            {cat.skills.map((skill, j) => (
+                               <span 
+                                 key={j} 
+                                 className="px-4 py-2 rounded-full text-sm bg-black/20 border border-white/5 text-white/70 group-hover:bg-black/40 group-hover:border-white/10 group-hover:text-white transition-all duration-300 backdrop-blur-sm"
+                               >
+                                 {skill}
+                               </span>
+                            ))}
+                         </div>
+                       </div>
                     </motion.div>
                  ))}
               </div>

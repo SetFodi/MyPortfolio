@@ -24,12 +24,35 @@ export const skillData = [
   // Tools & Deployment
   { name: 'Git', category: 'tools', color: '#F05032' },
   { name: 'Docker', category: 'tools', color: '#2496ED' },
-{ name: 'Swagger', category: 'tools', color: '#85ea2d' },
+  { name: 'Swagger', category: 'tools', color: '#85ea2d' },
   { name: 'Postman', category: 'tools', color: '#FF6C37' },
-  { name: 'Shell', category: 'tools', color: '#4EA94B' },]
+  { name: 'Shell', category: 'tools', color: '#4EA94B' },
+]
 
 // Project data with enhanced details
 export const projects = [
+  {
+    title: 'AndWatch',
+    description: 'Comprehensive media tracking platform for movies and anime with personalized recommendations, watch history, and community reviews.',
+    image: '/andwatch.jpg',
+    link: 'https://andwatch.vercel.app/',
+    technologies: ['Next.js', 'TypeScript', 'Node.js', 'MongoDB', 'API Integration', 'Tailwind CSS'],
+    status: 'Live',
+    category: 'Entertainment',
+    githubStats: { stars: 16, forks: 2 },
+    longDescription: 'AndWatch is a sophisticated media tracking platform that helps users discover, track, and organize their favorite movies and anime. The application integrates with multiple media databases to provide comprehensive information, including cast details, episode guides, and release schedules. Users can create custom collections, track their watch progress, and receive personalized recommendations based on their preferences.'
+  },
+  {
+    title: 'Furniture',
+    description: 'Modern e-commerce platform for furniture with 3D product visualization, room planning tools, and seamless checkout experience.',
+    image: '/furniture.jpeg',
+    link: 'https://github.com/SetFodi/furniture-store',
+    technologies: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Node.js', 'MongoDB'],
+    status: 'Completed',
+    category: 'E-commerce',
+    githubStats: { stars: 9, forks: 1 },
+    longDescription: 'Furniture is a modern e-commerce platform specializing in home furnishings. The application features high-quality product images, detailed specifications, and customer reviews. Users can visualize products in their space using AR technology, create wishlists, and enjoy a seamless checkout process with multiple payment options.'
+  },
   {
     title: 'AndCook',
     description: 'Recipe sharing platform where users can discover, save, and create recipes. Features user profiles, favorites, and personalized collections.',
@@ -128,28 +151,6 @@ export const projects = [
     category: 'Education',
     githubStats: { stars: 20, forks: 3 },
     longDescription: 'AndCode is an interactive platform designed to help developers improve their coding skills through practical challenges. The application offers a wide range of programming problems across different difficulty levels and domains. Users can write and execute code directly in the browser, receive instant feedback, and learn from detailed explanations of optimal solutions.'
-  },
-  {
-    title: 'AndWatch',
-    description: 'Comprehensive media tracking platform for movies and anime with personalized recommendations, watch history, and community reviews.',
-    image: '/andwatch.jpg',
-    link: 'https://andwatch.vercel.app/',
-    technologies: ['Next.js', 'TypeScript', 'Node.js', 'MongoDB', 'API Integration', 'Tailwind CSS'],
-    status: 'Live',
-    category: 'Entertainment',
-    githubStats: { stars: 16, forks: 2 },
-    longDescription: 'AndWatch is a sophisticated media tracking platform that helps users discover, track, and organize their favorite movies and anime. The application integrates with multiple media databases to provide comprehensive information, including cast details, episode guides, and release schedules. Users can create custom collections, track their watch progress, and receive personalized recommendations based on their preferences.'
-  },
-  {
-    title: 'Furniture',
-    description: 'Modern e-commerce platform for furniture with 3D product visualization, room planning tools, and seamless checkout experience.',
-    image: '/furniture.jpeg',
-    link: 'https://github.com/SetFodi/furniture-store',
-    technologies: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Node.js', 'MongoDB'],
-    status: 'Completed',
-    category: 'E-commerce',
-    githubStats: { stars: 9, forks: 1 },
-    longDescription: 'Furniture is a modern e-commerce platform specializing in home furnishings. The application features high-quality product images, detailed specifications, and customer reviews. Users can visualize products in their space using AR technology, create wishlists, and enjoy a seamless checkout process with multiple payment options.'
   },
   {
     title: 'LocalEvently',

@@ -55,3 +55,23 @@ body::after {
   background: rgba(147, 51, 234, 0.3); /* Purple */
   color: white;
 }
+
+/* Flying Animations */
+@keyframes float-fly {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-4px) rotate(-5deg); }
+}
+
+.animate-float-fly {
+  animation: float-fly 2s ease-in-out infinite;
+}
+
+@keyframes fly-away {
+  0% { transform: translate(0, 0) scale(1) rotate(0deg); opacity: 1; }
+  20% { transform: translate(-10px, 10px) scale(0.9) rotate(-10deg); opacity: 1; }
+  100% { transform: translate(200px, -200px) scale(0.5) rotate(45deg); opacity: 0; }
+}
+
+.animate-fly-away {
+  animation: fly-away 1s ease-in forwards;
+}

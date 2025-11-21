@@ -2,60 +2,73 @@
 import Link from 'next/link'
 import { useState } from 'react'
 import { usePathname } from 'next/navigation'
-import { motion, useScroll, useMotionValueEvent } from 'framer-motion'
-import Magnetic from './Magnetic'
+import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion'
+import { useRef } from 'react'
 
-export default function Navbar() {
-  const [hidden, setHidden] = useState(false)
-  const { scrollY } = useScroll()
-  const pathname = usePathname()
-  const [activeTab, setActiveTab] = useState(pathname)
+function DockIcon({ mouseX, item, isActive }) {
+  const ref = useRef(null)
 
-  useMotionValueEvent(scrollY, 'change', (latest) => {
-    const previous = scrollY.getPrevious() ?? 0
-    if (latest > previous && latest > 150) {
-      setHidden(true)
-    } else {
-      setHidden(false)
-    }
+  const distance = useTransform(mouseX, (val) => {
+    const bounds = ref.current?.getBoundingClientRect() ?? { x: 0, width: 0 }
+    return val - bounds.x - bounds.width / 2
   })
 
+  const widthSync = useTransform(distance, [-150, 0, 150], [40, 80, 40])
+  const width = useSpring(widthSync, { mass: 0.1, stiffness: 150, damping: 12 })
+
+  return (
+    <Link href={item.path}>
+      <motion.div
+        ref={ref}
+        style={{ width }}
+        className={`aspect-square rounded-full flex items-center justify-center relative group cursor-pointer ${
+          isActive 
+            ? 'bg-white text-black shadow-lg shadow-white/20' 
+            : 'bg-white/10 text-white hover:bg-white/20 border border-white/10'
+        }`}
+      >
+        <span className="text-xs font-medium uppercase tracking-wider absolute -top-10 bg-black/80 text-white px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none border border-white/10">
+          {item.name}
+        </span>
+        <item.icon className={`w-1/2 h-1/2 ${isActive ? 'text-black' : 'text-white'}`} />
+        
+        {isActive && (
+          <span className="absolute -bottom-2 w-1 h-1 rounded-full bg-white"></span>
+        )}
+      </motion.div>
+    </Link>
+  )
+}
+
+import { FaHome, FaUser, FaLayerGroup, FaEnvelope } from 'react-icons/fa'
+
+export default function Navbar() {
+  const mouseX = useMotionValue(Infinity)
+  const pathname = usePathname()
+
   const navItems = [
-    { name: 'Home', path: '/' },
-    { name: 'About', path: '/about' },
-    { name: 'Projects', path: '/projects' },
-    { name: 'Contact', path: '/contact' },
+    { name: 'Home', path: '/', icon: FaHome },
+    { name: 'About', path: '/about', icon: FaUser },
+    { name: 'Projects', path: '/projects', icon: FaLayerGroup },
+    { name: 'Contact', path: '/contact', icon: FaEnvelope },
   ]
 
   return (
-    <motion.nav
-      variants={{
-        visible: { y: 0 },
-        hidden: { y: -100 },
-      }}
-      animate={hidden ? "hidden" : "visible"}
-      transition={{ duration: 0.35, ease: "easeInOut" }}
-      className="fixed top-0 left-0 right-0 z-50 flex justify-center pt-6 pointer-events-none"
-    >
-      <div className="pointer-events-auto flex items-center gap-1 p-1.5 rounded-full bg-white/5 backdrop-blur-xl border border-white/10 shadow-2xl shadow-black/20">
+    <div className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50">
+      <motion.div
+        onMouseMove={(e) => mouseX.set(e.pageX)}
+        onMouseLeave={() => mouseX.set(Infinity)}
+        className="mx-auto flex h-16 items-end gap-4 rounded-2xl bg-black/40 px-4 pb-3 border border-white/10 backdrop-blur-2xl"
+      >
         {navItems.map((item) => (
-          <Link key={item.path} href={item.path} onClick={() => setActiveTab(item.path)}>
-            <div className="relative px-5 py-2.5 rounded-full group cursor-pointer transition-colors">
-              {activeTab === item.path && (
-                <motion.div
-                  layoutId="active-pill"
-                  className="absolute inset-0 bg-white/10 rounded-full"
-                  transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                />
-              )}
-              <span className={`relative z-10 text-sm font-medium transition-colors duration-300 ${activeTab === item.path ? 'text-white' : 'text-white/60 group-hover:text-white'}`}>
-                {item.name}
-              </span>
-              <span className="absolute bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 bg-purple-500 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 translate-y-2 group-hover:translate-y-0"></span>
-            </div>
-          </Link>
+          <DockIcon 
+            key={item.path} 
+            mouseX={mouseX} 
+            item={item} 
+            isActive={pathname === item.path} 
+          />
         ))}
-      </div>
-    </motion.nav>
+      </motion.div>
+    </div>
   )
 }
