@@ -35,7 +35,7 @@ export default function Home() {
       <main ref={containerRef} className="relative z-10">
         
         {/* HERO SECTION */}
-        <section className="relative min-h-screen flex flex-col justify-center items-center px-4">
+        <section className="relative min-h-screen flex flex-col justify-start items-center px-4 pt-12">
           <div className="z-10 text-center max-w-4xl mx-auto space-y-8">
              
              {/* Subtle Status Indicator */}
@@ -59,8 +59,7 @@ export default function Home() {
                transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
                className="text-6xl md:text-8xl font-bold tracking-tight leading-tight"
              >
-               <span className="block text-white">Luka Partenadze</span>
-               <span className="block text-4xl md:text-6xl text-transparent bg-clip-text bg-gradient-to-r from-white/40 via-white/80 to-white/40 font-light mt-2">
+               <span className="block text-transparent bg-clip-text bg-gradient-to-b from-white to-white/40">
                  Full Stack Developer
                </span>
              </motion.h1>

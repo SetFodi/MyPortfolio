@@ -60,7 +60,7 @@ export default function About() {
       <Logo />
       <Navbar />
 
-      <main className="pt-20 pb-32">
+      <main className="pt-12 pb-32">
         
         {/* HEADER SECTION */}
         <section className="px-6 md:px-12 max-w-7xl mx-auto mb-32">

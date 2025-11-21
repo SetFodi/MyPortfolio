@@ -3,12 +3,13 @@ import '../styles/globals.css'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
-import KeyboardShortcuts from '../components/KeyboardShortcuts'
 import BackToTop from '../components/BackToTop'
+import Preloader from '../components/Preloader'
 
 export default function MyApp({ Component, pageProps }) {
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(false)
+  const [showPreloader, setShowPreloader] = useState(true)
 
   useEffect(() => {
     const handleStart = () => setIsLoading(true)
@@ -27,6 +28,13 @@ export default function MyApp({ Component, pageProps }) {
 
   return (
     <div className="min-h-screen flex flex-col relative">
+      {/* Initial Preloader */}
+      <AnimatePresence mode="wait">
+        {showPreloader && (
+          <Preloader onComplete={() => setShowPreloader(false)} />
+        )}
+      </AnimatePresence>
+
       {/* Page Transition Loading Bar */}
       {isLoading && (
         <motion.div
@@ -37,24 +45,25 @@ export default function MyApp({ Component, pageProps }) {
         />
       )}
 
-      {/* Smooth Page Transitions */}
-      <AnimatePresence mode="wait" initial={false}>
-        <motion.div
-          key={router.pathname}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -20 }}
-          transition={{ duration: 0.3, ease: 'easeInOut' }}
-        >
-          <Component {...pageProps} />
-        </motion.div>
-      </AnimatePresence>
+      {/* Smooth Page Transitions - Only show content after preloader */}
+      {!showPreloader && (
+        <>
+          <AnimatePresence mode="wait" initial={false}>
+            <motion.div
+              key={router.pathname}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.3, ease: 'easeInOut' }}
+            >
+              <Component {...pageProps} />
+            </motion.div>
+          </AnimatePresence>
 
-      {/* Back to Top Button */}
-      <BackToTop />
-      
-      {/* Keyboard Shortcuts Help */}
-      <KeyboardShortcuts />
+          {/* Back to Top Button */}
+          <BackToTop />
+        </>
+      )}
     </div>
   )
 }

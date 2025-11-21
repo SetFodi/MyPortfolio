@@ -39,7 +39,7 @@ export default function Projects() {
       <Logo />
       <Navbar />
 
-      <main className="pt-20 flex-grow pb-32">
+      <main className="pt-12 flex-grow pb-32">
         <div className="px-6 md:px-12 max-w-7xl mx-auto">
           
           {/* HEADER */}
