@@ -1,110 +1,67 @@
 'use client'
 import Link from 'next/link'
-import { motion } from 'framer-motion'
+import { motion, useScroll, useTransform } from 'framer-motion'
+import { useRef } from 'react'
+import Magnetic from './Magnetic'
 import { FaGithub, FaLinkedin, FaInstagram, FaEnvelope } from 'react-icons/fa'
 
 export default function Footer() {
-  const socialLinks = [
-    { 
-      name: 'GitHub', 
-      href: 'https://github.com/SetFodi', 
-      icon: FaGithub
-    },
-    { 
-      name: 'LinkedIn', 
-      href: 'https://www.linkedin.com/in/luka-partenadze-394675348/', 
-      icon: FaLinkedin
-    },
-    { 
-      name: 'Instagram', 
-      href: 'https://www.instagram.com/fartenadzeluka/', 
-      icon: FaInstagram
-    },
-    { 
-      name: 'Email', 
-      href: 'mailto:lukafartenadze2004@gmail.com', 
-      icon: FaEnvelope
-    },
-  ]
+  const container = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: container,
+    offset: ["start end", "end end"]
+  })
+  
+  const y = useTransform(scrollYProgress, [0, 1], [-100, 0])
 
-  const navLinks = [
-    { name: 'Home', path: '/' },
-    { name: 'About', path: '/about' },
-    { name: 'Projects', path: '/projects' },
-    { name: 'Contact', path: '/contact' },
+  const socialLinks = [
+    { name: 'GitHub', href: 'https://github.com/SetFodi', icon: FaGithub },
+    { name: 'LinkedIn', href: 'https://www.linkedin.com/in/luka-partenadze-394675348/', icon: FaLinkedin },
+    { name: 'Instagram', href: 'https://www.instagram.com/fartenadzeluka/', icon: FaInstagram },
+    { name: 'Email', href: 'mailto:lukafartenadze2004@gmail.com', icon: FaEnvelope },
   ]
 
   return (
-    <footer className="bg-[#0a0a0a] border-t border-white/5 relative overflow-hidden">
-      {/* Decorative background */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute bottom-0 left-1/4 w-96 h-96 bg-purple-500/5 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-blue-500/5 rounded-full blur-3xl"></div>
-      </div>
-
-      <div className="max-w-7xl mx-auto px-6 lg:px-8 py-16 relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
-          {/* Brand */}
-          <div>
-            <Link href="/" className="text-2xl font-light tracking-wider gradient-text hover:scale-105 inline-block transition-transform duration-300">
-              LUKA
-            </Link>
-            <p className="mt-4 text-sm text-white/40 leading-relaxed">
-              Full Stack Developer crafting elegant digital solutions with modern technologies.
-            </p>
+    <div 
+      className="relative h-[600px]" 
+      style={{clipPath: "polygon(0% 0, 100% 0%, 100% 100%, 0 100%)"}}
+      ref={container}
+    >
+      <div className="fixed bottom-0 h-[600px] w-full">
+        <div className="h-full bg-[#0f0f0f] flex flex-col justify-between p-12 lg:p-24 text-white border-t border-white/10">
+          <div className="flex flex-col gap-8">
+            <div className="flex items-center gap-4">
+               <div className="w-3 h-3 rounded-full bg-green-500 animate-pulse"></div>
+               <span className="text-sm text-white/50 uppercase tracking-widest">Available for work</span>
+            </div>
+            <h2 className="text-6xl md:text-9xl font-bold tracking-tighter leading-none">
+              <span className="block text-transparent bg-clip-text bg-gradient-to-r from-white to-white/40">LET'S WORK</span>
+              <span className="block text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-500">TOGETHER</span>
+            </h2>
           </div>
 
-          {/* Navigation */}
-          <div>
-            <h4 className="text-sm font-medium tracking-wider text-white mb-4">NAVIGATION</h4>
-            <div className="space-y-3">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.path}
-                  href={link.path}
-                  className="block text-sm text-white/40 hover:text-purple-400 transition-all duration-300 hover:translate-x-1"
-                >
-                  {link.name}
-                </Link>
+          <div className="flex flex-col md:flex-row justify-between items-end gap-12">
+            <div className="flex gap-4 flex-wrap">
+              {socialLinks.map((link, i) => (
+                <Magnetic key={i}>
+                  <a 
+                    href={link.href} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-center w-16 h-16 rounded-full border border-white/10 hover:bg-white text-white hover:text-black transition-all duration-300"
+                  >
+                    <link.icon className="w-6 h-6" />
+                  </a>
+                </Magnetic>
               ))}
             </div>
-          </div>
-
-          {/* Social */}
-          <div>
-            <h4 className="text-sm font-medium tracking-wider text-white mb-4">CONNECT</h4>
-            <div className="space-y-3">
-              {socialLinks.map((social) => (
-                <motion.a
-                  key={social.name}
-                  href={social.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  whileHover={{ x: 5 }}
-                  className="flex items-center text-sm text-white/40 hover:text-purple-400 transition-all duration-300 group relative"
-                >
-                  <social.icon className="w-4 h-4 mr-3 group-hover:scale-125 group-hover:rotate-12 transition-all duration-300" />
-                  <span>{social.name}</span>
-                  <svg className="w-3 h-3 ml-2 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                  </svg>
-                </motion.a>
-              ))}
+            <div className="flex flex-col items-end gap-2">
+              <p className="text-white/40 text-sm">© 2025 Luka Partenadze</p>
+              <p className="text-white/40 text-sm">Developed with Next.js & Framer Motion</p>
             </div>
           </div>
         </div>
-
-        {/* Bottom */}
-        <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-          <p className="text-xs text-white/30">
-            © 2025 Luka Partenadze. All rights reserved.
-          </p>
-          <p className="text-xs text-white/30 flex items-center gap-2">
-            <span className="inline-block w-2 h-2 bg-purple-400 rounded-full animate-pulse"></span>
-            Tbilisi, Georgia
-          </p>
-        </div>
       </div>
-    </footer>
+    </div>
   )
 }
