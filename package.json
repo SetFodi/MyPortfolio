@@ -16,7 +16,7 @@
     "framer-motion": "^12.7.2",
     "gsap": "^3.12.7",
     "lottie-react": "^2.4.1",
-    "next": "15.1.9",
+    "next": "15.1.11",
     "nodemailer": "^6.10.0",
     "particles-bg": "^2.5.5",
     "prism-react-renderer": "^2.4.1",
