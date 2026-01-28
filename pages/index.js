@@ -3,13 +3,13 @@ import { useState, useEffect, useRef } from 'react'
 import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link'
-import { motion, useScroll, useTransform } from 'framer-motion'
+import { motion } from 'framer-motion'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import Logo from '../components/Logo'
 import HeroSection from '@/components/ui/interactive-image-accordion'
+import { ContainerScroll } from '@/components/ui/container-scroll-animation'
 import { projects } from '../data/homeData'
-import { skillData } from '../data/homeData' // Assuming skillData is exported from here
 
 export default function Home() {
   const [mounted, setMounted] = useState(false)
@@ -36,64 +36,64 @@ export default function Home() {
         {/* HERO SECTION */}
         <HeroSection />
 
-        {/* SELECTED WORK - BENTO GRID */}
-        <section className="py-32 px-6 md:px-12 max-w-7xl mx-auto">
-          <div className="flex justify-between items-end mb-16">
-            <h2 className="text-3xl font-medium tracking-tight">Selected Work</h2>
-            <Link href="/projects" className="text-sm text-white/50 hover:text-white transition-colors">View All &rarr;</Link>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-[380px]">
-            {/* Main Featured Project - Spans 2 columns */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-              className="md:col-span-2 row-span-1 relative group overflow-hidden rounded-2xl bg-white/5 border border-white/10"
-            >
-              <Link href={projects[0].link} target="_blank" className="block h-full w-full">
-                <div className="absolute inset-0 z-10 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-60 group-hover:opacity-40 transition-opacity duration-500"></div>
-                <Image
-                  src={projects[0].image}
-                  alt={projects[0].title}
-                  fill
-                  className="object-cover transition-transform duration-700 group-hover:scale-105"
-                />
-                <div className="absolute bottom-0 left-0 p-8 z-20">
-                  <span className="text-xs font-medium text-purple-400 mb-2 block uppercase tracking-wider">{projects[0].category}</span>
-                  <h3 className="text-3xl font-semibold mb-2">{projects[0].title}</h3>
-                  <p className="text-white/70 max-w-md line-clamp-2">{projects[0].description}</p>
-                </div>
-              </Link>
-            </motion.div>
-
-            {/* Secondary Projects */}
-            {projects.slice(1, 4).map((project, i) => (
+        {/* SELECTED WORK - SCROLL ANIMATION */}
+        <section className="-mt-12">
+          <ContainerScroll
+            titleComponent={
+              <div className="flex flex-col items-center mb-10">
+                <h2 className="text-4xl md:text-7xl font-bold bg-clip-text text-transparent bg-gradient-to-b from-white to-white/60">
+                  Selected Work
+                </h2>
+                <Link href="/projects" className="text-xl text-purple-400 mt-4 hover:text-purple-300 transition-colors">
+                  View All Projects &rarr;
+                </Link>
+              </div>
+            }
+          >
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-[380px] p-4 text-left h-full">
+              {/* Main Featured Project - Spans 2 columns */}
               <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: i * 0.1 }}
-                className="col-span-1 row-span-1 relative group overflow-hidden rounded-2xl bg-white/5 border border-white/10"
+                className="md:col-span-2 row-span-1 relative group overflow-hidden rounded-2xl bg-white/5 border border-white/10"
               >
-                <Link href={project.link} target="_blank" className="block h-full w-full">
+                <Link href={projects[0].link} target="_blank" className="block h-full w-full">
                   <div className="absolute inset-0 z-10 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-60 group-hover:opacity-40 transition-opacity duration-500"></div>
                   <Image
-                    src={project.image}
-                    alt={project.title}
+                    src={projects[0].image}
+                    alt={projects[0].title}
                     fill
                     className="object-cover transition-transform duration-700 group-hover:scale-105"
                   />
-                  <div className="absolute bottom-0 left-0 p-6 z-20">
-                    <span className="text-xs font-medium text-purple-400 mb-2 block uppercase tracking-wider">{project.category}</span>
-                    <h3 className="text-xl font-semibold mb-1">{project.title}</h3>
+                  <div className="absolute bottom-0 left-0 p-8 z-20">
+                    <span className="text-xs font-medium text-purple-400 mb-2 block uppercase tracking-wider">{projects[0].category}</span>
+                    <h3 className="text-3xl font-semibold mb-2">{projects[0].title}</h3>
+                    <p className="text-white/70 max-w-md line-clamp-2">{projects[0].description}</p>
                   </div>
                 </Link>
               </motion.div>
-            ))}
-          </div>
+
+              {/* Secondary Projects */}
+              {projects.slice(1, 4).map((project, i) => (
+                <motion.div
+                  key={i}
+                  className="col-span-1 row-span-1 relative group overflow-hidden rounded-2xl bg-white/5 border border-white/10"
+                >
+                  <Link href={project.link} target="_blank" className="block h-full w-full">
+                    <div className="absolute inset-0 z-10 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-60 group-hover:opacity-40 transition-opacity duration-500"></div>
+                    <Image
+                      src={project.image}
+                      alt={project.title}
+                      fill
+                      className="object-cover transition-transform duration-700 group-hover:scale-105"
+                    />
+                    <div className="absolute bottom-0 left-0 p-6 z-20">
+                      <span className="text-xs font-medium text-purple-400 mb-2 block uppercase tracking-wider">{project.category}</span>
+                      <h3 className="text-xl font-semibold mb-1">{project.title}</h3>
+                    </div>
+                  </Link>
+                </motion.div>
+              ))}
+            </div>
+          </ContainerScroll>
         </section>
 
         {/* TECH STACK - CREATIVE INTERACTIVE GRID */}
@@ -183,12 +183,6 @@ export default function Home() {
                 View All Plans &rarr;
               </Link>
             </div>
-
-            {/* Simplified Pricing Cards for Home - Direct usage of Pricing component with limited props or just custom cards? 
-                     Using the full Pricing component might be too heavy with the toggle unless we want it. 
-                     Let's use a simplified view or just link to pricing. 
-                     Actually, user requested "a little preview". Let's show the 3 cards but maybe simpler.
-                 */}
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {[
