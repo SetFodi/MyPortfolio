@@ -6,38 +6,38 @@ import { ArrowRight, MessageCircle } from 'lucide-react';
 const accordionItems = [
     {
         id: 1,
-        title: 'AndWatch',
-        description: 'Media tracking platform for movies & anime',
-        imageUrl: '/andwatch.jpg', // Using local image path from data
-        link: 'https://andwatch.vercel.app/'
+        title: 'Clean Code',
+        description: 'Writing maintainable and scalable software',
+        imageUrl: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=2072&auto=format&fit=crop',
+        link: '/projects'
     },
     {
         id: 2,
-        title: 'Furniture',
-        description: 'Modern 3D e-commerce platform',
-        imageUrl: '/furniture.jpeg',
-        link: 'https://github.com/SetFodi/furniture-store'
+        title: 'Architecture',
+        description: 'Designing robust system foundations',
+        imageUrl: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2070&auto=format&fit=crop',
+        link: '/projects'
     },
     {
         id: 3,
-        title: 'AndCook',
-        description: 'Recipe sharing & discovery platform',
-        imageUrl: '/images/AndCook.jpg',
-        link: 'https://andcook.vercel.app'
+        title: 'Innovation',
+        description: 'Exploring new technologies and solutions',
+        imageUrl: 'https://images.unsplash.com/photo-1555099962-4199c345e5dd?q=80&w=2070&auto=format&fit=crop',
+        link: '/projects'
     },
     {
         id: 4,
-        title: 'Syncrolly',
-        description: 'Real-time data synchronization app',
-        imageUrl: '/images/syncrolly.jpg',
-        link: 'https://syncrolly.com'
+        title: 'Collaboration',
+        description: 'Building great things together',
+        imageUrl: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=2070&auto=format&fit=crop',
+        link: '/projects'
     },
     {
         id: 5,
-        title: 'Typingy',
-        description: 'Multiplayer typing speed platform',
-        imageUrl: '/images/typingy.jpg',
-        link: 'https://typingy.live'
+        title: 'Lifestyle',
+        description: 'Balancing code with creativity',
+        imageUrl: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=2070&auto=format&fit=crop',
+        link: '/projects'
     },
 ];
 

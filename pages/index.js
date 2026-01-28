@@ -55,27 +55,37 @@ export default function Home() {
           >
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-[380px] p-4 text-left h-full">
               {/* Main Featured Project - Spans 2 columns */}
-              <motion.div
-                className="md:col-span-2 row-span-1 relative group overflow-hidden rounded-2xl bg-white/5 border border-white/10"
-              >
-                <Link href={projects[0].link} target="_blank" className="block h-full w-full">
-                  <div className="absolute inset-0 z-10 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-60 group-hover:opacity-40 transition-opacity duration-500"></div>
-                  <Image
-                    src={projects[0].image}
-                    alt={projects[0].title}
-                    fill
-                    className="object-cover transition-transform duration-700 group-hover:scale-105"
-                  />
-                  <div className="absolute bottom-0 left-0 p-8 z-20">
-                    <span className="text-xs font-medium text-purple-400 mb-2 block uppercase tracking-wider">{projects[0].category}</span>
-                    <h3 className="text-3xl font-semibold mb-2">{projects[0].title}</h3>
-                    <p className="text-white/70 max-w-md line-clamp-2">{projects[0].description}</p>
-                  </div>
-                </Link>
-              </motion.div>
+              {(() => {
+                const mainProject = projects.find(p => p.title === 'Furniture') || projects[0];
+                return (
+                  <motion.div
+                    className="md:col-span-2 row-span-1 relative group overflow-hidden rounded-2xl bg-white/5 border border-white/10"
+                  >
+                    <Link href={mainProject.link} target="_blank" className="block h-full w-full">
+                      <div className="absolute inset-0 z-10 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-60 group-hover:opacity-40 transition-opacity duration-500"></div>
+                      <Image
+                        src={mainProject.image}
+                        alt={mainProject.title}
+                        fill
+                        className="object-cover transition-transform duration-700 group-hover:scale-105"
+                      />
+                      <div className="absolute bottom-0 left-0 p-8 z-20">
+                        <span className="text-xs font-medium text-purple-400 mb-2 block uppercase tracking-wider">{mainProject.category}</span>
+                        <h3 className="text-3xl font-semibold mb-2">{mainProject.title}</h3>
+                        <p className="text-white/70 max-w-md line-clamp-2">{mainProject.description}</p>
+                      </div>
+                    </Link>
+                  </motion.div>
+                );
+              })()}
 
               {/* Secondary Projects */}
-              {projects.slice(1, 4).map((project, i) => (
+              {[
+                projects.find(p => p.title === 'AndScore') || projects.find(p => p.title === 'AndCode'),
+                projects[0], // AndWatch moved here
+                projects[2], // AndCook
+                projects[3]  // Syncrolly
+              ].map((project, i) => (
                 <motion.div
                   key={i}
                   className="col-span-1 row-span-1 relative group overflow-hidden rounded-2xl bg-white/5 border border-white/10"
