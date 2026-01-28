@@ -12,7 +12,7 @@ html {
 
 body { 
   font-family: 'Inter', sans-serif; 
-  background: #0a0a0a;
+  background: transparent;
   color: #ffffff;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;

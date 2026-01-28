@@ -10,9 +10,9 @@ export default function Footer() {
   ]
 
   return (
-    <footer className="bg-[#0a0a0a] border-t border-white/5 pt-20 pb-8">
+    <footer className="bg-transparent border-t border-white/5 pt-20 pb-8 backdrop-blur-sm">
       <div className="max-w-7xl mx-auto px-6 md:px-12">
-        
+
         <div className="flex flex-col items-center text-center mb-20">
           <h2 className="text-4xl md:text-6xl font-bold mb-6 tracking-tight">
             Let's work together.
@@ -20,8 +20,8 @@ export default function Footer() {
           <p className="text-white/50 text-lg mb-8 max-w-lg">
             Creating digital experiences with a focus on design and performance.
           </p>
-          <a 
-            href="mailto:lukafartenadze2004@gmail.com" 
+          <a
+            href="mailto:lukafartenadze2004@gmail.com"
             className="px-8 py-3 rounded-full border border-white/20 hover:bg-white hover:text-black transition-all duration-300"
           >
             lukafartenadze2004@gmail.com
@@ -35,10 +35,10 @@ export default function Footer() {
 
           <div className="flex gap-6">
             {socialLinks.map((link, i) => (
-              <a 
+              <a
                 key={i}
-                href={link.href} 
-                target="_blank" 
+                href={link.href}
+                target="_blank"
                 rel="noopener noreferrer"
                 className="text-white/40 hover:text-white transition-colors"
               >
