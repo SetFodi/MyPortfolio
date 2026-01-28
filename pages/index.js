@@ -110,7 +110,7 @@ export default function Home() {
           </ContainerScroll>
         </section>
 
-        import {TechStackCards} from '@/components/ui/tech-stack-cards'
+
 
         {/* TECH STACK - GLOWING CARDS */}
         <section className="py-32 bg-transparent border-y border-white/5 overflow-hidden">

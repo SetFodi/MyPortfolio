@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import Logo from '../components/Logo'
+import FlightButton from '../components/FlightButton'
 import { FaGithub, FaLinkedin, FaInstagram, FaEnvelope, FaMapMarkerAlt, FaPaperPlane, FaPaperPlane as Send } from 'react-icons/fa'
 
 export default function Contact() {
@@ -143,16 +144,13 @@ export default function Contact() {
                 {errors.message && <span className="text-red-400 text-sm">{errors.message.message}</span>}
               </div>
 
-              <button
+              <FlightButton
                 type="submit"
                 disabled={isSubmitting}
-                className="group relative inline-flex items-center gap-3 px-8 py-4 bg-foreground text-background rounded-full font-bold overflow-hidden transition-all hover:bg-purple-500 hover:text-white disabled:opacity-70 disabled:cursor-not-allowed"
-              >
-                <span className="relative z-10">
-                  {isSubmitting ? 'Sending...' : 'Send Message'}
-                </span>
-                <Send className={`w-4 h-4 relative z-10 ${isSubmitting ? 'animate-pulse' : 'group-hover:translate-x-1'} transition-transform`} />
-              </button>
+                text={isSubmitting ? 'Sending...' : 'Send Message'}
+                icon={Send}
+                className="bg-foreground text-background w-56 border dark:border-white/20 border-gray-300"
+              />
 
               {submitSuccess && (
                 <motion.p

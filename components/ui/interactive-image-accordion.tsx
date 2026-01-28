@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { ArrowRight, MessageCircle } from 'lucide-react';
-import { RainbowButton } from './rainbow-button';
+import FlightButton from '../FlightButton';
+import { FlowButton } from './flow-button';
 
 // --- Data for the image accordion ---
 // Populated with user's specific project data
@@ -127,17 +128,17 @@ export default function InteractiveImageAccordion() {
                         </p>
 
                         <div className="flex flex-col sm:flex-row gap-4 justify-center xl:justify-start pt-4">
-                            <RainbowButton asChild className="rounded-full h-12 px-8">
-                                <a href="#contact" className="gap-2">
-                                    Contact Me <MessageCircle className="w-4 h-4 ml-2" />
-                                </a>
-                            </RainbowButton>
+                            <FlightButton
+                                href="#contact"
+                                text="Contact Me"
+                                icon={MessageCircle}
+                                className="bg-foreground text-background border dark:border-white/20 border-gray-300"
+                            />
 
-                            <RainbowButton asChild className="rounded-full h-12 px-8 bg-transparent before:hidden dark:bg-transparent border dark:border-white/20 border-gray-300 text-foreground">
-                                <a href="/projects" className="gap-2 hover:bg-foreground/5 transition-all">
-                                    All Projects <ArrowRight className="w-4 h-4 ml-2" />
+                            <FlowButton asChild text="All Projects">
+                                <a href="/projects" className="gap-2">
                                 </a>
-                            </RainbowButton>
+                            </FlowButton>
                         </div>
                     </div>
 

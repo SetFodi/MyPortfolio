@@ -7,6 +7,7 @@ import { Pricing } from '@/components/ui/pricing'
 import { FaqAccordion } from '@/components/ui/faq-chat-accordion'
 import { motion } from 'framer-motion'
 import { FaRocket, FaHandshake, FaGem } from 'react-icons/fa'
+import { FlowButton } from '@/components/ui/flow-button'
 
 export default function PricingPage() {
     const [mounted, setMounted] = useState(false)
@@ -124,12 +125,9 @@ export default function PricingPage() {
                             </p>
 
                             <div className="flex flex-col sm:flex-row gap-4 justify-center w-full max-w-md">
-                                <a
-                                    href="/contact?plan=custom"
-                                    className="px-8 py-4 rounded-full bg-foreground text-background font-bold text-lg hover:scale-105 transition-all duration-300 shadow-xl dark:shadow-white/5 shadow-black/5 w-full sm:w-auto"
-                                >
-                                    Contact for a Quote
-                                </a>
+                                <FlowButton asChild text="Contact for a Quote">
+                                    <a href="/contact?plan=custom"></a>
+                                </FlowButton>
                             </div>
 
                             <p className="text-muted-foreground/50 text-sm mt-6">
