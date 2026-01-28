@@ -34,6 +34,23 @@ export const ContainerScroll = ({
     const scale = useTransform(scrollYProgress, [0, 1], scaleDimensions());
     const translate = useTransform(scrollYProgress, [0, 1], [0, -100]);
 
+    // Mobile: render static layout without scroll animation
+    if (isMobile) {
+        return (
+            <div className="py-10 px-4">
+                <div className="max-w-5xl mx-auto text-center mb-8">
+                    {titleComponent}
+                </div>
+                <div className="max-w-6xl mx-auto h-auto w-full border-2 border-[#6C6C6C] p-2 bg-[#222222] rounded-[20px] shadow-xl">
+                    <div className="h-full w-full overflow-hidden rounded-xl bg-zinc-900 p-2">
+                        {children}
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
+    // Desktop: render with scroll animation
     return (
         <div
             className="h-[60rem] md:h-[80rem] flex items-center justify-center relative p-2 md:p-20"

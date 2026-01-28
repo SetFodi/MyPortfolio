@@ -53,7 +53,7 @@ const AccordionItem = ({ item, isActive, onMouseEnter }: { item: any, isActive: 
             className={`
         relative h-[450px] rounded-2xl overflow-hidden cursor-pointer
         transition-all duration-700 ease-in-out
-        ${isActive ? 'w-[400px]' : 'w-[80px] md:w-[100px]'}
+        ${isActive ? 'w-full md:w-[350px] lg:w-[400px]' : 'w-[60px] md:w-[80px] lg:w-[100px]'}
       `}
             onMouseEnter={onMouseEnter}
         >
@@ -103,7 +103,7 @@ export default function InteractiveImageAccordion() {
     };
 
     return (
-        <section className="bg-transparent text-foreground font-sans py-12 md:py-24 min-h-screen flex items-center">
+        <section className="bg-transparent text-foreground font-sans py-16 md:py-24 min-h-[80vh] md:min-h-screen flex items-center">
             <div className="container mx-auto px-4">
                 <div className="flex flex-col xl:flex-row items-center justify-between gap-12 xl:gap-20">
 
@@ -142,8 +142,8 @@ export default function InteractiveImageAccordion() {
                         </div>
                     </div>
 
-                    {/* Right Side: Image Accordion */}
-                    <div className="w-full xl:w-7/12">
+                    {/* Right Side: Image Accordion - Hidden on mobile */}
+                    <div className="hidden md:block w-full xl:w-7/12">
                         <div className="flex flex-row items-center justify-center gap-2 md:gap-4 overflow-x-auto pb-4 md:pb-0 hide-scrollbar">
                             {accordionItems.map((item, index) => (
                                 <AccordionItem
