@@ -1,6 +1,7 @@
 'use client'
 import Link from 'next/link'
 import { FaGithub, FaLinkedin, FaInstagram } from 'react-icons/fa'
+import { RainbowButton } from './ui/rainbow-button'
 
 export default function Footer() {
   const socialLinks = [
@@ -20,12 +21,11 @@ export default function Footer() {
           <p className="text-muted-foreground text-lg mb-8 max-w-lg">
             Creating digital experiences with a focus on design and performance.
           </p>
-          <a
-            href="mailto:lukafartenadze2004@gmail.com"
-            className="px-8 py-3 rounded-full border dark:border-white/20 border-gray-300 hover:bg-foreground hover:text-background transition-all duration-300 text-foreground"
-          >
-            lukafartenadze2004@gmail.com
-          </a>
+          <RainbowButton asChild className="h-12 px-8 rounded-full">
+            <a href="mailto:lukafartenadze2004@gmail.com">
+              lukafartenadze2004@gmail.com
+            </a>
+          </RainbowButton>
         </div>
 
         <div className="flex flex-col md:flex-row justify-between items-center pt-8 border-t dark:border-white/5 border-gray-200 gap-4">

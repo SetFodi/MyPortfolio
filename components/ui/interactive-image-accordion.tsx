@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { ArrowRight, MessageCircle } from 'lucide-react';
+import { RainbowButton } from './rainbow-button';
 
 // --- Data for the image accordion ---
 // Populated with user's specific project data
@@ -126,18 +127,17 @@ export default function InteractiveImageAccordion() {
                         </p>
 
                         <div className="flex flex-col sm:flex-row gap-4 justify-center xl:justify-start pt-4">
-                            <a
-                                href="#contact"
-                                className="inline-flex items-center justify-center gap-2 bg-foreground text-background font-bold px-8 py-4 rounded-full hover:opacity-90 transition-all active:scale-95"
-                            >
-                                Contact Me <MessageCircle className="w-4 h-4" />
-                            </a>
-                            <a
-                                href="/projects"
-                                className="inline-flex items-center justify-center gap-2 border dark:border-white/20 border-gray-300 text-foreground font-bold px-8 py-4 rounded-full hover:bg-foreground/5 transition-all"
-                            >
-                                All Projects <ArrowRight className="w-4 h-4" />
-                            </a>
+                            <RainbowButton asChild className="rounded-full h-12 px-8">
+                                <a href="#contact" className="gap-2">
+                                    Contact Me <MessageCircle className="w-4 h-4 ml-2" />
+                                </a>
+                            </RainbowButton>
+
+                            <RainbowButton asChild className="rounded-full h-12 px-8 bg-transparent before:hidden dark:bg-transparent border dark:border-white/20 border-gray-300 text-foreground">
+                                <a href="/projects" className="gap-2 hover:bg-foreground/5 transition-all">
+                                    All Projects <ArrowRight className="w-4 h-4 ml-2" />
+                                </a>
+                            </RainbowButton>
                         </div>
                     </div>
 
