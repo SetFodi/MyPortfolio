@@ -4,6 +4,7 @@ import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import Logo from '../components/Logo'
 import { Pricing } from '@/components/ui/pricing'
+import { FaqAccordion } from '@/components/ui/faq-chat-accordion'
 import { motion } from 'framer-motion'
 import { FaRocket, FaHandshake, FaGem } from 'react-icons/fa'
 
@@ -80,7 +81,7 @@ export default function PricingPage() {
     ]
 
     return (
-        <div className="bg-transparent text-white selection:bg-purple-500/30 selection:text-white min-h-screen flex flex-col font-sans">
+        <div className="bg-transparent text-foreground selection:bg-purple-500/30 selection:text-white min-h-screen flex flex-col font-sans">
             <Head>
                 <title>Pricing | Luka Partenadze</title>
                 <meta name="description" content="Transparent pricing packages for website development." />
@@ -96,37 +97,98 @@ export default function PricingPage() {
                     description="High-quality development at competitive rates. Choose the package that fits your goals."
                 />
 
-                {/* CUSTOM ENTERPRISE SECTION */}
-                <section className="max-w-7xl mx-auto px-6 md:px-12 mt-20">
+                {/* CUSTOM ENTERPRISE SECTION - Redesigned as a Premium Card */}
+                <section className="max-w-7xl mx-auto px-6 md:px-12 mt-20 mb-32">
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
-                        transition={{ duration: 0.6 }}
-                        className="relative rounded-3xl overflow-hidden bg-gradient-to-br from-purple-900/40 to-black border border-purple-500/30 p-8 md:p-16 text-center"
+                        whileHover={{ scale: 1.01 }}
+                        transition={{ duration: 0.5 }}
+                        className="relative rounded-3xl overflow-hidden dark:bg-zinc-900/80 bg-white/80 border dark:border-white/10 border-gray-200 backdrop-blur-xl p-8 md:p-12 text-center group"
                     >
-                        <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-20"></div>
+                        {/* Gradient Glow */}
+                        <div className="absolute inset-0 bg-gradient-to-b from-purple-500/10 to-transparent pointer-events-none transition-opacity duration-500 group-hover:opacity-100 opacity-50" />
 
-                        <div className="relative z-10 max-w-3xl mx-auto">
-                            <div className="inline-flex items-center justify-center p-3 bg-white/10 rounded-full mb-6">
-                                <FaGem className="text-2xl text-purple-400" />
+                        <div className="relative z-10 max-w-4xl mx-auto flex flex-col items-center">
+                            <div className="inline-flex items-center justify-center p-4 dark:bg-white/5 bg-gray-50 rounded-full mb-6 border dark:border-white/5 border-gray-100 group-hover:border-purple-500/30 transition-colors">
+                                <FaGem className="text-3xl text-purple-400" />
                             </div>
-                            <h2 className="text-3xl md:text-5xl font-bold mb-6">Need a Custom Solution?</h2>
-                            <p className="text-lg text-white/70 mb-10 leading-relaxed">
+
+                            <h2 className="text-3xl md:text-5xl font-bold mb-6 text-foreground tracking-tight">Need a Custom Solution?</h2>
+
+                            <p className="text-lg text-muted-foreground mb-10 leading-relaxed max-w-2xl mx-auto">
                                 Have a complex project or specific requirements not covered above?
                                 I offer tailored development for large-scale applications, SaaS platforms,
                                 and unique digital experiences.
                             </p>
-                            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+
+                            <div className="flex flex-col sm:flex-row gap-4 justify-center w-full max-w-md">
                                 <a
                                     href="/contact?plan=custom"
-                                    className="px-8 py-4 rounded-full bg-white text-black font-bold text-lg hover:scale-105 transition-transform duration-300"
+                                    className="px-8 py-4 rounded-full bg-foreground text-background font-bold text-lg hover:scale-105 transition-all duration-300 shadow-xl dark:shadow-white/5 shadow-black/5 w-full sm:w-auto"
                                 >
                                     Contact for a Quote
                                 </a>
                             </div>
+
+                            <p className="text-muted-foreground/50 text-sm mt-6">
+                                Fully scalable • Enterprise-grade security • Priority support
+                            </p>
                         </div>
                     </motion.div>
+                </section>
+
+                {/* FAQ SECTION */}
+                <section className="max-w-3xl mx-auto px-6 md:px-12 pb-32">
+                    <div className="text-center mb-16">
+                        <h2 className="text-3xl md:text-5xl font-bold mb-6 text-foreground">Frequently Asked Questions</h2>
+                        <p className="text-muted-foreground">Everything you need to know about my services and process.</p>
+                    </div>
+
+                    <FaqAccordion
+                        data={[
+                            {
+                                id: 1,
+                                question: "What is your typical turnaround time?",
+                                answer: "For a standard landing page, it usually takes 3-5 days. Larger projects like e-commerce sites or custom web apps typically take 2-4 weeks, depending on complexity.",
+                                icon: "⏱️",
+                                iconPosition: "left"
+                            },
+                            {
+                                id: 2,
+                                question: "Do you provide hosting and domain setup?",
+                                answer: "Yes! I can handle the entire deployment process, including setting up your domain, SSL certificate, and hosting on fast, reliable platforms like Vercel or AWS.",
+                                icon: "🌐",
+                                iconPosition: "right"
+                            },
+                            {
+                                id: 3,
+                                question: "Will my website be mobile-friendly?",
+                                answer: "Absolutely. I follow a mobile-first approach, ensuring your site looks and performs perfectly on all devices, from smartphones to large desktop screens.",
+                                icon: "📱",
+                                iconPosition: "left"
+                            },
+                            {
+                                id: 4,
+                                question: "Do you offer maintenance after launch?",
+                                answer: "Yes, I offer ongoing support packages to keep your website updated, secure, and running smoothly. We can discuss a plan that works for you.",
+                                icon: "🛠️",
+                                iconPosition: "right"
+                            },
+                            {
+                                id: 5,
+                                question: "What technologies do you use?",
+                                answer: "I primarily use Next.js, React, and Tailwind CSS for modern, high-performance websites. For backends, I use Node.js, MongoDB, or SQL depending on the project needs.",
+                                icon: "💻",
+                                iconPosition: "left"
+                            }
+                        ]}
+                        className="w-full"
+                        questionClassName="dark:bg-white/5 bg-gray-50 hover:dark:bg-white/10 hover:bg-gray-100"
+                        answerClassName="dark:bg-white/5 bg-gray-50 text-muted-foreground"
+                        timestamp="Updated recently"
+                    />
                 </section>
             </main>
 

@@ -25,7 +25,7 @@ function DisplayCard({
     return (
         <div
             className={cn(
-                "relative flex h-36 w-[22rem] -skew-y-[8deg] select-none flex-col justify-between rounded-xl border-2 bg-zinc-900 px-4 py-3 transition-all duration-700 after:absolute after:-right-1 after:top-[-5%] after:h-[110%] after:w-[20rem] after:bg-gradient-to-l after:from-background after:to-transparent after:content-[''] hover:border-white/20 hover:bg-zinc-800 [&>*]:flex [&>*]:items-center [&>*]:gap-2",
+                "relative flex h-36 w-[22rem] -skew-y-[8deg] select-none flex-col justify-between rounded-xl border-2 dark:bg-zinc-900 bg-white dark:border-white/10 border-gray-200 px-4 py-3 transition-all duration-700 after:absolute after:-right-1 after:top-[-5%] after:h-[110%] after:w-[20rem] after:bg-gradient-to-l after:from-background after:to-transparent after:content-[''] hover:dark:border-white/20 hover:border-gray-300 hover:dark:bg-zinc-800 hover:bg-gray-50 [&>*]:flex [&>*]:items-center [&>*]:gap-2",
                 className
             )}
         >
@@ -37,7 +37,7 @@ function DisplayCard({
             </div>
             <p className="whitespace-nowrap text-lg">{description}</p>
             <p className="text-muted-foreground">{date}</p>
-        </div>
+        </div >
     );
 }
 

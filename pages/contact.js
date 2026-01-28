@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import Logo from '../components/Logo'
-import { FaGithub, FaLinkedin, FaInstagram, FaEnvelope, FaMapMarkerAlt, FaPaperPlane } from 'react-icons/fa'
+import { FaGithub, FaLinkedin, FaInstagram, FaEnvelope, FaMapMarkerAlt, FaPaperPlane, FaPaperPlane as Send } from 'react-icons/fa'
 
 export default function Contact() {
   const [mounted, setMounted] = useState(false)
@@ -63,7 +63,7 @@ export default function Contact() {
   ]
 
   return (
-    <div className="bg-transparent text-white selection:bg-purple-500/30 selection:text-white min-h-screen flex flex-col">
+    <div className="bg-transparent text-foreground selection:bg-purple-500/30 selection:text-white min-h-screen flex flex-col transition-colors duration-300">
       <Head>
         <title>Contact | Luka Partenadze</title>
         <meta name="description" content="Get in touch for collaborations or freelance work." />
@@ -72,175 +72,155 @@ export default function Contact() {
       <Logo />
       <Navbar />
 
-      <main className="pt-20 pb-32 flex-grow">
-        <div className="px-6 md:px-12 max-w-7xl mx-auto">
+      <main className="pt-32 pb-20 px-6 md:px-12 max-w-7xl mx-auto w-full relative z-10">
 
-          {/* HEADER */}
-          <div className="max-w-3xl mb-24">
-            <motion.h1
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-20">
+
+          {/* LEFT COLUMN - TEXT & FORM */}
+          <div>
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
-              className="text-5xl md:text-7xl font-bold mb-6"
             >
-              Let's start a <br />
-              <span className="text-purple-400">conversation.</span>
-            </motion.h1>
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              className="text-xl text-white/60 leading-relaxed max-w-xl"
-            >
-              Interested in working together? Feel free to drop me a line about your project.
-            </motion.p>
+              <h1 className="text-5xl md:text-7xl font-bold mb-6 tracking-tight text-foreground">
+                Get in <span className="text-purple-400">Touch.</span>
+              </h1>
+              <p className="text-xl text-muted-foreground leading-relaxed max-w-xl mb-12">
+                Have a project in mind or just want to chat? I'm currently open to new opportunities.
+              </p>
+            </motion.div>
+
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div className="group">
+                  <label className="text-sm font-medium text-muted-foreground uppercase tracking-wider mb-2 block">Name</label>
+                  <input
+                    {...register('name', { required: 'Name is required' })}
+                    type="text"
+                    placeholder="John Doe"
+                    className="w-full bg-transparent border-b dark:border-white/20 border-gray-300 py-3 dark:text-white text-black placeholder:text-muted-foreground/30 focus:outline-none focus:border-purple-500 transition-colors"
+                  />
+                  {errors.name && <span className="text-red-400 text-sm">{errors.name.message}</span>}
+                </div>
+                <div className="group">
+                  <label className="text-sm font-medium text-muted-foreground uppercase tracking-wider mb-2 block">Email</label>
+                  <input
+                    {...register('email', {
+                      required: 'Email is required',
+                      pattern: { value: /^\S+@\S+$/i, message: 'Invalid email' }
+                    })}
+                    type="email"
+                    placeholder="john@example.com"
+                    className="w-full bg-transparent border-b dark:border-white/20 border-gray-300 py-3 dark:text-white text-black placeholder:text-muted-foreground/30 focus:outline-none focus:border-purple-500 transition-colors"
+                  />
+                  {errors.email && <span className="text-red-400 text-sm">{errors.email.message}</span>}
+                </div>
+              </div>
+
+              <div className="group">
+                <label className="text-sm font-medium text-muted-foreground uppercase tracking-wider mb-2 block">Subject</label>
+                <select
+                  {...register('subject', { required: 'Subject is required' })}
+                  className="w-full bg-transparent border-b dark:border-white/20 border-gray-300 py-3 dark:text-white text-black focus:outline-none focus:border-purple-500 transition-colors"
+                >
+                  <option className="bg-background text-foreground">General Inquiry</option>
+                  <option className="bg-background text-foreground">Project Proposal</option>
+                  <option className="bg-background text-foreground">Freelance</option>
+                  <option className="bg-background text-foreground">Other</option>
+                </select>
+                {errors.subject && <span className="text-red-400 text-sm">{errors.subject.message}</span>}
+              </div>
+
+              <div className="group">
+                <label className="text-sm font-medium text-muted-foreground uppercase tracking-wider mb-2 block">Message</label>
+                <textarea
+                  {...register('message', { required: 'Message is required' })}
+                  rows="4"
+                  placeholder="Tell me about your project..."
+                  className="w-full bg-transparent border-b dark:border-white/20 border-gray-300 py-3 dark:text-white text-black placeholder:text-muted-foreground/30 focus:outline-none focus:border-purple-500 transition-colors resize-none"
+                ></textarea>
+                {errors.message && <span className="text-red-400 text-sm">{errors.message.message}</span>}
+              </div>
+
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="group relative inline-flex items-center gap-3 px-8 py-4 bg-foreground text-background rounded-full font-bold overflow-hidden transition-all hover:bg-purple-500 hover:text-white disabled:opacity-70 disabled:cursor-not-allowed"
+              >
+                <span className="relative z-10">
+                  {isSubmitting ? 'Sending...' : 'Send Message'}
+                </span>
+                <Send className={`w-4 h-4 relative z-10 ${isSubmitting ? 'animate-pulse' : 'group-hover:translate-x-1'} transition-transform`} />
+              </button>
+
+              {submitSuccess && (
+                <motion.p
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="mt-4 text-green-400"
+                >
+                  {submitSuccess}
+                </motion.p>
+              )}
+              {submitError && (
+                <motion.p
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="mt-4 text-red-400"
+                >
+                  {submitError}
+                </motion.p>
+              )}
+            </form>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24">
-
-            {/* LEFT COLUMN - FORM */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-            >
-              <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
-                <div className="space-y-6">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div className="space-y-2">
-                      <label className="text-sm font-medium text-white/40 uppercase tracking-wider">Name</label>
-                      <input
-                        {...register('name', { required: 'Name is required' })}
-                        className="w-full bg-transparent border-b border-white/20 py-4 text-lg focus:border-purple-500 transition-colors outline-none placeholder-white/20"
-                        placeholder="John Doe"
-                      />
-                      {errors.name && <span className="text-red-400 text-sm">{errors.name.message}</span>}
-                    </div>
-                    <div className="space-y-2">
-                      <label className="text-sm font-medium text-white/40 uppercase tracking-wider">Email</label>
-                      <input
-                        {...register('email', {
-                          required: 'Email is required',
-                          pattern: { value: /^\S+@\S+$/i, message: 'Invalid email' }
-                        })}
-                        className="w-full bg-transparent border-b border-white/20 py-4 text-lg focus:border-purple-500 transition-colors outline-none placeholder-white/20"
-                        placeholder="john@example.com"
-                      />
-                      {errors.email && <span className="text-red-400 text-sm">{errors.email.message}</span>}
-                    </div>
+          {/* RIGHT COLUMN - CONTACT INFO & SOCIALS */}
+          <div className="lg:pl-12 flex flex-col justify-between">
+            <div className="grid grid-cols-1 gap-6 mb-12">
+              {contactMethods.map((method, i) => (
+                <a
+                  key={i}
+                  href={method.link}
+                  className="flex items-center gap-6 p-6 rounded-2xl dark:bg-white/5 bg-gray-50 border dark:border-white/5 border-gray-200 hover:dark:border-white/20 hover:border-gray-300 transition-all group"
+                >
+                  <div className="h-12 w-12 rounded-full dark:bg-white/5 bg-white flex items-center justify-center border dark:border-white/5 border-gray-100">
+                    <method.icon className="text-xl text-muted-foreground group-hover:text-purple-400 transition-colors" />
                   </div>
-
-                  <div className="space-y-2">
-                    <label className="text-sm font-medium text-white/40 uppercase tracking-wider">Subject</label>
-                    <input
-                      {...register('subject', { required: 'Subject is required' })}
-                      className="w-full bg-transparent border-b border-white/20 py-4 text-lg focus:border-purple-500 transition-colors outline-none placeholder-white/20"
-                      placeholder="Project Proposal"
-                    />
-                    {errors.subject && <span className="text-red-400 text-sm">{errors.subject.message}</span>}
+                  <div>
+                    <h3 className="text-sm font-medium text-muted-foreground/50 uppercase tracking-wider mb-1">{method.label}</h3>
+                    <p className="text-lg text-foreground">{method.value}</p>
                   </div>
+                </a>
+              ))}
+            </div>
 
-                  <div className="space-y-2">
-                    <label className="text-sm font-medium text-white/40 uppercase tracking-wider">Message</label>
-                    <textarea
-                      {...register('message', { required: 'Message is required' })}
-                      rows={4}
-                      className="w-full bg-transparent border-b border-white/20 py-4 text-lg focus:border-purple-500 transition-colors outline-none resize-none placeholder-white/20"
-                      placeholder="Tell me about your project..."
-                    />
-                    {errors.message && <span className="text-red-400 text-sm">{errors.message.message}</span>}
-                  </div>
-                </div>
-
-                <div className="pt-4">
-                  <button
-                    type="submit"
-                    disabled={isSubmitting}
-                    className="group relative w-40 h-14 bg-white text-black rounded-full font-medium text-base overflow-hidden transition-all hover:scale-[1.02] active:scale-[0.98] disabled:opacity-70 disabled:cursor-not-allowed hover:shadow-lg hover:shadow-purple-500/20"
+            <div className="p-8 rounded-3xl dark:bg-white/5 bg-gray-50 border dark:border-white/5 border-gray-200">
+              <h3 className="text-xl font-bold mb-6 text-foreground">Connect on Social</h3>
+              <div className="flex flex-wrap gap-4">
+                {[
+                  { name: 'GitHub', icon: FaGithub, link: 'https://github.com/SetFodi' },
+                  { name: 'LinkedIn', icon: FaLinkedin, link: 'https://www.linkedin.com/in/luka-partenadze-394675348/' },
+                  { name: 'Instagram', icon: FaInstagram, link: 'https://www.instagram.com/fartenadzeluka/' },
+                ].map((social, i) => (
+                  <a
+                    key={i}
+                    href={social.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-3 px-5 py-3 rounded-full dark:bg-black/20 bg-white border dark:border-white/10 border-gray-200 hover:dark:bg-white/10 hover:bg-gray-100 transition-all group"
                   >
-                    {/* Text State */}
-                    <div className={`relative z-10 flex items-center justify-center gap-2 transition-all duration-500 ${isSubmitting ? 'opacity-0' : 'group-hover:translate-y-10 group-hover:opacity-0'}`}>
-                      <span>Send Message</span>
-                    </div>
-
-                    {/* Hover Flight State */}
-                    <div className={`absolute inset-0 flex items-center justify-center transition-all duration-500 ${isSubmitting ? 'opacity-0' : 'translate-y-10 opacity-0 group-hover:translate-y-0 group-hover:opacity-100'}`}>
-                      <FaPaperPlane className="text-2xl animate-float-fly" />
-                    </div>
-
-                    {/* Sending State */}
-                    {isSubmitting && (
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <FaPaperPlane className="text-2xl animate-fly-away" />
-                      </div>
-                    )}
-                  </button>
-
-                  {submitSuccess && (
-                    <motion.p
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      className="mt-4 text-green-400"
-                    >
-                      {submitSuccess}
-                    </motion.p>
-                  )}
-                </div>
-              </form>
-            </motion.div>
-
-            {/* RIGHT COLUMN - INFO */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-              className="space-y-12 lg:pl-12"
-            >
-              <div className="grid gap-8">
-                {contactMethods.map((method, i) => (
-                  <div key={i} className="flex items-start gap-6 group">
-                    <div className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center flex-shrink-0 group-hover:border-purple-500/50 transition-colors">
-                      <method.icon className="text-xl text-white/60 group-hover:text-purple-400 transition-colors" />
-                    </div>
-                    <div>
-                      <h3 className="text-sm font-medium text-white/40 uppercase tracking-wider mb-1">{method.label}</h3>
-                      {method.link ? (
-                        <a href={method.link} className="text-xl text-white hover:text-purple-400 transition-colors block">
-                          {method.value}
-                        </a>
-                      ) : (
-                        <p className="text-xl text-white">{method.value}</p>
-                      )}
-                    </div>
-                  </div>
+                    <social.icon className="w-5 h-5 text-muted-foreground group-hover:text-white transition-colors" />
+                    <span className="text-foreground group-hover:text-purple-400 transition-colors">{social.name}</span>
+                  </a>
                 ))}
               </div>
-
-              <div className="p-8 rounded-2xl bg-white/5 border border-white/10">
-                <h3 className="text-lg font-bold mb-4">Socials</h3>
-                <div className="flex gap-4">
-                  {[
-                    { icon: FaLinkedin, href: 'https://www.linkedin.com/in/luka-partenadze-394675348/' },
-                    { icon: FaGithub, href: 'https://github.com/SetFodi' },
-                    { icon: FaInstagram, href: 'https://www.instagram.com/fartenadzeluka/' }
-                  ].map((social, i) => (
-                    <a
-                      key={i}
-                      href={social.href}
-                      target="_blank"
-                      className="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-white hover:text-black transition-all duration-300 hover:scale-110"
-                    >
-                      <social.icon className="text-xl" />
-                    </a>
-                  ))}
-                </div>
-              </div>
-            </motion.div>
+            </div>
           </div>
 
         </div>
-      </main>
 
+      </main>
       <Footer />
     </div>
   )

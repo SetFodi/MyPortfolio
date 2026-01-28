@@ -101,26 +101,26 @@ export default function InteractiveImageAccordion() {
     };
 
     return (
-        <section className="bg-transparent text-white font-sans py-12 md:py-24 min-h-screen flex items-center">
+        <section className="bg-transparent text-foreground font-sans py-12 md:py-24 min-h-screen flex items-center">
             <div className="container mx-auto px-4">
                 <div className="flex flex-col xl:flex-row items-center justify-between gap-12 xl:gap-20">
 
                     {/* Left Side: Content */}
                     <div className="w-full xl:w-5/12 text-center xl:text-left space-y-8">
-                        <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 backdrop-blur-md">
-                            <span className="text-xs font-semibold uppercase tracking-wider text-green-400">
+                        <div className="inline-flex items-center gap-2 rounded-full border dark:border-white/10 border-gray-200 dark:bg-white/5 bg-gray-50 px-4 py-1.5 backdrop-blur-md">
+                            <span className="text-xs font-semibold uppercase tracking-wider text-green-500">
                                 Junior Odoo Developer
                             </span>
                         </div>
 
                         <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tighter leading-[1.1]">
                             Crafting <br />
-                            <span className="bg-gradient-to-br from-purple-400 via-blue-400 to-emerald-400 bg-clip-text text-transparent">
+                            <span className="bg-gradient-to-br from-purple-500 via-blue-500 to-emerald-500 bg-clip-text text-transparent">
                                 Digital Stories
                             </span>
                         </h1>
 
-                        <p className="text-lg text-zinc-400 max-w-xl mx-auto xl:mx-0 leading-relaxed">
+                        <p className="text-lg text-muted-foreground max-w-xl mx-auto xl:mx-0 leading-relaxed">
                             I'm Luka, a Full Stack Developer building robust applications that scale.
                             Explore my latest work in web development, from e-commerce platforms to interactive apps.
                         </p>
@@ -128,13 +128,13 @@ export default function InteractiveImageAccordion() {
                         <div className="flex flex-col sm:flex-row gap-4 justify-center xl:justify-start pt-4">
                             <a
                                 href="#contact"
-                                className="inline-flex items-center justify-center gap-2 bg-white text-black font-bold px-8 py-4 rounded-full hover:bg-zinc-200 transition-all active:scale-95"
+                                className="inline-flex items-center justify-center gap-2 bg-foreground text-background font-bold px-8 py-4 rounded-full hover:opacity-90 transition-all active:scale-95"
                             >
                                 Contact Me <MessageCircle className="w-4 h-4" />
                             </a>
                             <a
                                 href="/projects"
-                                className="inline-flex items-center justify-center gap-2 border border-white/20 text-white font-bold px-8 py-4 rounded-full hover:bg-white/10 transition-all"
+                                className="inline-flex items-center justify-center gap-2 border dark:border-white/20 border-gray-300 text-foreground font-bold px-8 py-4 rounded-full hover:bg-foreground/5 transition-all"
                             >
                                 All Projects <ArrowRight className="w-4 h-4" />
                             </a>

@@ -171,7 +171,7 @@ export function BeamsBackground({
     return (
         <div
             className={cn(
-                "relative min-h-screen w-full overflow-hidden bg-neutral-950",
+                "relative min-h-screen w-full overflow-hidden bg-background transition-colors duration-300",
                 className
             )}
         >
@@ -182,7 +182,7 @@ export function BeamsBackground({
             />
 
             <motion.div
-                className="fixed inset-0 bg-neutral-950/5 z-0 pointer-events-none"
+                className="fixed inset-0 bg-background/5 z-0 pointer-events-none"
                 animate={{
                     opacity: [0.05, 0.15, 0.05],
                 }}

@@ -10,26 +10,26 @@ export default function Footer() {
   ]
 
   return (
-    <footer className="bg-transparent border-t border-white/5 pt-20 pb-8 backdrop-blur-sm">
+    <footer className="bg-transparent border-t dark:border-white/5 border-gray-200 pt-20 pb-8 backdrop-blur-sm">
       <div className="max-w-7xl mx-auto px-6 md:px-12">
 
         <div className="flex flex-col items-center text-center mb-20">
-          <h2 className="text-4xl md:text-6xl font-bold mb-6 tracking-tight">
+          <h2 className="text-4xl md:text-6xl font-bold mb-6 tracking-tight text-foreground">
             Let's work together.
           </h2>
-          <p className="text-white/50 text-lg mb-8 max-w-lg">
+          <p className="text-muted-foreground text-lg mb-8 max-w-lg">
             Creating digital experiences with a focus on design and performance.
           </p>
           <a
             href="mailto:lukafartenadze2004@gmail.com"
-            className="px-8 py-3 rounded-full border border-white/20 hover:bg-white hover:text-black transition-all duration-300"
+            className="px-8 py-3 rounded-full border dark:border-white/20 border-gray-300 hover:bg-foreground hover:text-background transition-all duration-300 text-foreground"
           >
             lukafartenadze2004@gmail.com
           </a>
         </div>
 
-        <div className="flex flex-col md:flex-row justify-between items-center pt-8 border-t border-white/5 gap-4">
-          <p className="text-sm text-white/40">
+        <div className="flex flex-col md:flex-row justify-between items-center pt-8 border-t dark:border-white/5 border-gray-200 gap-4">
+          <p className="text-sm text-muted-foreground/60">
             © 2025 Luka Partenadze
           </p>
 
@@ -40,7 +40,7 @@ export default function Footer() {
                 href={link.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-white/40 hover:text-white transition-colors"
+                className="text-muted-foreground/60 hover:text-foreground transition-colors"
               >
                 <link.icon className="text-xl" />
               </a>

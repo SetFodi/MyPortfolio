@@ -30,7 +30,7 @@ export default function Projects() {
   const hasLiveLink = (link) => link && link !== '#' && !link.includes('github.com')
 
   return (
-    <div className="bg-transparent text-white selection:bg-purple-500/30 selection:text-white min-h-screen flex flex-col">
+    <div className="bg-transparent text-foreground selection:bg-purple-500/30 selection:text-white min-h-screen flex flex-col">
       <Head>
         <title>Projects | Luka Partenadze</title>
         <meta name="description" content="Showcase of my latest development projects." />
@@ -44,16 +44,16 @@ export default function Projects() {
 
           {/* HEADER */}
           <div className="mb-24">
-            <h1 className="text-5xl md:text-7xl font-bold mb-6">Selected Works</h1>
+            <h1 className="text-5xl md:text-7xl font-bold mb-6 tracking-tight text-foreground">Selected Works</h1>
             <div className="flex flex-wrap gap-4 items-center">
-              <p className="text-white/50 mr-8">Filter by:</p>
+              <p className="text-muted-foreground mr-8">Filter by:</p>
               {categories.map((cat) => (
                 <button
                   key={cat}
                   onClick={() => setFilter(cat)}
                   className={`px-4 py-2 rounded-full text-sm transition-all duration-300 border ${filter === cat
-                    ? 'bg-white text-black border-white'
-                    : 'bg-transparent text-white/60 border-white/10 hover:border-white/30 hover:text-white'
+                    ? 'bg-foreground text-background border-foreground'
+                    : 'bg-transparent text-muted-foreground border-gray-200 dark:border-white/10 hover:border-gray-300 hover:dark:border-white/30 hover:text-foreground'
                     }`}
                 >
                   {cat}
@@ -125,14 +125,14 @@ export default function Projects() {
                     <div className="flex items-center gap-4">
                       <span className="text-purple-400 text-sm font-mono">0{index + 1}</span>
                       <div className="h-[1px] w-12 bg-purple-500/30"></div>
-                      <span className="text-white/40 text-sm uppercase tracking-widest">{project.category}</span>
+                      <span className="text-muted-foreground text-sm uppercase tracking-widest">{project.category}</span>
                     </div>
 
-                    <h2 className="text-4xl font-bold group-hover:text-purple-200 transition-colors duration-300">
+                    <h2 className="text-4xl font-bold text-foreground group-hover:text-purple-500 transition-colors duration-300">
                       {project.title}
                     </h2>
 
-                    <p className="text-white/60 leading-relaxed text-lg">
+                    <p className="text-muted-foreground leading-relaxed text-lg">
                       {project.description}
                     </p>
 
@@ -141,7 +141,7 @@ export default function Projects() {
                         <Link
                           href={project.link}
                           target="_blank"
-                          className="flex items-center gap-2 text-white hover:text-purple-400 transition-colors border-b border-transparent hover:border-purple-400 pb-1"
+                          className="flex items-center gap-2 text-foreground hover:text-purple-400 transition-colors border-b border-transparent hover:border-purple-400 pb-1"
                         >
                           <FaExternalLinkAlt className="text-sm" />
                           <span className="text-sm font-medium uppercase tracking-wide">Live Demo</span>
@@ -150,7 +150,7 @@ export default function Projects() {
                       <Link
                         href={project.github || '#'}
                         target="_blank"
-                        className="flex items-center gap-2 text-white hover:text-purple-400 transition-colors border-b border-transparent hover:border-purple-400 pb-1"
+                        className="flex items-center gap-2 text-foreground hover:text-purple-400 transition-colors border-b border-transparent hover:border-purple-400 pb-1"
                       >
                         <FaGithub className="text-lg" />
                         <span className="text-sm font-medium uppercase tracking-wide">Source Code</span>
@@ -163,9 +163,9 @@ export default function Projects() {
           </div>
 
           {/* CALL TO ACTION */}
-          <div className="bg-white/5 rounded-3xl p-12 md:p-24 text-center border border-white/5 mb-24">
-            <h2 className="text-3xl md:text-5xl font-bold mb-6">Have a project in mind?</h2>
-            <p className="text-white/50 mb-12 max-w-xl mx-auto">
+          <div className="dark:bg-white/5 bg-gray-50 rounded-3xl p-12 md:p-24 text-center dark:border-white/5 border-gray-200 mb-24 transition-colors">
+            <h2 className="text-3xl md:text-5xl font-bold mb-6 text-foreground">Have a project in mind?</h2>
+            <p className="text-muted-foreground mb-12 max-w-xl mx-auto">
               I'm always open to discussing new projects and opportunities.
               Let's build something amazing together.
             </p>
