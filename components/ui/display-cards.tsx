@@ -13,7 +13,7 @@ interface DisplayCardProps {
     titleClassName?: string;
 }
 
-function DisplayCard({
+export function DisplayCard({
     className,
     icon = <Sparkles className="size-4 text-blue-300" />,
     title = "Featured",

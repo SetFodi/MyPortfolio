@@ -5,6 +5,8 @@ import { motion } from 'framer-motion'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import Logo from '../components/Logo'
+import { BeamsBackground } from '../components/ui/beams-background'
+import { DisplayCard } from '../components/ui/display-cards'
 import { FaGithub, FaLinkedin, FaInstagram, FaCode, FaServer, FaDatabase, FaTools } from 'react-icons/fa'
 
 export default function About() {
