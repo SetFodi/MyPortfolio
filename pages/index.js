@@ -10,6 +10,7 @@ import Logo from '../components/Logo'
 import HeroSection from '@/components/ui/interactive-image-accordion'
 import { ContainerScroll } from '@/components/ui/container-scroll-animation'
 import DisplayCards from '@/components/ui/display-cards'
+import { TechStackCards } from '@/components/ui/tech-stack-cards'
 import { Sparkles, Code, Rocket } from 'lucide-react'
 import { projects } from '../data/homeData'
 import { skillData } from '../data/homeData' // Assuming skillData is exported from here
@@ -109,7 +110,9 @@ export default function Home() {
           </ContainerScroll>
         </section>
 
-        {/* TECH STACK - CREATIVE INTERACTIVE GRID */}
+        import {TechStackCards} from '@/components/ui/tech-stack-cards'
+
+        {/* TECH STACK - GLOWING CARDS */}
         <section className="py-32 bg-transparent border-y border-white/5 overflow-hidden">
           <div className="max-w-7xl mx-auto px-6 md:px-12">
             <div className="text-center mb-24">
@@ -119,68 +122,7 @@ export default function Home() {
                 My preferred stack for building scalable, high-performance applications.
               </p>
             </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
-              {[
-                {
-                  category: 'Frontend',
-                  desc: 'Building immersive user interfaces',
-                  skills: ['JavaScript', 'TypeScript', 'React', 'Next.js', 'Tailwind CSS', 'Framer Motion'],
-                  gradient: 'from-purple-500/20 to-blue-500/20'
-                },
-                {
-                  category: 'Backend',
-                  desc: 'Powering robust server-side logic',
-                  skills: ['Node.js', 'Python', 'PHP', 'Laravel', 'Odoo'],
-                  gradient: 'from-green-500/20 to-emerald-500/20'
-                },
-                {
-                  category: 'Database',
-                  desc: 'Architecting reliable data storage',
-                  skills: ['MongoDB', 'MySQL', 'PostgreSQL', 'Redis'],
-                  gradient: 'from-orange-500/20 to-red-500/20'
-                },
-                {
-                  category: 'DevOps & Tools',
-                  desc: 'Streamlining deployment & workflow',
-                  skills: ['Git', 'Docker', 'Swagger', 'Postman', 'Linux'],
-                  gradient: 'from-blue-500/20 to-cyan-500/20'
-                }
-              ].map((cat, i) => (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.1 }}
-                  className="group relative p-8 rounded-3xl dark:bg-white/5 bg-gray-50 border dark:border-white/10 border-gray-200 overflow-hidden hover:border-purple-500/30 transition-colors duration-500"
-                >
-                  {/* Hover Gradient Background */}
-                  <div className={`absolute inset-0 bg-gradient-to-br ${cat.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl`}></div>
-
-                  <div className="relative z-10">
-                    <div className="flex justify-between items-start mb-8">
-                      <div>
-                        <h3 className="text-2xl font-bold text-foreground mb-2">{cat.category}</h3>
-                        <p className="text-muted-foreground text-sm">{cat.desc}</p>
-                      </div>
-                      <span className="text-xs font-mono text-muted-foreground/50 px-2 py-1 rounded border dark:border-white/10 border-gray-300">0{i + 1}</span>
-                    </div>
-
-                    <div className="flex flex-wrap gap-3">
-                      {cat.skills.map((skill, j) => (
-                        <span
-                          key={j}
-                          className="px-4 py-2 rounded-full text-sm dark:bg-black/20 bg-white border dark:border-white/5 border-gray-200 text-muted-foreground group-hover:dark:bg-black/40 group-hover:bg-gray-100 group-hover:dark:border-white/10 group-hover:text-foreground transition-all duration-300 backdrop-blur-sm"
-                        >
-                          {skill}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
+            <TechStackCards />
           </div>
         </section>
 
