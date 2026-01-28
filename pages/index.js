@@ -9,7 +9,10 @@ import Footer from '../components/Footer'
 import Logo from '../components/Logo'
 import HeroSection from '@/components/ui/interactive-image-accordion'
 import { ContainerScroll } from '@/components/ui/container-scroll-animation'
+import DisplayCards from '@/components/ui/display-cards'
+import { Sparkles, Code, Rocket } from 'lucide-react'
 import { projects } from '../data/homeData'
+import { skillData } from '../data/homeData' // Assuming skillData is exported from here
 
 export default function Home() {
   const [mounted, setMounted] = useState(false)
@@ -170,6 +173,68 @@ export default function Home() {
             </div>
           </div>
         </section>
+
+        {/* WORKFLOW - DISPLAY CARDS */}
+        <section className="py-32 border-y border-white/5 bg-transparent overflow-hidden">
+          <div className="max-w-7xl mx-auto px-6 md:px-12 flex flex-col md:flex-row items-center gap-16 md:gap-32">
+            <div className="w-full md:w-1/2">
+              <span className="text-sm text-purple-400 uppercase tracking-widest font-medium">Workflow</span>
+              <h2 className="text-4xl md:text-5xl font-bold mt-4 mb-6">How I Work</h2>
+              <p className="text-white/50 text-lg leading-relaxed mb-8">
+                My process is streamlined to deliver high-quality results efficiently.
+                From initial concept to final deployment, every step is crafted for excellence.
+              </p>
+              <ul className="space-y-4">
+                <li className="flex items-center gap-3">
+                  <div className="h-8 w-8 rounded-full bg-blue-500/10 flex items-center justify-center text-blue-400">1</div>
+                  <span className="text-white/80">Strategic Planning & Design</span>
+                </li>
+                <li className="flex items-center gap-3">
+                  <div className="h-8 w-8 rounded-full bg-purple-500/10 flex items-center justify-center text-purple-400">2</div>
+                  <span className="text-white/80">Agile Development & Testing</span>
+                </li>
+                <li className="flex items-center gap-3">
+                  <div className="h-8 w-8 rounded-full bg-green-500/10 flex items-center justify-center text-green-400">3</div>
+                  <span className="text-white/80">Optimization & Deployment</span>
+                </li>
+              </ul>
+            </div>
+
+            <div className="w-full md:w-1/2 flex justify-center py-10">
+              <DisplayCards cards={[
+                {
+                  icon: <Sparkles className="size-4 text-blue-300" />,
+                  title: "Design",
+                  description: "Modern & Intuitive",
+                  date: "Phase 1",
+                  iconClassName: "text-blue-500",
+                  titleClassName: "text-blue-500",
+                  className: "[grid-area:stack] hover:-translate-y-10 before:absolute before:w-[100%] before:outline-1 before:rounded-xl before:outline-border before:h-[100%] before:content-[''] before:bg-blend-overlay before:bg-background/50 grayscale-[100%] hover:before:opacity-0 before:transition-opacity before:duration-700 hover:grayscale-0 before:left-0 before:top-0",
+                },
+                {
+                  icon: <Code className="size-4 text-purple-300" />,
+                  title: "Develop",
+                  description: "Clean & Scalable",
+                  date: "Phase 2",
+                  iconClassName: "text-purple-500",
+                  titleClassName: "text-purple-500",
+                  className: "[grid-area:stack] translate-x-12 translate-y-10 hover:-translate-y-1 before:absolute before:w-[100%] before:outline-1 before:rounded-xl before:outline-border before:h-[100%] before:content-[''] before:bg-blend-overlay before:bg-background/50 grayscale-[100%] hover:before:opacity-0 before:transition-opacity before:duration-700 hover:grayscale-0 before:left-0 before:top-0",
+                },
+                {
+                  icon: <Rocket className="size-4 text-green-300" />,
+                  title: "Deploy",
+                  description: "Fast & Secure",
+                  date: "Phase 3",
+                  iconClassName: "text-green-500",
+                  titleClassName: "text-green-500",
+                  className: "[grid-area:stack] translate-x-24 translate-y-20 hover:translate-y-10",
+                },
+              ]} />
+            </div>
+          </div>
+        </section>
+
+
 
         {/* PRICING PREVIEW */}
         <section className="py-32 border-y border-white/5 bg-transparent overflow-hidden">
