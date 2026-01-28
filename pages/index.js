@@ -171,6 +171,44 @@ export default function Home() {
           </div>
         </section>
 
+        {/* PRICING PREVIEW */}
+        <section className="py-32 border-y border-white/5 bg-transparent overflow-hidden">
+          <div className="max-w-7xl mx-auto px-6 md:px-12">
+            <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
+              <div>
+                <span className="text-sm text-purple-400 uppercase tracking-widest font-medium">Pricing</span>
+                <h2 className="text-4xl md:text-5xl font-bold mt-4">Transparent Packages</h2>
+              </div>
+              <Link href="/pricing" className="px-6 py-3 rounded-full border border-white/20 hover:bg-white hover:text-black transition-all duration-300">
+                View All Plans &rarr;
+              </Link>
+            </div>
+
+            {/* Simplified Pricing Cards for Home - Direct usage of Pricing component with limited props or just custom cards? 
+                     Using the full Pricing component might be too heavy with the toggle unless we want it. 
+                     Let's use a simplified view or just link to pricing. 
+                     Actually, user requested "a little preview". Let's show the 3 cards but maybe simpler.
+                 */}
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {[
+                { title: "Landing Page", price: "400-700 ₾", desc: "Perfect for small businesses." },
+                { title: "Business Website", price: "1,000+ ₾", desc: "Full-featured professional site.", popular: true },
+                { title: "E-Commerce", price: "3,000+ ₾", desc: "Complete online store solution." }
+              ].map((plan, i) => (
+                <div key={i} className={`p-8 rounded-2xl border ${plan.popular ? 'bg-white/10 border-purple-500/50' : 'bg-white/5 border-white/10'} hover:border-white/30 transition-all`}>
+                  <h3 className="text-xl font-bold mb-2">{plan.title}</h3>
+                  <p className="text-3xl font-bold text-white mb-4">{plan.price}</p>
+                  <p className="text-white/50 mb-8">{plan.desc}</p>
+                  <Link href="/pricing" className="text-sm font-bold text-purple-400 hover:text-purple-300 flex items-center gap-2">
+                    Learn More <span aria-hidden="true">&rarr;</span>
+                  </Link>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
         <Footer />
       </main>
     </div>

@@ -22,8 +22,8 @@ function DockIcon({ mouseX, item, isActive }) {
         ref={ref}
         style={{ width }}
         className={`aspect-square rounded-full flex items-center justify-center relative group cursor-pointer ${isActive
-            ? 'bg-white text-black shadow-lg shadow-white/20'
-            : 'bg-white/10 text-white hover:bg-white/20 border border-white/10'
+          ? 'bg-white text-black shadow-lg shadow-white/20'
+          : 'bg-white/10 text-white hover:bg-white/20 border border-white/10'
           }`}
       >
         <span className="text-xs font-medium uppercase tracking-wider absolute -top-10 bg-black/80 text-white px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none border border-white/10">
@@ -39,7 +39,7 @@ function DockIcon({ mouseX, item, isActive }) {
   )
 }
 
-import { FaHome, FaUser, FaLayerGroup, FaEnvelope } from 'react-icons/fa'
+import { FaHome, FaUser, FaLayerGroup, FaEnvelope, FaTag } from 'react-icons/fa'
 
 export default function Navbar() {
   const mouseX = useMotionValue(Infinity)
@@ -49,6 +49,7 @@ export default function Navbar() {
     { name: 'Home', path: '/', icon: FaHome },
     { name: 'About', path: '/about', icon: FaUser },
     { name: 'Projects', path: '/projects', icon: FaLayerGroup },
+    { name: 'Pricing', path: '/pricing', icon: FaTag },
     { name: 'Contact', path: '/contact', icon: FaEnvelope },
   ]
 
