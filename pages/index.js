@@ -1,203 +1,227 @@
+'use client'
+import { useState, useEffect, useRef } from 'react'
 import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
-import { ArrowDown, ArrowUpRight } from 'lucide-react'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import Logo from '../components/Logo'
-import EditorialProjectCard from '../components/EditorialProjectCard'
-import { featuredProjects, conceptProjects } from '../data/homeData'
-
-const capabilities = [
-  {
-    number: '01',
-    title: 'Product thinking',
-    copy: 'Turning a rough goal into clear flows, useful features, and a scope that can actually ship.',
-    tags: ['Discovery', 'UX structure', 'Prototyping'],
-  },
-  {
-    number: '02',
-    title: 'Interface craft',
-    copy: 'Building responsive interfaces with a distinct visual voice, precise motion, and accessible interaction.',
-    tags: ['UI systems', 'Motion', 'Frontend'],
-  },
-  {
-    number: '03',
-    title: 'Full-stack delivery',
-    copy: 'Connecting the interface to reliable data, APIs, content systems, analytics, and deployment.',
-    tags: ['Next.js', 'Databases', 'Integrations'],
-  },
-]
+import HeroSection from '@/components/ui/interactive-image-accordion'
+import { ContainerScroll } from '@/components/ui/container-scroll-animation'
+import DisplayCards from '@/components/ui/display-cards'
+import { TechStackCards } from '@/components/ui/tech-stack-cards'
+import { Sparkles, Code, Rocket } from 'lucide-react'
+import { projects } from '../data/homeData'
+import { skillData } from '../data/homeData' // Assuming skillData is exported from here
 
 export default function Home() {
-  const leadProject = featuredProjects[0]
-  const secondProject = featuredProjects[1]
+  const [mounted, setMounted] = useState(false)
+  const containerRef = useRef(null)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  if (!mounted) return null
 
   return (
-    <div className="portfolio-page">
+    <div className="bg-transparent text-foreground selection:bg-purple-500/30 selection:text-white">
       <Head>
-        <title>Luka Partenadze — Product-minded Full-Stack Developer</title>
-        <meta
-          name="description"
-          content="Portfolio of Luka Partenadze, a product-minded full-stack developer in Tbilisi building client websites, web products, and interaction concepts."
-        />
+        <title>Luka Partenadze | Full Stack Developer</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
 
       <Logo />
       <Navbar />
 
-      <main>
-        <section className="editorial-hero">
-          <div className="editorial-hero__grid">
-            <motion.div
-              className="editorial-hero__copy"
-              initial={{ opacity: 0, y: 24 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.1 }}
-            >
-              <div className="availability-pill">
-                <span /> Available for selected projects
-              </div>
-              <p className="eyebrow">Independent developer · Tbilisi, Georgia</p>
-              <h1>
-                Digital products,<br />
-                <em>built with intent.</em>
-              </h1>
-              <p className="editorial-hero__intro">
-                I’m Luka, a product-minded full-stack developer. I shape ideas into fast, expressive websites and web applications—from first interface to production.
-              </p>
-              <div className="hero-actions">
-                <Link href="/projects" className="button button--solid">
-                  Explore selected work <ArrowUpRight size={18} />
+      <main ref={containerRef} className="relative z-10">
+
+        {/* HERO SECTION */}
+        <HeroSection />
+
+        {/* SELECTED WORK - SCROLL ANIMATION */}
+        <section className="-mt-12">
+          <ContainerScroll
+            titleComponent={
+              <div className="flex flex-col items-center mb-10">
+                <h2 className="text-4xl md:text-7xl font-bold bg-clip-text text-transparent bg-gradient-to-b from-black to-black/60 dark:from-white dark:to-white/60">
+                  Selected Work
+                </h2>
+                <Link href="/projects" className="text-xl text-purple-400 mt-4 hover:text-purple-300 transition-colors">
+                  View All Projects &rarr;
                 </Link>
-                <a href="#selected-work" className="button button--quiet">
-                  Scroll to work <ArrowDown size={17} />
-                </a>
               </div>
-            </motion.div>
+            }
+          >
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-[380px] p-4 text-left h-full">
+              {/* Main Featured Project - Spans 2 columns */}
+              {(() => {
+                const mainProject = projects.find(p => p.title === 'Furniture') || projects[0];
+                return (
+                  <motion.div
+                    className="md:col-span-2 row-span-1 relative group overflow-hidden rounded-2xl dark:bg-white/5 bg-black/5 border dark:border-white/10 border-black/10"
+                  >
+                    <Link href={mainProject.link} target="_blank" className="block h-full w-full">
+                      <div className="absolute inset-0 z-10 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-60 group-hover:opacity-40 transition-opacity duration-500"></div>
+                      <Image
+                        src={mainProject.image}
+                        alt={mainProject.title}
+                        fill
+                        className="object-cover transition-transform duration-700 group-hover:scale-105"
+                      />
+                      <div className="absolute bottom-0 left-0 p-8 z-20">
+                        <span className="text-xs font-medium text-purple-400 mb-2 block uppercase tracking-wider">{mainProject.category}</span>
+                        <h3 className="text-3xl font-semibold mb-2">{mainProject.title}</h3>
+                        <p className="text-white/70 max-w-md line-clamp-2">{mainProject.description}</p>
+                      </div>
+                    </Link>
+                  </motion.div>
+                );
+              })()}
 
-            <motion.div
-              className="hero-stage"
-              initial={{ opacity: 0, scale: 0.97 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.9, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-            >
-              <a href={leadProject.link} target="_blank" rel="noopener noreferrer" className="hero-stage__main">
-                <div className="hero-stage__toolbar">
-                  <span>{leadProject.kind} / {leadProject.year}</span>
-                  <span className="hero-stage__lights"><i /><i /><i /></span>
-                </div>
-                <div className="hero-stage__image">
-                  <Image
-                    src={leadProject.image}
-                    alt={`${leadProject.title} website`}
-                    fill
-                    priority
-                    sizes="(max-width: 900px) 100vw, 54vw"
-                    className="object-cover object-top"
-                  />
-                </div>
-                <div className="hero-stage__caption">
-                  <span>{leadProject.title}</span>
-                  <span>{leadProject.category} ↗</span>
-                </div>
-              </a>
-
-              <a href={secondProject.link} target="_blank" rel="noopener noreferrer" className="hero-stage__float">
-                <div className="hero-stage__float-image">
-                  <Image
-                    src={secondProject.image}
-                    alt={`${secondProject.title} website`}
-                    fill
-                    sizes="(max-width: 900px) 42vw, 18vw"
-                    className="object-cover object-top"
-                  />
-                </div>
-                <div><span>Latest ship</span><strong>{secondProject.title}</strong></div>
-                <ArrowUpRight size={17} />
-              </a>
-            </motion.div>
-          </div>
-
-          <div className="hero-index" aria-label="Areas of work">
-            <span>Client websites</span>
-            <span>Product systems</span>
-            <span>Creative prototypes</span>
-            <span>2026 portfolio refresh</span>
-          </div>
-        </section>
-
-        <section className="content-section" id="selected-work">
-          <div className="section-heading">
-            <div>
-              <p className="eyebrow">Selected work · 2025—2026</p>
-              <h2>Recent things<br /><em>out in the world.</em></h2>
+              {/* Secondary Projects */}
+              {[
+                projects.find(p => p.title === 'AndScore') || projects.find(p => p.title === 'AndCode'),
+                projects[0], // AndWatch moved here
+                projects[2], // AndCook
+                projects[3]  // Syncrolly
+              ].map((project, i) => (
+                <motion.div
+                  key={i}
+                  className="col-span-1 row-span-1 relative group overflow-hidden rounded-2xl dark:bg-white/5 bg-black/5 border dark:border-white/10 border-black/10"
+                >
+                  <Link href={project.link} target="_blank" className="block h-full w-full">
+                    <div className="absolute inset-0 z-10 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-60 group-hover:opacity-40 transition-opacity duration-500"></div>
+                    <Image
+                      src={project.image}
+                      alt={project.title}
+                      fill
+                      className="object-cover transition-transform duration-700 group-hover:scale-105"
+                    />
+                    <div className="absolute bottom-0 left-0 p-6 z-20">
+                      <span className="text-xs font-medium text-purple-400 mb-2 block uppercase tracking-wider">{project.category}</span>
+                      <h3 className="text-xl font-semibold mb-1">{project.title}</h3>
+                    </div>
+                  </Link>
+                </motion.div>
+              ))}
             </div>
-            <div className="section-heading__aside">
-              <span className="section-count">04</span>
-              <p>Real client work across medical, services, e-commerce, and interactive products.</p>
-              <Link href="/projects">View the full archive <ArrowUpRight size={16} /></Link>
-            </div>
-          </div>
+          </ContainerScroll>
+        </section>
 
-          <div className="featured-grid">
-            {featuredProjects.map((project, index) => (
-              <EditorialProjectCard
-                key={project.slug}
-                project={project}
-                index={index}
-                large={index === 0 || index === 3}
-                priority={index === 0}
-              />
-            ))}
+
+
+        {/* TECH STACK - GLOWING CARDS */}
+        <section className="py-32 bg-transparent border-y border-white/5 overflow-hidden">
+          <div className="max-w-7xl mx-auto px-6 md:px-12">
+            <div className="text-center mb-24">
+              <span className="text-sm text-purple-400 uppercase tracking-widest font-medium">Expertise</span>
+              <h2 className="text-4xl md:text-5xl font-bold mt-4 mb-6">Tools & Technologies</h2>
+              <p className="text-white/50 max-w-2xl mx-auto">
+                My preferred stack for building scalable, high-performance applications.
+              </p>
+            </div>
+            <TechStackCards />
           </div>
         </section>
 
-        <section className="capability-section">
-          <div className="capability-section__intro">
-            <p className="eyebrow">How I contribute</p>
-            <h2>From fuzzy brief<br />to finished product.</h2>
-            <p>I work across strategy, interface, and implementation, keeping the same idea intact from the first sketch to the production build.</p>
+        {/* WORKFLOW - DISPLAY CARDS */}
+        <section className="py-32 border-y dark:border-white/5 border-gray-200 bg-transparent overflow-hidden">
+          <div className="max-w-7xl mx-auto px-6 md:px-12 flex flex-col md:flex-row items-center gap-16 md:gap-32">
+            <div className="w-full md:w-1/2">
+              <span className="text-sm text-purple-400 uppercase tracking-widest font-medium">Workflow</span>
+              <h2 className="text-4xl md:text-5xl font-bold mt-4 mb-6 text-foreground">How I Work</h2>
+              <p className="text-muted-foreground text-lg leading-relaxed mb-8">
+                My process is streamlined to deliver high-quality results efficiently.
+                From initial concept to final deployment, every step is crafted for excellence.
+              </p>
+              <ul className="space-y-4">
+                <li className="flex items-center gap-3">
+                  <div className="h-8 w-8 rounded-full bg-blue-500/10 flex items-center justify-center text-blue-400">1</div>
+                  <span className="text-foreground/80">Strategic Planning & Design</span>
+                </li>
+                <li className="flex items-center gap-3">
+                  <div className="h-8 w-8 rounded-full bg-purple-500/10 flex items-center justify-center text-purple-400">2</div>
+                  <span className="text-foreground/80">Agile Development & Testing</span>
+                </li>
+                <li className="flex items-center gap-3">
+                  <div className="h-8 w-8 rounded-full bg-green-500/10 flex items-center justify-center text-green-400">3</div>
+                  <span className="text-foreground/80">Optimization & Deployment</span>
+                </li>
+              </ul>
+            </div>
+
+            <div className="w-full md:w-1/2 flex justify-center py-10">
+              <DisplayCards cards={[
+                {
+                  icon: <Sparkles className="size-4 text-blue-300" />,
+                  title: "Design",
+                  description: "Modern & Intuitive",
+                  date: "Phase 1",
+                  iconClassName: "text-blue-500",
+                  titleClassName: "text-blue-500",
+                  className: "[grid-area:stack] hover:-translate-y-10 before:absolute before:w-[100%] before:outline-1 before:rounded-xl before:outline-border before:h-[100%] before:content-[''] before:bg-blend-overlay before:bg-background/50 grayscale-[100%] hover:before:opacity-0 before:transition-opacity before:duration-700 hover:grayscale-0 before:left-0 before:top-0",
+                },
+                {
+                  icon: <Code className="size-4 text-purple-300" />,
+                  title: "Develop",
+                  description: "Clean & Scalable",
+                  date: "Phase 2",
+                  iconClassName: "text-purple-500",
+                  titleClassName: "text-purple-500",
+                  className: "[grid-area:stack] md:translate-x-12 translate-y-10 hover:-translate-y-1 before:absolute before:w-[100%] before:outline-1 before:rounded-xl before:outline-border before:h-[100%] before:content-[''] before:bg-blend-overlay before:bg-background/50 grayscale-[100%] hover:before:opacity-0 before:transition-opacity before:duration-700 hover:grayscale-0 before:left-0 before:top-0",
+                },
+                {
+                  icon: <Rocket className="size-4 text-green-300" />,
+                  title: "Deploy",
+                  description: "Fast & Secure",
+                  date: "Phase 3",
+                  iconClassName: "text-green-500",
+                  titleClassName: "text-green-500",
+                  className: "[grid-area:stack] md:translate-x-24 translate-y-20 hover:translate-y-10",
+                },
+              ]} />
+            </div>
           </div>
-          <div className="capability-list">
-            {capabilities.map((capability) => (
-              <motion.article
-                key={capability.number}
-                initial={{ opacity: 0, x: 24 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.55 }}
-              >
-                <span>{capability.number}</span>
-                <div>
-                  <h3>{capability.title}</h3>
-                  <p>{capability.copy}</p>
-                  <div>{capability.tags.map((tag) => <small key={tag}>{tag}</small>)}</div>
+        </section>
+
+
+
+        {/* PRICING PREVIEW */}
+        <section className="py-32 border-y dark:border-white/5 border-gray-200 bg-transparent overflow-hidden">
+          <div className="max-w-7xl mx-auto px-6 md:px-12">
+            <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
+              <div>
+                <span className="text-sm text-purple-400 uppercase tracking-widest font-medium">Pricing</span>
+                <h2 className="text-4xl md:text-5xl font-bold mt-4 text-foreground">Transparent Packages</h2>
+              </div>
+              <Link href="/pricing" className="px-6 py-3 rounded-full border dark:border-white/20 border-gray-300 hover:bg-foreground hover:text-background transition-all duration-300">
+                View All Plans &rarr;
+              </Link>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {[
+                { title: "Landing Page", price: "400-700 ₾", desc: "Perfect for small businesses." },
+                { title: "Business Website", price: "1,000+ ₾", desc: "Full-featured professional site.", popular: true },
+                { title: "E-Commerce", price: "3,000+ ₾", desc: "Complete online store solution." }
+              ].map((plan, i) => (
+                <div key={i} className={`p-8 rounded-2xl border ${plan.popular ? 'dark:bg-white/10 bg-purple-50 dark:border-purple-500/50 border-purple-200' : 'dark:bg-white/5 bg-gray-50 dark:border-white/10 border-gray-200'} hover:border-purple-500/30 transition-all`}>
+                  <h3 className="text-xl font-bold mb-2 text-foreground">{plan.title}</h3>
+                  <p className="text-3xl font-bold text-foreground mb-4">{plan.price}</p>
+                  <p className="text-muted-foreground mb-8">{plan.desc}</p>
+                  <Link href="/pricing" className="text-sm font-bold text-purple-400 hover:text-purple-300 flex items-center gap-2">
+                    Learn More <span aria-hidden="true">&rarr;</span>
+                  </Link>
                 </div>
-              </motion.article>
-            ))}
+              ))}
+            </div>
           </div>
         </section>
 
-        <section className="content-section concept-section">
-          <div className="section-heading section-heading--compact">
-            <div>
-              <p className="eyebrow">Concept lab</p>
-              <h2>Ideas need room<br /><em>to misbehave.</em></h2>
-            </div>
-            <p>Self-directed studies where I test bolder art direction, interaction, and product mood without a client brief.</p>
-          </div>
-          <div className="concept-grid">
-            {conceptProjects.map((project, index) => (
-              <EditorialProjectCard key={project.slug} project={project} index={index} />
-            ))}
-          </div>
-        </section>
+        <Footer />
       </main>
-
-      <Footer />
     </div>
   )
 }
