@@ -1,7 +1,6 @@
-'use client'
 import Link from 'next/link'
+import { ArrowUpRight } from 'lucide-react'
 import { FaGithub, FaLinkedin, FaInstagram } from 'react-icons/fa'
-import { RainbowButton } from './ui/rainbow-button'
 
 export default function Footer() {
   const socialLinks = [
@@ -11,43 +10,30 @@ export default function Footer() {
   ]
 
   return (
-    <footer className="bg-transparent border-t dark:border-white/5 border-gray-200 pt-20 pb-8 backdrop-blur-sm">
-      <div className="max-w-7xl mx-auto px-6 md:px-12">
-
-        <div className="flex flex-col items-center text-center mb-20">
-          <h2 className="text-4xl md:text-6xl font-bold mb-6 tracking-tight text-foreground">
-            Let's work together.
-          </h2>
-          <p className="text-muted-foreground text-lg mb-8 max-w-lg">
-            Creating digital experiences with a focus on design and performance.
-          </p>
-          <RainbowButton asChild className="h-12 px-8 rounded-full">
-            <a href="mailto:lukafartenadze2004@gmail.com">
-              lukafartenadze2004@gmail.com
-            </a>
-          </RainbowButton>
+    <footer className="editorial-footer" id="contact">
+      <div className="editorial-footer__inner">
+        <p className="eyebrow">Have a project in mind?</p>
+        <div className="editorial-footer__headline">
+          <h2>Let’s make it <em>useful,</em><br />then unforgettable.</h2>
+          <a className="circle-link" href="mailto:lukafartenadze2004@gmail.com" aria-label="Email Luka Partenadze">
+            <ArrowUpRight size={28} />
+          </a>
         </div>
-
-        <div className="flex flex-col md:flex-row justify-between items-center pt-8 border-t dark:border-white/5 border-gray-200 gap-4">
-          <p className="text-sm text-muted-foreground/60">
-            © 2025 Luka Partenadze
-          </p>
-
-          <div className="flex gap-6">
-            {socialLinks.map((link, i) => (
-              <a
-                key={i}
-                href={link.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-muted-foreground/60 hover:text-foreground transition-colors"
-              >
-                <link.icon className="text-xl" />
+        <a className="editorial-footer__email" href="mailto:lukafartenadze2004@gmail.com">
+          lukafartenadze2004@gmail.com
+        </a>
+        <div className="editorial-footer__bottom">
+          <span>© 2026 Luka Partenadze</span>
+          <span>Tbilisi, Georgia · GMT+4</span>
+          <div className="editorial-footer__socials">
+            {socialLinks.map((social) => (
+              <a key={social.name} href={social.href} target="_blank" rel="noopener noreferrer" aria-label={social.name}>
+                <social.icon />
               </a>
             ))}
           </div>
+          <Link href="/projects">Selected work ↗</Link>
         </div>
-
       </div>
     </footer>
   )
