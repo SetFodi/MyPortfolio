@@ -64,7 +64,7 @@ export default function Contact() {
   ]
 
   return (
-    <div className="bg-transparent text-foreground selection:bg-purple-500/30 selection:text-white min-h-screen flex flex-col transition-colors duration-300">
+    <div className="bg-transparent text-foreground selection:bg-brand/35 selection:text-foreground min-h-screen flex flex-col transition-colors duration-300">
       <Head>
         <title>Contact | Luka Partenadze</title>
         <meta name="description" content="Get in touch for collaborations or freelance work." />
@@ -85,7 +85,7 @@ export default function Contact() {
               transition={{ duration: 0.6 }}
             >
               <h1 className="text-5xl md:text-7xl font-bold mb-6 tracking-tight text-foreground">
-                Get in <span className="text-purple-400">Touch.</span>
+                Get in <span className="text-brand">Touch.</span>
               </h1>
               <p className="text-xl text-muted-foreground leading-relaxed max-w-xl mb-12">
                 Have a project in mind or just want to chat? I'm currently open to new opportunities.
@@ -100,7 +100,7 @@ export default function Contact() {
                     {...register('name', { required: 'Name is required' })}
                     type="text"
                     placeholder="John Doe"
-                    className="w-full bg-transparent border-b dark:border-white/20 border-gray-300 py-3 dark:text-white text-black placeholder:text-muted-foreground/30 focus:outline-none focus:border-purple-500 transition-colors"
+                    className="w-full bg-transparent border-b dark:border-white/20 border-gray-300 py-3 dark:text-white text-black placeholder:text-muted-foreground/30 focus:outline-none focus:border-brand transition-colors"
                   />
                   {errors.name && <span className="text-red-400 text-sm">{errors.name.message}</span>}
                 </div>
@@ -113,7 +113,7 @@ export default function Contact() {
                     })}
                     type="email"
                     placeholder="john@example.com"
-                    className="w-full bg-transparent border-b dark:border-white/20 border-gray-300 py-3 dark:text-white text-black placeholder:text-muted-foreground/30 focus:outline-none focus:border-purple-500 transition-colors"
+                    className="w-full bg-transparent border-b dark:border-white/20 border-gray-300 py-3 dark:text-white text-black placeholder:text-muted-foreground/30 focus:outline-none focus:border-brand transition-colors"
                   />
                   {errors.email && <span className="text-red-400 text-sm">{errors.email.message}</span>}
                 </div>
@@ -123,7 +123,7 @@ export default function Contact() {
                 <label className="text-sm font-medium text-muted-foreground uppercase tracking-wider mb-2 block">Subject</label>
                 <select
                   {...register('subject', { required: 'Subject is required' })}
-                  className="w-full bg-transparent border-b dark:border-white/20 border-gray-300 py-3 dark:text-white text-black focus:outline-none focus:border-purple-500 transition-colors"
+                  className="w-full bg-transparent border-b dark:border-white/20 border-gray-300 py-3 dark:text-white text-black focus:outline-none focus:border-brand transition-colors"
                 >
                   <option className="bg-background text-foreground">General Inquiry</option>
                   <option className="bg-background text-foreground">Project Proposal</option>
@@ -139,7 +139,7 @@ export default function Contact() {
                   {...register('message', { required: 'Message is required' })}
                   rows="4"
                   placeholder="Tell me about your project..."
-                  className="w-full bg-transparent border-b dark:border-white/20 border-gray-300 py-3 dark:text-white text-black placeholder:text-muted-foreground/30 focus:outline-none focus:border-purple-500 transition-colors resize-none"
+                  className="w-full bg-transparent border-b dark:border-white/20 border-gray-300 py-3 dark:text-white text-black placeholder:text-muted-foreground/30 focus:outline-none focus:border-brand transition-colors resize-none"
                 ></textarea>
                 {errors.message && <span className="text-red-400 text-sm">{errors.message.message}</span>}
               </div>
@@ -156,7 +156,7 @@ export default function Contact() {
                 <motion.p
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="mt-4 text-green-400"
+                  className="mt-4 text-signal"
                 >
                   {submitSuccess}
                 </motion.p>
@@ -183,7 +183,7 @@ export default function Contact() {
                   className="flex items-center gap-6 p-6 rounded-2xl dark:bg-white/5 bg-gray-50 border dark:border-white/5 border-gray-200 hover:dark:border-white/20 hover:border-gray-300 transition-all group"
                 >
                   <div className="h-12 w-12 rounded-full dark:bg-white/5 bg-white flex items-center justify-center border dark:border-white/5 border-gray-100">
-                    <method.icon className="text-xl text-muted-foreground group-hover:text-purple-400 transition-colors" />
+                    <method.icon className="text-xl text-muted-foreground group-hover:text-brand transition-colors" />
                   </div>
                   <div>
                     <h3 className="text-sm font-medium text-muted-foreground/50 uppercase tracking-wider mb-1">{method.label}</h3>
@@ -209,7 +209,7 @@ export default function Contact() {
                     className="flex items-center gap-3 px-5 py-3 rounded-full dark:bg-black/20 bg-white border dark:border-white/10 border-gray-200 hover:dark:bg-white/10 hover:bg-gray-100 transition-all group"
                   >
                     <social.icon className="w-5 h-5 text-muted-foreground group-hover:text-white transition-colors" />
-                    <span className="text-foreground group-hover:text-purple-400 transition-colors">{social.name}</span>
+                    <span className="text-foreground group-hover:text-brand transition-colors">{social.name}</span>
                   </a>
                 ))}
               </div>

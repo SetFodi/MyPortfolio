@@ -8,7 +8,7 @@ export default function ProjectCard({ title, description, image, link, technolog
     <motion.div
       whileHover={{ y: -10, scale: 1.02 }}
       transition={{ duration: 0.3 }}
-      className="group relative bg-white rounded-2xl shadow-2xl overflow-hidden border border-transparent hover:border-blue-300 transition-all duration-300"
+      className="group relative bg-card rounded-2xl shadow-2xl overflow-hidden border border-transparent hover:border-brand/45 transition-all duration-300"
     >
       {/* Image Section */}
       <div className="relative h-56 overflow-hidden">
@@ -28,11 +28,11 @@ export default function ProjectCard({ title, description, image, link, technolog
       <div className="p-6">
         <motion.h3
           whileHover={{ scale: 1.05 }}
-          className="text-xl font-bold text-gray-900 mb-2"
+          className="text-xl font-bold text-foreground mb-2"
         >
           {title}
         </motion.h3>
-        <p className="text-gray-700 mb-4">{description}</p>
+        <p className="text-muted-foreground mb-4">{description}</p>
         
         {/* Technologies */}
         {technologies && (
@@ -40,7 +40,7 @@ export default function ProjectCard({ title, description, image, link, technolog
             {technologies.map((tech, index) => (
               <span
                 key={index}
-                className="px-2 py-1 bg-blue-100 text-blue-600 text-xs font-medium rounded"
+                className="px-2 py-1 bg-brand-soft text-brand-strong text-xs font-medium rounded"
               >
                 {tech}
               </span>
@@ -52,7 +52,7 @@ export default function ProjectCard({ title, description, image, link, technolog
         <Link href={link} legacyBehavior>
           <motion.a
             whileHover={{ x: 5 }}
-            className="inline-flex items-center text-blue-600 font-medium hover:underline"
+            className="inline-flex items-center text-brand font-medium hover:underline"
           >
             Visit Site
             <svg

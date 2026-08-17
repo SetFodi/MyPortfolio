@@ -43,13 +43,13 @@ export default function SpotlightButton({ children, onClick, className = "", typ
       onClick={onClick}
       type={type}
       disabled={disabled}
-      className={`relative overflow-hidden rounded-full bg-white/5 px-8 py-4 text-white shadow-2xl transition-all duration-300 hover:scale-[1.02] hover:shadow-purple-500/20 active:scale-[0.98] ${className}`}
+      className={`relative overflow-hidden rounded-full bg-white/5 px-8 py-4 text-white shadow-2xl transition-all duration-300 hover:scale-[1.02] hover:shadow-brand/20 active:scale-[0.98] ${className}`}
     >
       <div
         className="pointer-events-none absolute -inset-px opacity-0 transition duration-300"
         style={{
           opacity,
-          background: `radial-gradient(600px circle at ${position.x}px ${position.y}px, rgba(168, 85, 247, 0.15), transparent 40%)`,
+          background: `radial-gradient(600px circle at ${position.x}px ${position.y}px, rgba(239, 112, 86, 0.16), transparent 40%)`,
         }}
       />
       <div className="relative z-10">{children}</div>
@@ -57,4 +57,3 @@ export default function SpotlightButton({ children, onClick, className = "", typ
     </button>
   )
 }
-

@@ -41,7 +41,7 @@ export default function Preloader({ onComplete }) {
 
   return (
     <motion.div
-      className="fixed inset-0 z-[9999] bg-[#0a0a0a] flex flex-col items-center justify-center font-mono"
+      className="fixed inset-0 z-[9999] bg-[#07111d] flex flex-col items-center justify-center font-mono"
       exit={{ opacity: 0, y: -100 }}
       transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1] }}
     >
@@ -49,7 +49,7 @@ export default function Preloader({ onComplete }) {
       <div className="relative w-72 md:w-96">
         
         {/* Screen Frame */}
-        <div className="relative bg-[#1a1a1a] rounded-t-lg p-2 border-[3px] border-[#2a2a2a] h-48 md:h-56 shadow-2xl">
+        <div className="relative bg-[#0b1726] rounded-t-lg p-2 border-[3px] border-[#1d2c3d] h-48 md:h-56 shadow-2xl">
           {/* Camera */}
           <div className="absolute top-1.5 left-1/2 -translate-x-1/2 w-1 h-1 bg-white/20 rounded-full z-20"></div>
           
@@ -64,28 +64,28 @@ export default function Preloader({ onComplete }) {
                     key={i}
                     initial={{ opacity: 0, x: -10 }}
                     animate={{ opacity: 1, x: 0 }}
-                    className="text-[10px] md:text-xs text-green-500/80 font-mono flex items-center gap-2"
+                    className="text-[10px] md:text-xs text-signal/85 font-mono flex items-center gap-2"
                   >
-                    <span className="text-green-700">➜</span> 
+                    <span className="text-brand">➜</span>
                     {line}
                   </motion.div>
                 ))}
                 <motion.div 
                   animate={{ opacity: [0, 1, 0] }}
                   transition={{ repeat: Infinity, duration: 0.8 }}
-                  className="w-2 h-3 bg-green-500/80"
+                  className="w-2 h-3 bg-brand/85"
                 />
               </div>
 
               {/* Progress Bar in Terminal */}
               <div className="mt-auto">
-                <div className="flex justify-between text-[10px] text-green-400/70 mb-1 font-bold">
+                <div className="flex justify-between text-[10px] text-signal/75 mb-1 font-bold">
                   <span>STATUS: {progress < 100 ? 'LOADING' : 'COMPLETE'}</span>
                   <span>{progress}%</span>
                 </div>
-                <div className="h-1 w-full bg-green-900/20 rounded-sm overflow-hidden border border-green-900/30">
+                <div className="h-1 w-full bg-signal-soft/30 rounded-sm overflow-hidden border border-signal/20">
                   <motion.div 
-                    className="h-full bg-green-500 shadow-[0_0_10px_rgba(34,197,94,0.4)]"
+                    className="h-full bg-signal shadow-[0_0_10px_rgba(65,174,132,0.38)]"
                     initial={{ width: 0 }}
                     animate={{ width: `${progress}%` }}
                     transition={{ ease: "linear" }}
@@ -95,15 +95,15 @@ export default function Preloader({ onComplete }) {
             </div>
 
             {/* Scanline Effect */}
-            <div className="absolute inset-0 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] z-20 pointer-events-none bg-[length:100%_2px,3px_100%]"></div>
-            <div className="absolute inset-0 bg-green-500/5 animate-pulse pointer-events-none z-10"></div>
+            <div className="absolute inset-0 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%)] z-20 pointer-events-none bg-[length:100%_2px]"></div>
+            <div className="absolute inset-0 bg-signal/5 animate-pulse pointer-events-none z-10"></div>
 
           </div>
         </div>
 
         {/* Keyboard Base */}
-        <div className="relative bg-[#252525] h-3 md:h-4 w-[120%] -ml-[10%] rounded-b-xl shadow-xl flex justify-center items-start pt-0.5 overflow-hidden">
-          <div className="absolute top-0 w-20 h-1 bg-[#1a1a1a] rounded-b-sm"></div>
+        <div className="relative bg-[#162536] h-3 md:h-4 w-[120%] -ml-[10%] rounded-b-xl shadow-xl flex justify-center items-start pt-0.5 overflow-hidden">
+          <div className="absolute top-0 w-20 h-1 bg-[#0b1726] rounded-b-sm"></div>
           
           {/* Key Press Animation (Visualizing typing without hands) */}
           <div className="absolute inset-0 flex flex-wrap justify-center gap-0.5 px-8 py-1 opacity-30">

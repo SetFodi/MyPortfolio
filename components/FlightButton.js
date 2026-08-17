@@ -21,7 +21,7 @@ export default function FlightButton({ href, text, icon: Icon, className = "", t
     </>
   )
 
-  const commonClasses = `group relative w-40 h-14 rounded-full font-medium text-base overflow-hidden transition-all hover:scale-[1.02] active:scale-[0.98] hover:shadow-lg hover:shadow-purple-500/20 cursor-pointer ${baseClasses} flex items-center justify-center disabled:opacity-70 disabled:cursor-not-allowed`
+  const commonClasses = `group relative w-40 h-14 rounded-full font-medium text-base overflow-hidden transition-all hover:scale-[1.02] active:scale-[0.98] hover:shadow-lg hover:shadow-brand/20 cursor-pointer ${baseClasses} flex items-center justify-center disabled:opacity-70 disabled:cursor-not-allowed`
 
   if (href) {
     return (
@@ -37,4 +37,3 @@ export default function FlightButton({ href, text, icon: Icon, className = "", t
     </button>
   )
 }
-

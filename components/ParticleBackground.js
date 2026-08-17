@@ -33,7 +33,7 @@ const ParticleBackground = ({ density = 15, interactive = false }) => {
       this.opacity = Math.random() * 0.3 + 0.1 // Lower opacity
       this.angle = Math.random() * Math.PI * 2
       this.speed = Math.random() * 0.01 + 0.005 // Slower movement
-      this.hue = Math.random() * 30 + 220 // Narrower blue range
+      this.hue = Math.random() * 10 + 8 // Restrained vermilion range
     }
 
     update(mouse) {
@@ -105,7 +105,7 @@ const ParticleBackground = ({ density = 15, interactive = false }) => {
         
         if (distance < 80) { // Reduced connection distance
           const opacity = (80 - distance) / 80 * 0.15 // Lower opacity
-          ctx.strokeStyle = `rgba(99, 102, 241, ${opacity})`
+          ctx.strokeStyle = `rgba(239, 112, 86, ${opacity})`
           ctx.lineWidth = 0.5
           ctx.beginPath()
           ctx.moveTo(particlesRef.current[i].x, particlesRef.current[i].y)
@@ -232,4 +232,4 @@ const ParticleBackground = ({ density = 15, interactive = false }) => {
   )
 }
 
-export default ParticleBackground 
+export default ParticleBackground

@@ -31,7 +31,7 @@ export default function MyApp({ Component, pageProps }) {
 
   return (
     <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
-      <BeamsBackground intensity="strong">
+      <BeamsBackground intensity="medium">
         <div className="min-h-screen flex flex-col relative z-10 transition-colors duration-300">
           {/* Initial Preloader */}
           <AnimatePresence mode="wait">
@@ -46,7 +46,7 @@ export default function MyApp({ Component, pageProps }) {
               initial={{ scaleX: 0 }}
               animate={{ scaleX: 1 }}
               transition={{ duration: 0.5 }}
-              className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-purple-500 to-blue-500 z-[100] origin-left"
+              className="fixed top-0 left-0 right-0 h-1 bg-brand z-[100] origin-left"
             />
           )}
 

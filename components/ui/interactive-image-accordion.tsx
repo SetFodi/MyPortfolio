@@ -110,14 +110,14 @@ export default function InteractiveImageAccordion() {
                     {/* Left Side: Content */}
                     <div className="w-full xl:w-5/12 text-center xl:text-left space-y-8">
                         <div className="inline-flex items-center gap-2 rounded-full border dark:border-white/10 border-gray-200 dark:bg-white/5 bg-gray-50 px-4 py-1.5 backdrop-blur-md">
-                            <span className="text-xs font-semibold uppercase tracking-wider text-green-500">
+                            <span className="text-xs font-semibold uppercase tracking-wider text-signal">
                                 Junior Odoo Developer
                             </span>
                         </div>
 
                         <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tighter leading-[1.1]">
                             Crafting <br />
-                            <span className="bg-gradient-to-br from-purple-500 via-blue-500 to-emerald-500 bg-clip-text text-transparent">
+                            <span className="text-brand">
                                 Digital Stories
                             </span>
                         </h1>

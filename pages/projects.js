@@ -10,6 +10,22 @@ import FlightButton from '../components/FlightButton'
 import { projects } from '../data/homeData'
 import { FaGithub, FaExternalLinkAlt, FaCode, FaPaperPlane } from 'react-icons/fa'
 
+const newProjectOrder = [
+  'alasi',
+  'nocturne',
+  'comfort-building',
+  'decoconcept',
+  'focus-cabin',
+  'geocanal',
+  'buildora-group',
+  'ndmedsphere',
+  'sea-llc',
+]
+
+const newProjectRanks = new Map(
+  newProjectOrder.map((slug, index) => [slug, index])
+)
+
 export default function Projects() {
   const [mounted, setMounted] = useState(false)
   const [filter, setFilter] = useState('All')
@@ -23,15 +39,19 @@ export default function Projects() {
 
   const categories = ['All', 'Client', 'Product', 'Concept']
   const getProjectKind = (project) => project.kind || 'Product'
+  const getProjectRank = (project) => newProjectRanks.get(project.slug) ?? newProjectOrder.length
+  const orderedProjects = [...projects].sort(
+    (firstProject, secondProject) => getProjectRank(firstProject) - getProjectRank(secondProject)
+  )
   const filteredProjects = filter === 'All'
-    ? projects
-    : projects.filter((project) => getProjectKind(project) === filter)
+    ? orderedProjects
+    : orderedProjects.filter((project) => getProjectKind(project) === filter)
 
   // Helper to check if project has a live link
   const hasLiveLink = (link) => link && link !== '#' && !link.includes('github.com')
 
   return (
-    <div className="bg-transparent text-foreground selection:bg-purple-500/30 selection:text-white min-h-screen flex flex-col">
+    <div className="bg-transparent text-foreground selection:bg-brand/35 selection:text-foreground min-h-screen flex flex-col">
       <Head>
         <title>Projects | Luka Partenadze</title>
         <meta name="description" content="Showcase of my latest development projects." />
@@ -79,7 +99,7 @@ export default function Projects() {
                   {/* IMAGE SIDE */}
                   <div className="w-full md:w-3/5 relative">
                     <Link href={project.link || '#'} target="_blank" className="block relative aspect-[16/9] rounded-2xl overflow-hidden">
-                      <div className="absolute inset-0 bg-purple-500/5 group-hover:bg-transparent transition-colors duration-500 z-10"></div>
+                      <div className="absolute inset-0 bg-brand/5 group-hover:bg-transparent transition-colors duration-500 z-10"></div>
                       <Image
                         src={project.image}
                         alt={project.title}
@@ -90,12 +110,12 @@ export default function Projects() {
                       {/* Status Indicator */}
                       <div className="absolute top-6 right-6 z-20">
                         {hasLiveLink(project.link) ? (
-                          <div className="flex items-center gap-2 px-3 py-1.5 bg-black/60 backdrop-blur-md border border-green-500/30 rounded-full">
+                          <div className="flex items-center gap-2 px-3 py-1.5 bg-[#07111d]/75 backdrop-blur-md border border-signal/35 rounded-full">
                             <span className="relative flex h-2 w-2">
-                              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                              <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+                              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-signal opacity-75"></span>
+                              <span className="relative inline-flex rounded-full h-2 w-2 bg-signal"></span>
                             </span>
-                            <span className="text-[10px] font-medium uppercase tracking-widest text-green-400">Live</span>
+                            <span className="text-[10px] font-medium uppercase tracking-widest text-signal">Live</span>
                           </div>
                         ) : (
                           <div className="flex items-center gap-2 px-3 py-1.5 bg-black/60 backdrop-blur-md border border-white/10 rounded-full">
@@ -124,12 +144,12 @@ export default function Projects() {
                   {/* CONTENT SIDE */}
                   <div className="w-full md:w-2/5 space-y-6">
                     <div className="flex items-center gap-4">
-                      <span className="text-purple-400 text-sm font-mono">0{index + 1}</span>
-                      <div className="h-[1px] w-12 bg-purple-500/30"></div>
+                      <span className="text-brand text-sm font-mono">0{index + 1}</span>
+                      <div className="h-[1px] w-12 bg-brand/35"></div>
                       <span className="text-muted-foreground text-sm uppercase tracking-widest">{getProjectKind(project)}</span>
                     </div>
 
-                    <h2 className="text-4xl font-bold text-foreground group-hover:text-purple-500 transition-colors duration-300">
+                    <h2 className="text-4xl font-bold text-foreground group-hover:text-brand transition-colors duration-300">
                       {project.title}
                     </h2>
 
@@ -142,7 +162,7 @@ export default function Projects() {
                         <Link
                           href={project.link}
                           target="_blank"
-                          className="flex items-center gap-2 text-foreground hover:text-purple-400 transition-colors border-b border-transparent hover:border-purple-400 pb-1"
+                          className="flex items-center gap-2 text-foreground hover:text-brand transition-colors border-b border-transparent hover:border-brand pb-1"
                         >
                           <FaExternalLinkAlt className="text-sm" />
                           <span className="text-sm font-medium uppercase tracking-wide">Live Demo</span>
@@ -151,7 +171,7 @@ export default function Projects() {
                       <Link
                         href={project.github || '#'}
                         target="_blank"
-                        className="flex items-center gap-2 text-foreground hover:text-purple-400 transition-colors border-b border-transparent hover:border-purple-400 pb-1"
+                        className="flex items-center gap-2 text-foreground hover:text-brand transition-colors border-b border-transparent hover:border-brand pb-1"
                       >
                         <FaGithub className="text-lg" />
                         <span className="text-sm font-medium uppercase tracking-wide">Source Code</span>

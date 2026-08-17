@@ -82,9 +82,9 @@ export function Pricing({
                             index === 2 && "lg:origin-left"
                         )}
                     >
-                        {/* Gradient Glow for Popular Plan */}
+                        {/* Quiet brand wash for the featured plan */}
                         {plan.isPopular && (
-                            <div className="absolute inset-0 bg-gradient-to-b from-purple-500/10 to-transparent pointer-events-none" />
+                            <div className="absolute inset-0 bg-brand/5 pointer-events-none" />
                         )}
 
                         {plan.isPopular && (
@@ -135,7 +135,7 @@ export function Pricing({
                                     <li key={idx} className="flex items-start gap-3">
                                         <div className={cn(
                                             "mt-1 p-0.5 rounded-full flex-shrink-0",
-                                            plan.isPopular ? "bg-green-500/20 text-green-500" : "dark:bg-white/10 bg-gray-200 text-muted-foreground"
+                                            plan.isPopular ? "bg-signal/15 text-signal" : "dark:bg-white/10 bg-gray-200 text-muted-foreground"
                                         )}>
                                             <Check className="h-3 w-3" />
                                         </div>
@@ -154,7 +154,7 @@ export function Pricing({
                                         }),
                                         "w-full rounded-full font-semibold tracking-wide transition-all duration-300",
                                         plan.isPopular
-                                            ? "bg-purple-600 hover:bg-purple-500 shadow-lg shadow-purple-500/25 text-white"
+                                            ? "bg-brand hover:bg-brand-strong shadow-lg shadow-black/20 text-brand-foreground"
                                             : "bg-transparent dark:border-white/20 border-gray-300 hover:bg-foreground hover:text-background"
                                     )}
                                 >

@@ -12,32 +12,56 @@ html {
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    /* White */
-    --foreground: 222.2 84% 4.9%;
-    /* Dark Blue/Black */
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
-    --border: 214.3 31.8% 91.4%;
-    --color-1: 0 100% 63%;
-    --color-2: 270 100% 63%;
-    --color-3: 210 100% 63%;
-    --color-4: 195 100% 63%;
-    --color-5: 90 100% 63%;
+    --background: 38 36% 95%;
+    --foreground: 212 49% 14%;
+    --muted: 35 25% 90%;
+    --muted-foreground: 211 14% 40%;
+    --card: 40 40% 98%;
+    --card-foreground: 212 49% 14%;
+    --border: 31 18% 82%;
+    --input: 31 18% 82%;
+    --ring: 9 74% 52%;
+    --primary: 9 74% 52%;
+    --primary-foreground: 38 36% 96%;
+    --secondary: 35 25% 90%;
+    --secondary-foreground: 212 49% 14%;
+    --accent: 12 46% 90%;
+    --accent-foreground: 9 74% 42%;
+    --brand: 9 74% 52%;
+    --brand-strong: 8 72% 45%;
+    --brand-soft: 12 46% 90%;
+    --brand-foreground: 38 36% 96%;
+    --signal: 158 42% 34%;
+    --signal-soft: 157 28% 88%;
+    --color-1: 9 74% 52%;
+    --color-2: 17 58% 48%;
+    --color-3: 38 36% 80%;
+    --color-4: 158 42% 34%;
+    --color-5: 212 49% 14%;
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    /* Dark Background */
-    --foreground: 210 40% 98%;
-    /* White text */
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-    --border: 217.2 32.6% 17.5%;
+    --background: 213 52% 8%;
+    --foreground: 38 31% 92%;
+    --muted: 211 34% 14%;
+    --muted-foreground: 36 12% 67%;
+    --card: 212 42% 10%;
+    --card-foreground: 38 31% 92%;
+    --border: 210 23% 22%;
+    --input: 210 23% 22%;
+    --ring: 10 84% 65%;
+    --primary: 10 84% 65%;
+    --primary-foreground: 213 52% 8%;
+    --secondary: 211 34% 14%;
+    --secondary-foreground: 38 31% 92%;
+    --accent: 12 48% 17%;
+    --accent-foreground: 10 84% 72%;
+    --brand: 10 84% 65%;
+    --brand-strong: 9 77% 58%;
+    --brand-soft: 12 48% 17%;
+    --brand-foreground: 213 52% 8%;
+    --signal: 158 42% 48%;
+    --signal-soft: 160 36% 17%;
   }
 }
 
@@ -70,32 +94,31 @@ body::after {
 }
 
 ::-webkit-scrollbar-track {
-  background: #0a0a0a;
+  background: hsl(var(--background));
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #333;
+  background: hsl(var(--brand) / 0.55);
   border-radius: 10px;
 }
 
 /* Utilities */
 .glass {
-  background: rgba(255, 255, 255, 0.03);
+  background: hsl(var(--card) / 0.58);
   backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border: 1px solid hsl(var(--border) / 0.65);
 }
 
 .glass-strong {
-  background: rgba(10, 10, 10, 0.8);
+  background: hsl(var(--card) / 0.86);
   backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid hsl(var(--border) / 0.85);
 }
 
 /* Custom Selection Color */
 ::selection {
-  background: rgba(147, 51, 234, 0.3);
-  /* Purple */
-  color: white;
+  background: hsl(var(--brand) / 0.36);
+  color: hsl(var(--foreground));
 }
 
 /* Flying Animations */

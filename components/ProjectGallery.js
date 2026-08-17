@@ -13,7 +13,7 @@ export default function ProjectGallery({ projects }) {
   const x = useTransform(scrollYProgress, [0, 1], ["1%", "-75%"])
 
   return (
-    <section ref={targetRef} className="relative h-[400vh] bg-[#0f0f0f]">
+    <section ref={targetRef} className="relative h-[400vh] bg-[#07111d]">
       <div className="sticky top-0 flex h-screen items-center overflow-hidden">
         <motion.div style={{ x }} className="flex gap-24 pl-24">
           {/* Title Card */}
@@ -21,7 +21,7 @@ export default function ProjectGallery({ projects }) {
             <h2 className="text-8xl font-bold leading-none mb-8">
               SELECTED
               <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-blue-500">
+              <span className="text-brand">
                 WORKS
               </span>
             </h2>
@@ -62,4 +62,3 @@ export default function ProjectGallery({ projects }) {
     </section>
   )
 }
-

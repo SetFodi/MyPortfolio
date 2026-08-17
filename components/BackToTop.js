@@ -46,11 +46,11 @@ export default function BackToTop() {
           initial={{ opacity: 0, scale: 0.5 }}
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0.5 }}
-          className="fixed bottom-8 right-8 z-50 mix-blend-difference"
+          className="fixed bottom-8 right-8 z-50"
         >
           <button
             onClick={scrollToTop}
-            className="group relative flex items-center justify-center w-14 h-14 rounded-full bg-white text-black hover:bg-purple-400 transition-colors duration-300 hover:scale-110"
+            className="group relative flex items-center justify-center w-14 h-14 rounded-full bg-brand text-brand-foreground shadow-lg shadow-black/20 transition-colors duration-300 hover:bg-brand-strong hover:scale-110"
           >
             {/* Progress Ring SVG */}
               <svg className="absolute inset-0 w-full h-full -rotate-90 pointer-events-none" viewBox="0 0 40 40">
@@ -61,7 +61,7 @@ export default function BackToTop() {
                   fill="none"
                   stroke="currentColor"
                   strokeWidth="2"
-                  className="text-black/10"
+                  className="text-brand-foreground/15"
                 />
                 <motion.circle
                   cx="20"
@@ -70,7 +70,7 @@ export default function BackToTop() {
                   fill="none"
                   stroke="currentColor"
                   strokeWidth="2"
-                  className="text-black"
+                  className="text-brand-foreground"
                   style={{ 
                     strokeDasharray: 113,
                     strokeDashoffset 
@@ -89,4 +89,3 @@ export default function BackToTop() {
     </AnimatePresence>
   )
 }
-

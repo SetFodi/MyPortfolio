@@ -82,7 +82,7 @@ export default function PricingPage() {
     ]
 
     return (
-        <div className="bg-transparent text-foreground selection:bg-purple-500/30 selection:text-white min-h-screen flex flex-col font-sans">
+        <div className="bg-transparent text-foreground selection:bg-brand/35 selection:text-foreground min-h-screen flex flex-col font-sans">
             <Head>
                 <title>Pricing | Luka Partenadze</title>
                 <meta name="description" content="Transparent pricing packages for website development." />
@@ -108,12 +108,11 @@ export default function PricingPage() {
                         transition={{ duration: 0.5 }}
                         className="relative rounded-3xl overflow-hidden dark:bg-zinc-900/80 bg-white/80 border dark:border-white/10 border-gray-200 backdrop-blur-xl p-8 md:p-12 text-center group"
                     >
-                        {/* Gradient Glow */}
-                        <div className="absolute inset-0 bg-gradient-to-b from-purple-500/10 to-transparent pointer-events-none transition-opacity duration-500 group-hover:opacity-100 opacity-50" />
+                        <div className="absolute inset-0 bg-brand/5 pointer-events-none transition-opacity duration-500 group-hover:opacity-100 opacity-50" />
 
                         <div className="relative z-10 max-w-4xl mx-auto flex flex-col items-center">
-                            <div className="inline-flex items-center justify-center p-4 dark:bg-white/5 bg-gray-50 rounded-full mb-6 border dark:border-white/5 border-gray-100 group-hover:border-purple-500/30 transition-colors">
-                                <FaGem className="text-3xl text-purple-400" />
+                            <div className="inline-flex items-center justify-center p-4 dark:bg-white/5 bg-gray-50 rounded-full mb-6 border dark:border-white/5 border-gray-100 group-hover:border-brand/35 transition-colors">
+                                <FaGem className="text-3xl text-brand" />
                             </div>
 
                             <h2 className="text-3xl md:text-5xl font-bold mb-6 text-foreground tracking-tight">Need a Custom Solution?</h2>

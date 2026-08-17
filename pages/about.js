@@ -21,7 +21,7 @@ export default function About() {
   if (!mounted) return null
 
   return (
-    <div className="bg-transparent text-foreground min-h-screen selection:bg-purple-500/30 selection:text-white transition-colors duration-300">
+    <div className="bg-transparent text-foreground min-h-screen selection:bg-brand/35 selection:text-foreground transition-colors duration-300">
       <Head>
         <title>About | Luka Partenadze</title>
       </Head>
@@ -68,13 +68,13 @@ export default function About() {
 
         {/* TOOLS & TECHNOLOGIES */}
         <section className="mb-32">
-          <h2 className="text-sm font-bold uppercase tracking-widest text-purple-400 mb-12 text-center md:text-left">Tools & Technologies</h2>
+          <h2 className="text-sm font-bold uppercase tracking-widest text-brand mb-12 text-center md:text-left">Tools & Technologies</h2>
           <TechStackCards />
         </section>
 
         {/* JOURNEY */}
         <section className="max-w-4xl mx-auto">
-          <h2 className="text-sm font-bold uppercase tracking-widest text-purple-400 mb-12 text-center md:text-left">Journey</h2>
+          <h2 className="text-sm font-bold uppercase tracking-widest text-brand mb-12 text-center md:text-left">Journey</h2>
 
           <div className="relative border-l dark:border-white/10 border-gray-200 ml-3 space-y-12 pl-8 pb-4">
             {[
@@ -98,8 +98,8 @@ export default function About() {
               }
             ].map((item, i) => (
               <div key={i} className="relative">
-                <span className="absolute -left-[39px] top-1.5 h-3 w-3 rounded-full bg-purple-500 ring-4 dark:ring-black ring-white"></span>
-                <span className="text-xs font-mono text-purple-400 mb-1 block">{item.year}</span>
+                <span className="absolute -left-[39px] top-1.5 h-3 w-3 rounded-full bg-brand ring-4 ring-background"></span>
+                <span className="text-xs font-mono text-brand mb-1 block">{item.year}</span>
                 <h3 className="text-xl font-bold text-foreground mb-1">{item.company}</h3>
                 <span className="text-sm text-muted-foreground mb-3 block">{item.role}</span>
                 <p className="text-muted-foreground text-sm leading-relaxed">

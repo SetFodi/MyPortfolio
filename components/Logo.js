@@ -11,10 +11,9 @@ export default function Logo() {
         transition={{ duration: 0.5 }}
         className="group flex flex-col"
       >
-        <span className="text-xl font-bold tracking-tighter text-foreground group-hover:text-purple-400 transition-colors">LUKA</span>
-        <span className="text-xl font-light tracking-widest text-muted-foreground group-hover:text-purple-400 transition-colors -mt-2">PARTENADZE</span>
+        <span className="text-xl font-bold tracking-tighter text-foreground group-hover:text-brand transition-colors">LUKA</span>
+        <span className="text-xl font-light tracking-widest text-muted-foreground group-hover:text-brand transition-colors -mt-2">PARTENADZE</span>
       </motion.div>
     </Link>
   )
 }
-

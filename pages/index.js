@@ -7,13 +7,24 @@ import { motion } from 'framer-motion'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import Logo from '../components/Logo'
-import HeroSection from '@/components/ui/interactive-image-accordion'
+import { AnimatedMarqueeHero } from '@/components/ui/hero-3'
 import { ContainerScroll } from '@/components/ui/container-scroll-animation'
 import DisplayCards from '@/components/ui/display-cards'
 import { TechStackCards } from '@/components/ui/tech-stack-cards'
 import { Sparkles, Code, Rocket } from 'lucide-react'
 import { projects } from '../data/homeData'
 import { skillData } from '../data/homeData' // Assuming skillData is exported from here
+
+const marqueeImages = [
+  '/work/alasi.png',
+  '/work/nocturne.png',
+  '/work/comfort-building.png',
+  '/work/focus-cabin.png',
+  '/work/sea.png',
+  '/furniture.jpeg',
+  '/work/buildora-group.png',
+  '/work/geocanal.png',
+]
 
 export default function Home() {
   const [mounted, setMounted] = useState(false)
@@ -26,7 +37,7 @@ export default function Home() {
   if (!mounted) return null
 
   return (
-    <div className="bg-transparent text-foreground selection:bg-purple-500/30 selection:text-white">
+    <div className="bg-transparent text-foreground selection:bg-brand/35 selection:text-foreground">
       <Head>
         <title>Luka Partenadze | Full Stack Developer</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -37,8 +48,20 @@ export default function Home() {
 
       <main ref={containerRef} className="relative z-10">
 
-        {/* HERO SECTION */}
-        <HeroSection />
+        {/* PROJECT MARQUEE HERO */}
+        <AnimatedMarqueeHero
+          tagline="Full-stack developer · Tbilisi"
+          title={
+            <>
+              Digital products,
+              <span className="block text-brand">made with intent.</span>
+            </>
+          }
+          description="I design and build polished, scalable websites and applications—from the first idea to the final deployment."
+          ctaText="Explore my work"
+          ctaHref="/projects"
+          images={marqueeImages}
+        />
 
         {/* SELECTED WORK - SCROLL ANIMATION */}
         <section className="-mt-12">
@@ -48,7 +71,7 @@ export default function Home() {
                 <h2 className="text-4xl md:text-7xl font-bold bg-clip-text text-transparent bg-gradient-to-b from-black to-black/60 dark:from-white dark:to-white/60">
                   Selected Work
                 </h2>
-                <Link href="/projects" className="text-xl text-purple-400 mt-4 hover:text-purple-300 transition-colors">
+                <Link href="/projects" className="text-xl text-brand mt-4 hover:text-brand-strong transition-colors">
                   View All Projects &rarr;
                 </Link>
               </div>
@@ -71,7 +94,7 @@ export default function Home() {
                         className="object-cover transition-transform duration-700 group-hover:scale-105"
                       />
                       <div className="absolute bottom-0 left-0 p-8 z-20">
-                        <span className="text-xs font-medium text-purple-400 mb-2 block uppercase tracking-wider">{mainProject.category}</span>
+                        <span className="text-xs font-medium text-brand mb-2 block uppercase tracking-wider">{mainProject.category}</span>
                         <h3 className="text-3xl font-semibold mb-2">{mainProject.title}</h3>
                         <p className="text-white/70 max-w-md line-clamp-2">{mainProject.description}</p>
                       </div>
@@ -100,7 +123,7 @@ export default function Home() {
                       className="object-cover transition-transform duration-700 group-hover:scale-105"
                     />
                     <div className="absolute bottom-0 left-0 p-6 z-20">
-                      <span className="text-xs font-medium text-purple-400 mb-2 block uppercase tracking-wider">{project.category}</span>
+                      <span className="text-xs font-medium text-brand mb-2 block uppercase tracking-wider">{project.category}</span>
                       <h3 className="text-xl font-semibold mb-1">{project.title}</h3>
                     </div>
                   </Link>
@@ -116,7 +139,7 @@ export default function Home() {
         <section className="py-32 bg-transparent border-y border-white/5 overflow-hidden">
           <div className="max-w-7xl mx-auto px-6 md:px-12">
             <div className="text-center mb-24">
-              <span className="text-sm text-purple-400 uppercase tracking-widest font-medium">Expertise</span>
+              <span className="text-sm text-brand uppercase tracking-widest font-medium">Expertise</span>
               <h2 className="text-4xl md:text-5xl font-bold mt-4 mb-6">Tools & Technologies</h2>
               <p className="text-white/50 max-w-2xl mx-auto">
                 My preferred stack for building scalable, high-performance applications.
@@ -130,7 +153,7 @@ export default function Home() {
         <section className="py-32 border-y dark:border-white/5 border-gray-200 bg-transparent overflow-hidden">
           <div className="max-w-7xl mx-auto px-6 md:px-12 flex flex-col md:flex-row items-center gap-16 md:gap-32">
             <div className="w-full md:w-1/2">
-              <span className="text-sm text-purple-400 uppercase tracking-widest font-medium">Workflow</span>
+              <span className="text-sm text-brand uppercase tracking-widest font-medium">Workflow</span>
               <h2 className="text-4xl md:text-5xl font-bold mt-4 mb-6 text-foreground">How I Work</h2>
               <p className="text-muted-foreground text-lg leading-relaxed mb-8">
                 My process is streamlined to deliver high-quality results efficiently.
@@ -138,15 +161,15 @@ export default function Home() {
               </p>
               <ul className="space-y-4">
                 <li className="flex items-center gap-3">
-                  <div className="h-8 w-8 rounded-full bg-blue-500/10 flex items-center justify-center text-blue-400">1</div>
+                  <div className="h-8 w-8 rounded-full bg-brand/10 flex items-center justify-center text-brand">1</div>
                   <span className="text-foreground/80">Strategic Planning & Design</span>
                 </li>
                 <li className="flex items-center gap-3">
-                  <div className="h-8 w-8 rounded-full bg-purple-500/10 flex items-center justify-center text-purple-400">2</div>
+                  <div className="h-8 w-8 rounded-full bg-foreground/10 flex items-center justify-center text-foreground">2</div>
                   <span className="text-foreground/80">Agile Development & Testing</span>
                 </li>
                 <li className="flex items-center gap-3">
-                  <div className="h-8 w-8 rounded-full bg-green-500/10 flex items-center justify-center text-green-400">3</div>
+                  <div className="h-8 w-8 rounded-full bg-signal/10 flex items-center justify-center text-signal">3</div>
                   <span className="text-foreground/80">Optimization & Deployment</span>
                 </li>
               </ul>
@@ -155,30 +178,30 @@ export default function Home() {
             <div className="w-full md:w-1/2 flex justify-center py-10">
               <DisplayCards cards={[
                 {
-                  icon: <Sparkles className="size-4 text-blue-300" />,
+                  icon: <Sparkles className="size-4 text-brand" />,
                   title: "Design",
                   description: "Modern & Intuitive",
                   date: "Phase 1",
-                  iconClassName: "text-blue-500",
-                  titleClassName: "text-blue-500",
-                  className: "[grid-area:stack] hover:-translate-y-10 before:absolute before:w-[100%] before:outline-1 before:rounded-xl before:outline-border before:h-[100%] before:content-[''] before:bg-blend-overlay before:bg-background/50 grayscale-[100%] hover:before:opacity-0 before:transition-opacity before:duration-700 hover:grayscale-0 before:left-0 before:top-0",
+                  iconClassName: "text-brand",
+                  titleClassName: "text-brand",
+                  className: "[grid-area:stack] hover:-translate-y-10",
                 },
                 {
-                  icon: <Code className="size-4 text-purple-300" />,
+                  icon: <Code className="size-4 text-foreground" />,
                   title: "Develop",
                   description: "Clean & Scalable",
                   date: "Phase 2",
-                  iconClassName: "text-purple-500",
-                  titleClassName: "text-purple-500",
-                  className: "[grid-area:stack] md:translate-x-12 translate-y-10 hover:-translate-y-1 before:absolute before:w-[100%] before:outline-1 before:rounded-xl before:outline-border before:h-[100%] before:content-[''] before:bg-blend-overlay before:bg-background/50 grayscale-[100%] hover:before:opacity-0 before:transition-opacity before:duration-700 hover:grayscale-0 before:left-0 before:top-0",
+                  iconClassName: "text-foreground",
+                  titleClassName: "text-foreground",
+                  className: "[grid-area:stack] md:translate-x-12 translate-y-10 hover:-translate-y-1",
                 },
                 {
-                  icon: <Rocket className="size-4 text-green-300" />,
+                  icon: <Rocket className="size-4 text-signal" />,
                   title: "Deploy",
                   description: "Fast & Secure",
                   date: "Phase 3",
-                  iconClassName: "text-green-500",
-                  titleClassName: "text-green-500",
+                  iconClassName: "text-signal",
+                  titleClassName: "text-signal",
                   className: "[grid-area:stack] md:translate-x-24 translate-y-20 hover:translate-y-10",
                 },
               ]} />
@@ -193,7 +216,7 @@ export default function Home() {
           <div className="max-w-7xl mx-auto px-6 md:px-12">
             <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
               <div>
-                <span className="text-sm text-purple-400 uppercase tracking-widest font-medium">Pricing</span>
+                <span className="text-sm text-brand uppercase tracking-widest font-medium">Pricing</span>
                 <h2 className="text-4xl md:text-5xl font-bold mt-4 text-foreground">Transparent Packages</h2>
               </div>
               <Link href="/pricing" className="px-6 py-3 rounded-full border dark:border-white/20 border-gray-300 hover:bg-foreground hover:text-background transition-all duration-300">
@@ -207,11 +230,11 @@ export default function Home() {
                 { title: "Business Website", price: "1,000+ ₾", desc: "Full-featured professional site.", popular: true },
                 { title: "E-Commerce", price: "3,000+ ₾", desc: "Complete online store solution." }
               ].map((plan, i) => (
-                <div key={i} className={`p-8 rounded-2xl border ${plan.popular ? 'dark:bg-white/10 bg-purple-50 dark:border-purple-500/50 border-purple-200' : 'dark:bg-white/5 bg-gray-50 dark:border-white/10 border-gray-200'} hover:border-purple-500/30 transition-all`}>
+                <div key={i} className={`p-8 rounded-2xl border ${plan.popular ? 'dark:bg-brand-soft/35 bg-brand-soft dark:border-brand/45 border-brand/30' : 'dark:bg-white/5 bg-gray-50 dark:border-white/10 border-gray-200'} hover:border-brand/35 transition-all`}>
                   <h3 className="text-xl font-bold mb-2 text-foreground">{plan.title}</h3>
                   <p className="text-3xl font-bold text-foreground mb-4">{plan.price}</p>
                   <p className="text-muted-foreground mb-8">{plan.desc}</p>
-                  <Link href="/pricing" className="text-sm font-bold text-purple-400 hover:text-purple-300 flex items-center gap-2">
+                  <Link href="/pricing" className="text-sm font-bold text-brand hover:text-brand-strong flex items-center gap-2">
                     Learn More <span aria-hidden="true">&rarr;</span>
                   </Link>
                 </div>

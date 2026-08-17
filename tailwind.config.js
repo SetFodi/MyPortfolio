@@ -7,6 +7,41 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        background: "hsl(var(--background) / <alpha-value>)",
+        foreground: "hsl(var(--foreground) / <alpha-value>)",
+        card: {
+          DEFAULT: "hsl(var(--card) / <alpha-value>)",
+          foreground: "hsl(var(--card-foreground) / <alpha-value>)",
+        },
+        muted: {
+          DEFAULT: "hsl(var(--muted) / <alpha-value>)",
+          foreground: "hsl(var(--muted-foreground) / <alpha-value>)",
+        },
+        border: "hsl(var(--border) / <alpha-value>)",
+        input: "hsl(var(--input) / <alpha-value>)",
+        ring: "hsl(var(--ring) / <alpha-value>)",
+        primary: {
+          DEFAULT: "hsl(var(--primary) / <alpha-value>)",
+          foreground: "hsl(var(--primary-foreground) / <alpha-value>)",
+        },
+        secondary: {
+          DEFAULT: "hsl(var(--secondary) / <alpha-value>)",
+          foreground: "hsl(var(--secondary-foreground) / <alpha-value>)",
+        },
+        accent: {
+          DEFAULT: "hsl(var(--accent) / <alpha-value>)",
+          foreground: "hsl(var(--accent-foreground) / <alpha-value>)",
+        },
+        brand: {
+          DEFAULT: "hsl(var(--brand) / <alpha-value>)",
+          strong: "hsl(var(--brand-strong) / <alpha-value>)",
+          soft: "hsl(var(--brand-soft) / <alpha-value>)",
+          foreground: "hsl(var(--brand-foreground) / <alpha-value>)",
+        },
+        signal: {
+          DEFAULT: "hsl(var(--signal) / <alpha-value>)",
+          soft: "hsl(var(--signal-soft) / <alpha-value>)",
+        },
         "color-1": "hsl(var(--color-1))",
         "color-2": "hsl(var(--color-2))",
         "color-3": "hsl(var(--color-3))",
@@ -49,8 +84,8 @@ module.exports = {
           '66%': { transform: 'translateY(-5px) rotate(-1deg)' },
         },
         glow: {
-          '0%': { boxShadow: '0 0 20px rgba(99, 102, 241, 0.3)' },
-          '100%': { boxShadow: '0 0 40px rgba(99, 102, 241, 0.6)' },
+          '0%': { boxShadow: '0 0 20px rgba(239, 112, 86, 0.22)' },
+          '100%': { boxShadow: '0 0 40px rgba(239, 112, 86, 0.42)' },
         },
         'slide-up': {
           from: {
