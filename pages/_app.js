@@ -1,5 +1,6 @@
 // pages/_app.js
 import '../styles/globals.css'
+import Head from 'next/head'
 import { ThemeProvider } from 'next-themes'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useRouter } from 'next/router'
@@ -31,6 +32,11 @@ export default function MyApp({ Component, pageProps }) {
 
   return (
     <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
+      <Head>
+        <link rel="icon" href="/favicon.svg" type="image/svg+xml" sizes="any" />
+        <link rel="shortcut icon" href="/favicon.svg" />
+        <meta name="theme-color" content="#07111d" />
+      </Head>
       <BeamsBackground intensity="medium">
         <div className="min-h-screen flex flex-col relative z-10 transition-colors duration-300">
           {/* Initial Preloader */}

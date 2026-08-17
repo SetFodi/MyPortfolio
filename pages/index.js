@@ -26,6 +26,14 @@ const marqueeImages = [
   '/work/geocanal.png',
 ]
 
+const selectedWorkProjects = [
+  'focus-cabin',
+  'nocturne',
+  'alasi',
+  'decoconcept',
+  'comfort-building',
+].map((slug) => projects.find((project) => project.slug === slug)).filter(Boolean)
+
 export default function Home() {
   const [mounted, setMounted] = useState(false)
   const containerRef = useRef(null)
@@ -77,58 +85,50 @@ export default function Home() {
               </div>
             }
           >
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-[380px] p-4 text-left h-full">
-              {/* Main Featured Project - Spans 2 columns */}
-              {(() => {
-                const mainProject = projects.find(p => p.title === 'Furniture') || projects[0];
+            <div className="grid grid-cols-1 gap-5 p-4 text-left md:grid-cols-2 md:gap-6">
+              {selectedWorkProjects.map((project, index) => {
+                const isFeature = index === 0
+
                 return (
                   <motion.div
-                    className="md:col-span-2 row-span-1 relative group overflow-hidden rounded-2xl dark:bg-white/5 bg-black/5 border dark:border-white/10 border-black/10"
+                    key={project.slug}
+                    className={`relative overflow-hidden rounded-2xl border border-white/10 bg-[#0a1725] shadow-xl shadow-black/15 group ${
+                      isFeature
+                        ? 'aspect-[8/5] md:col-span-2 md:aspect-[12/5]'
+                        : 'aspect-video'
+                    }`}
                   >
-                    <Link href={mainProject.link} target="_blank" className="block h-full w-full">
-                      <div className="absolute inset-0 z-10 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-60 group-hover:opacity-40 transition-opacity duration-500"></div>
+                    <Link
+                      href={project.link || '/projects'}
+                      target={project.link ? '_blank' : undefined}
+                      rel={project.link ? 'noopener noreferrer' : undefined}
+                      className="block h-full w-full"
+                    >
                       <Image
-                        src={mainProject.image}
-                        alt={mainProject.title}
+                        src={project.image}
+                        alt={project.title}
                         fill
-                        className="object-cover transition-transform duration-700 group-hover:scale-105"
+                        sizes={isFeature ? '(min-width: 768px) 1100px, 100vw' : '(min-width: 768px) 540px, 100vw'}
+                        className="object-cover transition-transform duration-700 group-hover:scale-[1.025]"
                       />
-                      <div className="absolute bottom-0 left-0 p-8 z-20">
-                        <span className="text-xs font-medium text-brand mb-2 block uppercase tracking-wider">{mainProject.category}</span>
-                        <h3 className="text-3xl font-semibold mb-2">{mainProject.title}</h3>
-                        <p className="text-white/70 max-w-md line-clamp-2">{mainProject.description}</p>
+                      <div className="absolute inset-0 z-10 bg-gradient-to-t from-[#07111d]/95 via-[#07111d]/5 to-transparent transition-opacity duration-500 group-hover:opacity-80" />
+                      <div className={`absolute bottom-0 left-0 z-20 ${isFeature ? 'p-7 md:p-9' : 'p-6'}`}>
+                        <span className="mb-2 block text-[10px] font-medium uppercase tracking-[0.18em] text-brand md:text-xs">
+                          {project.category}
+                        </span>
+                        <h3 className={`${isFeature ? 'text-2xl md:text-4xl' : 'text-xl md:text-2xl'} font-semibold text-white`}>
+                          {project.title}
+                        </h3>
+                        {isFeature && (
+                          <p className="mt-2 hidden max-w-md text-sm leading-6 text-white/70 sm:block md:text-base">
+                            {project.description}
+                          </p>
+                        )}
                       </div>
                     </Link>
                   </motion.div>
-                );
-              })()}
-
-              {/* Secondary Projects */}
-              {[
-                projects.find(p => p.title === 'AndScore') || projects.find(p => p.title === 'AndCode'),
-                projects[0], // AndWatch moved here
-                projects[2], // AndCook
-                projects[3]  // Syncrolly
-              ].map((project, i) => (
-                <motion.div
-                  key={i}
-                  className="col-span-1 row-span-1 relative group overflow-hidden rounded-2xl dark:bg-white/5 bg-black/5 border dark:border-white/10 border-black/10"
-                >
-                  <Link href={project.link} target="_blank" className="block h-full w-full">
-                    <div className="absolute inset-0 z-10 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-60 group-hover:opacity-40 transition-opacity duration-500"></div>
-                    <Image
-                      src={project.image}
-                      alt={project.title}
-                      fill
-                      className="object-cover transition-transform duration-700 group-hover:scale-105"
-                    />
-                    <div className="absolute bottom-0 left-0 p-6 z-20">
-                      <span className="text-xs font-medium text-brand mb-2 block uppercase tracking-wider">{project.category}</span>
-                      <h3 className="text-xl font-semibold mb-1">{project.title}</h3>
-                    </div>
-                  </Link>
-                </motion.div>
-              ))}
+                )
+              })}
             </div>
           </ContainerScroll>
         </section>
