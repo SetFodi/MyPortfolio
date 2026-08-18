@@ -111,7 +111,7 @@ export default function InteractiveImageAccordion() {
                     <div className="w-full xl:w-5/12 text-center xl:text-left space-y-8">
                         <div className="inline-flex items-center gap-2 rounded-full border dark:border-white/10 border-gray-200 dark:bg-white/5 bg-gray-50 px-4 py-1.5 backdrop-blur-md">
                             <span className="text-xs font-semibold uppercase tracking-wider text-signal">
-                                Junior Odoo Developer
+                                Front-End Developer
                             </span>
                         </div>
 

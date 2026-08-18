@@ -79,22 +79,40 @@ export default function About() {
           <div className="relative border-l dark:border-white/10 border-gray-200 ml-3 space-y-12 pl-8 pb-4">
             {[
               {
-                year: '2023 - Present',
-                role: 'Freelance Full Stack Developer',
-                company: 'Self-Employed',
-                desc: 'Working with diverse clients to deliver custom web solutions, from landing pages to full-stack applications.'
+                year: 'February 2026 - Present',
+                role: 'Developer',
+                company: 'DnD Solutions',
+                desc: 'Developing management systems and frontend experiences while working across active product requirements.'
               },
               {
-                year: '2023 - Present',
-                role: 'Junior Odoo Developer',
-                company: 'BDO Georgia',
-                desc: 'Developing and customizing modules for Odoo ERP, integrating varied business processes.'
+                year: '2025 - Present',
+                role: 'Odoo Developer',
+                company: 'Fostral',
+                desc: 'Developing and customizing Odoo modules that support practical business workflows.'
               },
               {
-                year: '2021 - 2025',
+                year: '2024',
+                role: 'Full-Stack Freelance Development',
+                company: 'Independent',
+                desc: 'Expanded from frontend delivery into complete full-stack freelance projects.'
+              },
+              {
+                year: '2023',
+                role: 'First Client & Backend Work',
+                company: 'Freelance',
+                desc: 'Delivered my first freelance projects and began building backend functionality.'
+              },
+              {
+                year: '2022',
+                role: 'Frontend Projects',
+                company: 'Independent Learning',
+                desc: 'Started building interfaces with HTML, CSS, Tailwind CSS, React, and Vite.'
+              },
+              {
+                year: '2022 - 2026',
                 role: 'Bachelor of Computer Science',
-                company: 'Business and Technology University',
-                desc: 'Foundational studies in algorithms, software engineering, and system design.'
+                company: 'Georgian American University',
+                desc: 'Completed a bachelor’s degree in Computer Science.'
               }
             ].map((item, i) => (
               <div key={i} className="relative">

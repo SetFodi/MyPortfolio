@@ -13,7 +13,7 @@ import { BeamsBackground } from '@/components/ui/beams-background'
 export default function MyApp({ Component, pageProps }) {
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(false)
-  const [showPreloader, setShowPreloader] = useState(true)
+  const [showPreloader, setShowPreloader] = useState(router.pathname !== '/cv')
 
   useEffect(() => {
     const handleStart = () => setIsLoading(true)

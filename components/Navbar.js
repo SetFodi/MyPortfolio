@@ -39,7 +39,7 @@ function DockIcon({ mouseX, item, isActive }) {
   )
 }
 
-import { FaHome, FaUser, FaLayerGroup, FaEnvelope, FaTag } from 'react-icons/fa'
+import { FaHome, FaUser, FaLayerGroup, FaEnvelope, FaTag, FaFileAlt } from 'react-icons/fa'
 import SkyToggle from '@/components/ui/sky-toggle'
 
 export default function Navbar() {
@@ -50,6 +50,7 @@ export default function Navbar() {
     { name: 'Home', path: '/', icon: FaHome },
     { name: 'About', path: '/about', icon: FaUser },
     { name: 'Projects', path: '/projects', icon: FaLayerGroup },
+    { name: 'CV', path: '/cv', icon: FaFileAlt },
     { name: 'Pricing', path: '/pricing', icon: FaTag },
     { name: 'Contact', path: '/contact', icon: FaEnvelope },
   ]
@@ -59,7 +60,7 @@ export default function Navbar() {
       <motion.div
         onMouseMove={(e) => mouseX.set(e.pageX)}
         onMouseLeave={() => mouseX.set(Infinity)}
-        className="mx-auto flex h-16 items-end gap-4 rounded-2xl bg-[#07111d]/70 px-4 pb-3 border border-white/10 shadow-2xl shadow-black/25 backdrop-blur-2xl"
+        className="mx-auto flex h-16 items-end gap-2 sm:gap-4 rounded-2xl bg-[#07111d]/70 px-2 sm:px-4 pb-3 border border-white/10 shadow-2xl shadow-black/25 backdrop-blur-2xl"
       >
         {navItems.map((item) => (
           <DockIcon
@@ -71,9 +72,9 @@ export default function Navbar() {
         ))}
 
         {/* Theme Toggle - Separator */}
-        <div className="h-8 w-[1px] bg-white/10 mx-1 mb-4"></div>
+        <div className="hidden sm:block h-8 w-[1px] bg-white/10 mx-1 mb-4"></div>
 
-        <div className="mb-3 px-2">
+        <div className="hidden sm:block mb-3 px-2">
           <SkyToggle />
         </div>
       </motion.div>
