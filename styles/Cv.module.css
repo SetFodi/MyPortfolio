@@ -744,9 +744,9 @@
 @media print {
   .page {
     width: 210mm;
-    min-height: 297mm;
+    height: 297mm;
     padding: 0;
-    overflow: visible;
+    overflow: hidden;
     background: #fff;
     print-color-adjust: exact;
     -webkit-print-color-adjust: exact;
@@ -759,14 +759,15 @@
 
   .sheet {
     width: 210mm;
-    min-height: 297mm;
+    height: 297mm;
     margin: 0;
     border: 0;
     border-radius: 0;
-    padding: 10mm 11mm 5mm;
+    padding: 8mm 10mm 4mm;
+    overflow: hidden;
     box-shadow: none;
     animation: none;
-    background-size: 28px 28px;
+    background-size: 7mm 7mm;
   }
 
   .sheet::before {
@@ -778,62 +779,224 @@
   }
 
   .cornerMark {
-    top: 7mm;
-    right: 9mm;
+    top: 6mm;
+    right: 8mm;
   }
 
   .hero {
-    padding-bottom: 6mm;
+    padding-bottom: 4mm;
+  }
+
+  .heroTopline,
+  .footer {
+    font-size: 6.5pt;
+  }
+
+  .heroTopline span:last-of-type {
+    margin-right: 20mm;
   }
 
   .name {
-    margin: 4mm 0;
-    font-size: 62pt;
+    margin: 2.5mm 0 3mm;
+    font-size: 52pt;
   }
 
   .roleRow {
     grid-template-columns: 0.9fr 1.2fr;
-    gap: 10mm;
+    gap: 8mm;
   }
 
   .roleRow h2 {
-    font-size: 23pt;
+    font-size: 19pt;
   }
 
   .roleRow p {
-    font-size: 12pt;
+    font-size: 9.5pt;
+    line-height: 1.18;
   }
 
   .fitStrip {
-    margin-top: 5mm;
-    padding: 2.5mm 3mm;
+    flex-wrap: nowrap;
+    gap: 4mm;
+    margin-top: 3.5mm;
+    padding: 2mm 2.5mm;
+  }
+
+  .fitStrip span {
+    font-size: 6pt;
   }
 
   .contentGrid {
     grid-template-columns: 0.72fr 1.78fr;
-    gap: 8mm;
-    padding-top: 6mm;
+    gap: 6mm;
+    padding-top: 4mm;
   }
 
   .sidebar {
-    padding-right: 5mm;
+    display: block;
+    padding-right: 4mm;
+    padding-bottom: 0;
+    border-right: 1px solid var(--rule);
+    border-bottom: 0;
   }
 
+  .sidebar .section + .section,
   .section + .section {
-    margin-top: 5mm;
+    margin-top: 3.2mm;
+  }
+
+  .sectionLabel {
+    margin-bottom: 2.2mm;
+    font-size: 6.5pt;
+  }
+
+  .contactList {
+    gap: 1.4mm;
+  }
+
+  .contactList > a,
+  .contactList > span {
+    grid-template-columns: 3.5mm minmax(0, 1fr);
+    gap: 1.7mm;
+    font-size: 7pt;
+    line-height: 1.25;
+  }
+
+  .contactList svg {
+    width: 3mm;
+    height: 3mm;
+  }
+
+  .socialRow {
+    gap: 1.2mm;
+    margin-top: 2mm;
+  }
+
+  .socialRow a {
+    gap: 1mm;
+    padding: 1.2mm 1.7mm;
+    font-size: 5.5pt;
+  }
+
+  .socialRow svg {
+    width: 3mm;
+    height: 3mm;
+  }
+
+  .skillList {
+    gap: 2mm;
+  }
+
+  .skillList h4,
+  .education h4 {
+    font-size: 7.5pt;
+  }
+
+  .skillList p,
+  .education p,
+  .note {
+    font-size: 7pt;
+    line-height: 1.35;
+  }
+
+  .note {
+    margin-top: 2mm;
+  }
+
+  .languageList {
+    gap: 1.2mm;
+  }
+
+  .languageList div {
+    padding-bottom: 1.2mm;
+    font-size: 6.5pt;
+  }
+
+  .languageList strong,
+  .education > span,
+  .headingRow > span {
+    font-size: 5.5pt;
+  }
+
+  .education > span {
+    margin-bottom: 1.2mm;
+  }
+
+  .headingRow {
+    margin-bottom: 2.2mm;
   }
 
   .experience {
-    padding: 3.5mm;
+    padding: 2.5mm 3mm;
   }
 
   .experienceHeading {
-    margin-bottom: 2.5mm;
+    margin-bottom: 1.4mm;
+  }
+
+  .experienceHeading h4 {
+    font-size: 12pt;
+  }
+
+  .experienceHeading p,
+  .experienceHeading time {
+    font-size: 5.5pt;
+  }
+
+  .roleEntry + .roleEntry {
+    margin-top: 2mm;
+    padding-top: 2mm;
+  }
+
+  .experience ul {
+    gap: 1.3mm 3mm;
+  }
+
+  .experience li {
+    padding-left: 2.5mm;
+    font-size: 7pt;
+    line-height: 1.35;
+  }
+
+  .experience li::before {
+    top: 0.9mm;
+    width: 1mm;
+    height: 1mm;
   }
 
   .project {
-    padding: 3mm 3.5mm 2.5mm;
+    grid-template-columns: 6mm minmax(0, 1fr);
+    gap: 2mm;
+    padding: 2mm 2.5mm 1.8mm;
     break-inside: avoid;
+  }
+
+  .projectNumber {
+    font-size: 5.5pt;
+  }
+
+  .projectTitleRow h4 {
+    font-size: 11pt;
+  }
+
+  .projectTitleRow span,
+  .projectMeta {
+    font-size: 5.6pt;
+  }
+
+  .projectTitleRow svg {
+    width: 3mm;
+    height: 3mm;
+  }
+
+  .projectBody > p {
+    margin: 1mm 0 1.3mm;
+    font-size: 7pt;
+    line-height: 1.3;
+  }
+
+  .projectMeta {
+    padding-top: 1.2mm;
   }
 
   .project:hover {
@@ -841,12 +1004,26 @@
   }
 
   .availability {
-    margin-top: 3.5mm;
-    padding: 3mm;
+    margin-top: 2.5mm;
+    padding: 2.2mm 2.5mm;
+  }
+
+  .availability strong {
+    font-size: 6.5pt;
+  }
+
+  .availability p span,
+  .availability a {
+    font-size: 5.2pt;
+  }
+
+  .availability svg {
+    width: 3mm;
+    height: 3mm;
   }
 
   .footer {
-    margin-top: 5mm;
-    padding-top: 2.5mm;
+    margin-top: 3mm;
+    padding-top: 1.8mm;
   }
 }
