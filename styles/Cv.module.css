@@ -744,9 +744,9 @@
 @media print {
   .page {
     width: 210mm;
-    height: 297mm;
+    min-height: 297mm;
     padding: 0;
-    overflow: hidden;
+    overflow: visible;
     background: #fff;
     print-color-adjust: exact;
     -webkit-print-color-adjust: exact;
@@ -759,12 +759,12 @@
 
   .sheet {
     width: 210mm;
-    height: 297mm;
+    min-height: 297mm;
     margin: 0;
     border: 0;
     border-radius: 0;
     padding: 8mm 10mm 4mm;
-    overflow: hidden;
+    overflow: visible;
     box-shadow: none;
     animation: none;
     background-size: 7mm 7mm;
@@ -1025,5 +1025,27 @@
   .footer {
     margin-top: 3mm;
     padding-top: 1.8mm;
+  }
+
+  /* Two-page print: the sheet covers both A4 pages so the site's dark
+     background never shows, and a project card moving to the next page
+     leaves no grey gap. */
+  .page,
+  .sheet {
+    min-height: 594mm;
+  }
+
+  .projectList {
+    gap: 0;
+    border: 0;
+    background: none;
+  }
+
+  .project {
+    border: 1px solid var(--rule);
+  }
+
+  .project + .project {
+    border-top: 0;
   }
 }
